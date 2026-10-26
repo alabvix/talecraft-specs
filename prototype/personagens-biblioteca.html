@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Personagens (Fichas Globais)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <a class="brandlink" href="index.html" title="Ir para o Início">
+    <div class="brand">
+      <div class="brand__mark">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      </div>
+      <div>
+          <div class="brand__name">Tale<span>Craft</span></div>
+        <span class="brand__book">Início</span>
+      </div>
+    </div>
+  </a>
+
+  <header class="topbar">
+    <div class="crumb">
+      <strong>Início</strong>
+      <span class="crumb__sep">/</span>
+      <span>Personagens</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <label class="field">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Buscar personagens…" />
+      <kbd>Ctrl K</kbd>
+    </label>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">Início</div>
+    <a class="navitem" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Meus Livros<small>4 projetos</small></span>
+      <span class="navitem__count">4</span>
+    </a>
+    <a class="navitem navitem--characters is-active" href="personagens-biblioteca.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Personagens<small>Fichas globais</small></span>
+      <span class="navitem__count">31</span>
+    </a>
+    <a class="navitem navitem--world" href="mundos.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Mundos</small></span>
+      <span class="navitem__count">3</span>
+    </a>
+
+    <div class="sidebar__label">Preferências</div>
+    <a class="navitem" href="temas.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9Z"/></svg>
+      <span class="navitem__text">Temas<small>3 temas · Blade Byte, Old Tower, Tundra</small></span>
+    </a>
+
+    <div class="sidebar__label">Livro aberto</div>
+    <a class="navitem navitem--book" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">A Órbita Silenciosa<small>Painel do livro</small></span>
+    </a>
+
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main main--wide">
+
+    <div class="roothead">
+      <div style="flex:1">
+        <div class="row" style="margin-bottom:6px">
+          <span class="badge badge--accent">nível da biblioteca</span>
+        </div>
+        <h1>Personagens</h1>
+        <p>31 fichas globais · 9 aparecem em mais de um livro · 4 livros usam esta biblioteca</p>
+      </div>
+      <button class="btn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Exportar fichas
+      </button>
+      <button class="btn btn--primary" onclick="location.href='personagem.html'">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Novo personagem
+      </button>
+    </div>
+
+    <div class="notice notice--char" style="margin-bottom:20px">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <div>
+        <strong>A ficha é global, o arco é por livro.</strong>
+        Nome, aparência e biografia são compartilhados. Papel narrativo, motivação, relações e curva de arco pertencem ao vínculo com cada livro — editar aqui não afeta o uso em outras histórias.
+      </div>
+    </div>
+
+    <div class="row row--wrap" style="margin-bottom:16px">
+      <span class="badge badge--accent">31 resultados</span>
+      <span class="badge">9 em 2+ livros</span>
+      <span class="badge">4 fichas incompletas</span>
+      <span class="spacer"></span>
+      <div class="formfield" style="flex-direction:row;align-items:center;gap:8px">
+        <label style="margin:0">Filtrar por livro</label>
+        <select class="select" style="min-width:190px">
+          <option>Todos os livros</option>
+          <option>A Órbita Silenciosa</option>
+          <option>O Jardim de Ossos</option>
+          <option>A Coroa de Sal</option>
+          <option>Estação Inverno</option>
+          <option>Não vinculados</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="libgrid">
+
+      <article class="libcard c--violet" onclick="location.href='personagem.html'">
+        <div class="libcard__top">
+          <div class="portrait portrait--amber">
+            <img src="img/personagens/iara-vasquez.jpg" alt="Retrato de Iara Vasquez" />
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="libcard__name">Iara Vasquez</div>
+            <div class="libcard__alias">"A piloto que ouve o vazio" · humana</div>
+          </div>
+          <span class="badge badge--warn">3</span>
+        </div>
+        <div class="libcard__body">
+          <div class="libcard__label">Arcos por livro</div>
+          <div class="arclink c--violet">
+            <span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span>
+            <div class="arclink__book">
+              <strong>A Órbita Silenciosa</strong>
+              <small>Protagonista · arco: ruptura · caps. 1–24</small>
+            </div>
+          </div>
+          <div class="arclink c--red">
+            <span class="dot" style="background:var(--danger);box-shadow:0 0 8px var(--danger)"></span>
+            <div class="arclink__book">
+              <strong>O Jardim de Ossos</strong>
+              <small>Protagonista · arco: queda inevitável · caps. 1–18</small>
+            </div>
+          </div>
+          <div class="arclink c--green">
+            <span class="dot" style="background:var(--accent-world);box-shadow:0 0 8px var(--accent-world)"></span>
+            <div class="arclink__book">
+              <strong>A Coroa de Sal</strong>
+              <small>Coadjuvante · apenas citada · caps. 4–6</small>
+            </div>
+          </div>
+        </div>
+        <div class="libcard__foot">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+          3 livros
+          <span class="spacer"></span>
+          <span class="badge badge--ok">ficha completa</span>
+        </div>
+      </article>
+
+      <article class="libcard c--violet" onclick="location.href='personagem.html'">
+        <div class="libcard__top">
+          <div class="portrait portrait--blue">
+            <img src="img/personagens/andarilho-9.jpg" alt="Retrato de Andarilho-9" />
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="libcard__name">Andarilho-9</div>
+            <div class="libcard__alias">IA de bordo · não humana</div>
+          </div>
+          <span class="badge badge--warn">2</span>
+        </div>
+        <div class="libcard__body">
+          <div class="libcard__label">Arcos por livro</div>
+          <div class="arclink c--violet">
+            <span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span>
+            <div class="arclink__book">
+              <strong>A Órbita Silenciosa</strong>
+              <small>Protagonista · arco: despertar · caps. 7–24</small>
+            </div>
+          </div>
+          <div class="arclink c--red">
+            <span class="dot" style="background:var(--danger);box-shadow:0 0 8px var(--danger)"></span>
+            <div class="arclink__book">
+              <strong>O Jardim de Ossos</strong>
+              <small style="color:var(--warn)">Antagonista · arco: corrupção · caps. 2–18</small>
+            </div>
+          </div>
+        </div>
+        <div class="libcard__foot">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m12 3 2.6 5.6 6.4.8-4.6 4.4 1.2 6.2-5.6-3-5.6 3 1.2-6.2L3 9.4l6.4-.8z"/></svg>
+          mesmo personagem, papéis opostos
+          <span class="spacer"></span>
+          <span class="badge badge--ok">ficha completa</span>
+        </div>
+      </article>
+
+      <article class="libcard c--red" onclick="location.href='personagem.html'">
+        <div class="libcard__top">
+          <div class="portrait portrait--red">
+            <img src="img/personagens/kael-moreau.jpg" alt="Retrato de Kael Moreau" />
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="libcard__name">Kael Moreau</div>
+            <div class="libcard__alias">Comando da estação · humana</div>
+          </div>
+          <span class="badge badge--warn">2</span>
+        </div>
+        <div class="libcard__body">
+          <div class="libcard__label">Arcos por livro</div>
+          <div class="arclink c--violet">
+            <span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span>
+            <div class="arclink__book">
+              <strong>A Órbita Silenciosa</strong>
+              <small>Antagonista · arco: queda · caps. 3–19 (morre)</small>
+            </div>
+          </div>
+          <div class="arclink c--green">
+            <span class="dot" style="background:var(--accent-world);box-shadow:0 0 8px var(--accent-world)"></span>
+            <div class="arclink__book">
+              <strong>A Coroa de Sal</strong>
+              <small>Coadjuvante · arco: redenção póstuma · caps. 1–8</small>
+            </div>
+          </div>
+        </div>
+        <div class="libcard__foot">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+          2 livros
+          <span class="spacer"></span>
+          <span class="badge badge--danger">morre em 1 livro</span>
+        </div>
+      </article>
+
+      <article class="libcard c--green" onclick="location.href='personagem.html'">
+        <div class="libcard__top">
+          <div class="portrait portrait--green">
+            <img src="img/personagens/sena-myr.jpg" alt="Retrato de Sena Myr" />
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="libcard__name">Sena Myr</div>
+            <div class="libcard__alias">Engenheira-chefe · humana</div>
+          </div>
+          <span class="badge">1</span>
+        </div>
+        <div class="libcard__body">
+          <div class="libcard__label">Arcos por livro</div>
+          <div class="arclink c--violet">
+            <span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span>
+            <div class="arclink__book">
+              <strong>A Órbita Silenciosa</strong>
+              <small>Mentor · arco: sacrifício · caps. 1–17</small>
+            </div>
+          </div>
+        </div>
+        <div class="libcard__foot">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+          1 livro
+          <span class="spacer"></span>
+          <span class="badge badge--warn">sem vínculos externos</span>
+        </div>
+      </article>
+
+      <article class="libcard c--violet" onclick="location.href='personagem.html'">
+        <div class="libcard__top">
+          <div class="portrait portrait--violet">
+            <img src="img/personagens/mira-vahl.jpg" alt="Retrato de Mira Vahl" />
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="libcard__name">Mira Vahl</div>
+            <div class="libcard__alias">Mercadora de relíquias · meio-elfa</div>
+          </div>
+          <span class="badge badge--warn">3</span>
+        </div>
+        <div class="libcard__body">
+          <div class="libcard__label">Arcos por livro</div>
+          <div class="arclink c--green">
+            <span class="dot" style="background:var(--accent-world);box-shadow:0 0 8px var(--accent-world)"></span>
+            <div class="arclink__book">
+              <strong>A Coroa de Sal</strong>
+              <small>Protagonista · arco: ascensão · caps. 1–32</small>
+            </div>
+          </div>
+          <div class="arclink c--blue">
+            <span class="dot" style="background:var(--accent-chapter);box-shadow:0 0 8px var(--accent-chapter)"></span>
+            <div class="arclink__book">
+              <strong>Estação Inverno</strong>
+              <small>Coadjuvante · arco: a definir</small>
+            </div>
+          </div>
+          <div class="arclink c--violet">
+            <span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span>
+            <div class="arclink__book">
+              <strong>A Órbita Silenciosa</strong>
+              <small>Figurante · apenas mencionada</small>
+            </div>
+          </div>
+        </div>
+        <div class="libcard__foot">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+          3 livros
+          <span class="spacer"></span>
+          <span class="badge badge--ok">ficha completa</span>
+        </div>
+      </article>
+
+      <article class="libcard" onclick="location.href='personagem.html'">
+        <div class="libcard__top">
+          <div class="portrait portrait--grey">
+            <img src="img/personagens/nadia-ferrer.jpg" alt="Retrato de Nadia Ferrer" />
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="libcard__name">Nadia Ferrer</div>
+            <div class="libcard__alias">Médica de bordo</div>
+          </div>
+          <span class="badge">1</span>
+        </div>
+        <div class="libcard__body">
+          <div class="libcard__label">Arcos por livro</div>
+          <div class="arclink c--violet">
+            <span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span>
+            <div class="arclink__book">
+              <strong>A Órbita Silenciosa</strong>
+              <small style="color:var(--warn)">Coadjuvante · arco: a definir · caps. 10, 12</small>
+            </div>
+          </div>
+        </div>
+        <div class="libcard__foot">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+          1 livro
+          <span class="spacer"></span>
+          <span class="badge badge--warn">ficha incompleta</span>
+        </div>
+      </article>
+
+      <article class="libcard c--accent" onclick="location.href='personagem.html'">
+        <div class="libcard__top">
+          <div class="portrait portrait--violet">
+            <img src="img/personagens/dariel-okonkwo.jpg" alt="Retrato de Dariel Okonkwo" />
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="libcard__name">Dariel Okonkwo</div>
+            <div class="libcard__alias">Navegador de deriva</div>
+          </div>
+          <span class="badge badge--warn">2</span>
+        </div>
+        <div class="libcard__body">
+          <div class="libcard__label">Arcos por livro</div>
+          <div class="arclink c--violet">
+            <span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span>
+            <div class="arclink__book">
+              <strong>A Órbita Silenciosa</strong>
+              <small>Coadjuvante · arco: resgate · caps. 5–16</small>
+            </div>
+          </div>
+          <div class="arclink c--blue">
+            <span class="dot" style="background:var(--accent-chapter);box-shadow:0 0 8px var(--accent-chapter)"></span>
+            <div class="arclink__book">
+              <strong>Estação Inverno</strong>
+              <small>Protagonista · arco: travessia · caps. 1–9</small>
+            </div>
+          </div>
+        </div>
+        <div class="libcard__foot">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+          2 livros
+          <span class="spacer"></span>
+          <span class="badge badge--ok">ficha completa</span>
+        </div>
+      </article>
+
+      <article class="libcard" style="border-style:dashed;background:transparent;align-items:center;justify-content:center;min-height:230px" onclick="location.href='personagem.html'">
+        <div class="empty" style="padding:22px">
+          <svg class="icon" viewBox="0 0 24 24" style="width:28px;height:28px"><path d="M12 5v14M5 12h14"/></svg>
+          <strong>Novo personagem</strong>
+          <p>Crie a ficha global, envie um retrato e depois vincule a quantos livros quiser, com um arco distinto em cada um.</p>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

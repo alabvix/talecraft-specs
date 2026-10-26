@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Capítulos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app app--book" style="--book-color:var(--accent-book)">
+
+  <div class="bookband">
+    <div class="bookband__mark">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+    </div>
+    <div class="bookband__text">
+      <div class="bookband__title">A Órbita Silenciosa</div>
+      <div class="bookband__sub">Livro aberto · Kepler · 62%</div>
+    </div>
+    <a class="bookswitch bookband__switch" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h7M4 12h7M4 18h7"/><path d="m17 8 4 4-4 4"/></svg>
+      Trocar livro
+    </a>
+  </div>
+
+  <header class="topbar">
+    <div class="crumb">
+      <a href="index.html" style="color:var(--text-muted)">Início</a>
+      <span class="crumb__sep">/</span>
+      <a href="livro.html" style="color:var(--text-muted)">A Órbita Silenciosa</a>
+      <span class="crumb__sep">/</span>
+      <span>Capítulos</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <label class="field">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Buscar capítulos ou cenas…" />
+      <kbd>Ctrl K</kbd>
+    </label>
+    <button class="btn btn--icon btn--ghost" title="Exportar" onclick="location.href='exportar.html'">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+    </button>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">A Órbita Silenciosa</div>
+    <a class="navitem" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">Painel do Livro<small>Visão geral</small></span>
+    </a>
+    <a class="navitem navitem--characters" href="personagens.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Elenco<small>Arcos neste livro</small></span>
+      <span class="navitem__count">12</span>
+    </a>
+    <a class="navitem navitem--world" href="worldbuilding.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Entradas de Kepler</small></span>
+      <span class="navitem__count">48</span>
+    </a>
+    <a class="navitem navitem--chapters is-active" href="capitulos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+      <span class="navitem__text">Capítulos<small>Estrutura e cenas</small></span>
+      <span class="navitem__count">24</span>
+    </a>
+    <a class="navitem navitem--book" href="dados-do-livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+      <span class="navitem__text">Dados do Livro<small>Premissa e temas</small></span>
+    </a>
+    <div class="sidebar__label">Análise</div>
+    <a class="navitem" href="graficos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+      <span class="navitem__text">Gráficos<small>Curvas narrativas</small></span>
+    </a>
+    <a class="navitem" href="exportar.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+      <span class="navitem__text">Exportar<small>HTML · MD · PDC</small></span>
+    </a>
+    <a class="navitem" href="personagens-biblioteca.html" style="margin-top:6px">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Início<small>Sair do livro</small></span>
+    </a>
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div class="page-head__title">
+        <div class="page-head__emblem" style="color:var(--accent-chapter);border-color:rgba(74,157,232,.35)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+        </div>
+        <div class="page-head__meta">
+          <h1>Capítulos</h1>
+          <p>24 capítulos · 71 cenas · três atos · quadro de status</p>
+        </div>
+      </div>
+      <div class="page-head__actions">
+        <button class="btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          Modo lista
+        </button>
+        <button class="btn btn--primary" style="background:var(--accent-chapter);box-shadow:0 0 0 1px rgba(74,157,232,.5),0 8px 20px -10px var(--accent-chapter)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Novo capítulo
+        </button>
+      </div>
+    </div>
+
+    <div class="stack">
+
+      <!-- Resumo do quadro -->
+      <div class="row row--wrap">
+        <span class="badge">8 em esboço</span>
+        <span class="badge badge--warn">5 em rascunho</span>
+        <span class="badge badge--info">2 em revisão</span>
+        <span class="badge badge--ok">9 finalizados</span>
+        <span class="spacer"></span>
+        <span class="badge">Progresso total: 62%</span>
+        <div class="progress" style="width:180px"><div class="progress__fill" style="--pct:62%"></div></div>
+      </div>
+
+      <!-- Kanban -->
+      <div class="kanban">
+
+        <section class="column column--outline">
+          <div class="column__head">
+            <span class="tick"></span> Esboço <span class="column__count">8</span>
+          </div>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 17</div>
+            <div class="chip__title">A lista de nomes</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Sena
+              <span class="spacer"></span> 3 cenas
+            </div>
+          </article>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 20</div>
+            <div class="chip__title">Cinturão cinza</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Iara
+              <span class="spacer"></span> 4 cenas
+            </div>
+          </article>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 21</div>
+            <div class="chip__title">Protocolo morto</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Andarilho-9
+              <span class="spacer"></span> 2 cenas
+            </div>
+          </article>
+
+          <article class="chip chip--add">+ Adicionar capítulo</article>
+        </section>
+
+        <section class="column column--draft">
+          <div class="column__head">
+            <span class="tick"></span> Rascunho <span class="column__count">5</span>
+          </div>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 14</div>
+            <div class="chip__title">O sinal repetido</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Iara
+              <span class="spacer"></span> 3 cenas
+            </div>
+          </article>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 15</div>
+            <div class="chip__title">Sala das cápsulas</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Tomas
+              <span class="spacer"></span> 5 cenas
+            </div>
+          </article>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 16</div>
+            <div class="chip__title">41 minutos</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Iara
+              <span class="spacer"></span> 4 cenas
+            </div>
+          </article>
+
+          <article class="chip chip--add">+ Adicionar capítulo</article>
+        </section>
+
+        <section class="column column--revise">
+          <div class="column__head">
+            <span class="tick"></span> Revisão <span class="column__count">2</span>
+          </div>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 18</div>
+            <div class="chip__title">O eco do reator</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Iara
+              <span class="spacer"></span> 4 cenas
+            </div>
+          </article>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 19</div>
+            <div class="chip__title">A decisão de Kael</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg> Morte de personagem
+              <span class="spacer"></span> 6 cenas
+            </div>
+          </article>
+        </section>
+
+        <section class="column column--done">
+          <div class="column__head">
+            <span class="tick"></span> Finalizado <span class="column__count">9</span>
+          </div>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 12</div>
+            <div class="chip__title">Deriva</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Iara
+              <span class="spacer"></span> <span class="badge badge--ok">v3</span>
+            </div>
+          </article>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 13</div>
+            <div class="chip__title">O que o casco diz</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Andarilho-9
+              <span class="spacer"></span> <span class="badge badge--ok">v2</span>
+            </div>
+          </article>
+
+          <article class="chip">
+            <div class="chip__no">CAP. 1</div>
+            <div class="chip__title">O sinal</div>
+            <div class="chip__foot">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg> POV Iara
+              <span class="spacer"></span> <span class="badge badge--ok">v5</span>
+            </div>
+          </article>
+        </section>
+
+      </div>
+
+      <!-- Detalhe do capítulo -->
+      <section class="panel panel--accent-chap">
+        <div class="panel__head">
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-chapter)"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+          <span class="panel__title">Capítulo 18 — O eco do reator</span>
+          <span class="badge badge--info">em revisão</span>
+          <div class="panel__tools">
+            <button class="btn btn--sm btn--ghost">Duplicar</button>
+            <button class="btn btn--sm">Editar</button>
+          </div>
+        </div>
+        <div class="tabs">
+          <div class="tab is-active">Resumo</div>
+          <div class="tab">Cenas (4)</div>
+          <div class="tab">POV e elenco</div>
+          <div class="tab">Notas</div>
+        </div>
+        <div class="panel__body">
+          <div class="formgrid formgrid--3">
+            <div class="formfield">
+              <label>Número</label>
+              <input class="input" value="18" />
+            </div>
+            <div class="formfield">
+              <label>Ato</label>
+              <select class="select"><option>Ato II — Deriva</option><option>Ato I</option><option>Ato III</option></select>
+            </div>
+            <div class="formfield">
+              <label>POV</label>
+              <select class="select"><option>Iara Vasquez</option><option>Andarilho-9</option><option>Kael Moreau</option></select>
+            </div>
+            <div class="formfield">
+              <label>Status</label>
+              <select class="select"><option>Em revisão</option><option>Esboço</option><option>Finalizado</option></select>
+            </div>
+            <div class="formfield">
+              <label>Meta de palavras</label>
+              <input class="input" value="4.500" />
+            </div>
+            <div class="formfield">
+              <label>Tensão (1–10)</label>
+              <input class="input" value="8" />
+            </div>
+            <div class="formfield span-all">
+              <label>Resumo</label>
+              <textarea class="textarea">Iara desce ao Poço de Manutenção 7 atrás do registro de queima. Encontra o Andarilho-9 já lá, ouvindo o eco do reator — e o eco responde com a voz de sua antiga tripulação.</textarea>
+            </div>
+          </div>
+
+          <div class="row row--wrap" style="margin-top:14px;gap:6px">
+            <span class="badge">Personagens: Iara, Andarilho-9</span>
+            <span class="badge">Local: Poço de Manutenção 7</span>
+            <span class="badge">Elemento: sistema de energia</span>
+            <span class="badge badge--warn">revisar ritmo do 2º terço</span>
+          </div>
+        </div>
+        <div class="panel__foot">
+          <span class="dot"></span> Última edição há 5 horas · 4 cenas · 3.180 palavras
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+</body>
+</html>

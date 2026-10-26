@@ -1,0 +1,29 @@
+name: Validate Specs
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: OpenSpec validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install OpenSpec
+        run: npm install --global @fission-ai/openspec@1.5.0
+
+      - name: Validate all specs
+        run: openspec validate --all

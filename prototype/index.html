@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Meus Livros</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <a class="brandlink" href="index.html" title="Ir para o Início">
+    <div class="brand">
+      <div class="brand__mark">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      </div>
+      <div>
+          <div class="brand__name">Tale<span>Craft</span></div>
+        <span class="brand__book">Início</span>
+      </div>
+    </div>
+  </a>
+
+  <header class="topbar">
+    <div class="crumb">
+      <strong>Início</strong>
+      <span class="crumb__sep">/</span>
+      <span>Meus Livros</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <label class="field">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Buscar livros…" />
+      <kbd>Ctrl K</kbd>
+    </label>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">Início</div>
+    <a class="navitem is-active" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Meus Livros<small>4 projetos</small></span>
+      <span class="navitem__count">4</span>
+    </a>
+    <a class="navitem" href="personagens-biblioteca.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Personagens<small>Fichas globais</small></span>
+      <span class="navitem__count">31</span>
+    </a>
+    <a class="navitem navitem--world" href="mundos.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Mundos</small></span>
+      <span class="navitem__count">3</span>
+    </a>
+
+    <div class="sidebar__label">Preferências</div>
+    <a class="navitem" href="temas.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9Z"/></svg>
+      <span class="navitem__text">Temas<small>3 temas · Blade Byte, Old Tower, Tundra</small></span>
+    </a>
+
+    <div class="sidebar__label">Livro aberto</div>
+    <a class="navitem navitem--book" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">A Órbita Silenciosa<small>Painel do livro</small></span>
+    </a>
+
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main main--wide">
+
+    <div class="roothead">
+      <div style="flex:1">
+        <h1>Meus Livros</h1>
+        <p>4 projetos de escrita · 31 fichas de personagem compartilháveis entre eles</p>
+      </div>
+      <button class="btn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Importar .pdc
+      </button>
+      <button class="btn btn--primary">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Novo livro
+      </button>
+    </div>
+
+    <div class="grid grid--4" style="margin-bottom:20px">
+      <div class="metric metric--book">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+        </div>
+        <div><div class="metric__value">4</div><div class="metric__label">Livros na biblioteca</div></div>
+      </div>
+      <div class="metric metric--char">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        </div>
+        <div><div class="metric__value">31</div><div class="metric__label">Personagens · 9 em 2+ livros</div></div>
+      </div>
+      <div class="metric metric--chap">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+        </div>
+        <div><div class="metric__value">83</div><div class="metric__label">Capítulos planejados</div></div>
+      </div>
+      <div class="metric metric--world">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+        </div>
+        <div><div class="metric__value">126</div><div class="metric__label">Entradas de worldbuilding</div></div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom:14px">
+      <h2 style="font-size:15px">Todos os projetos</h2>
+      <span class="spacer"></span>
+      <span class="badge">4 resultados</span>
+      <button class="btn btn--sm btn--ghost">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Grade
+      </button>
+    </div>
+
+    <div class="booklist">
+
+      <article class="booktile c--violet" onclick="location.href='livro.html'">
+        <div class="booktile__cover">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+        </div>
+        <div class="booktile__main">
+          <div class="booktile__title">A Órbita Silenciosa</div>
+          <div class="booktile__sub">Livro 1 — Kepler · Ficção Científica · última edição há 5 h</div>
+          <div class="booktile__tags">
+            <span class="badge badge--accent">em andamento</span>
+            <span class="badge">12 personagens</span>
+            <span class="badge">10 personagens globais</span>
+          </div>
+        </div>
+        <div class="booktile__stats">
+          <div class="bookstat"><div class="bookstat__n">24</div><div class="bookstat__l">Capítulos</div></div>
+          <div class="bookstat"><div class="bookstat__n">48</div><div class="bookstat__l">Mundo</div></div>
+          <div class="bookstat"><div class="bookstat__n">62%</div><div class="bookstat__l">Planejado</div></div>
+        </div>
+        <div class="booktile__side">
+          <div style="width:90px">
+            <div class="progress"><div class="progress__fill" style="--pct:62%"></div></div>
+          </div>
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--text-dim)"><path d="m9 6 6 6-6 6"/></svg>
+        </div>
+      </article>
+
+      <article class="booktile c--red" onclick="location.href='livro.html'">
+        <div class="booktile__cover">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+        </div>
+        <div class="booktile__main">
+          <div class="booktile__title">O Jardim de Ossos</div>
+          <div class="booktile__sub">Livro 2 — Kepler · Terror · última edição há 3 dias</div>
+          <div class="booktile__tags">
+            <span class="badge badge--accent">em andamento</span>
+            <span class="badge">8 personagens</span>
+            <span class="badge badge--warn">3 reutilizados de outro livro</span>
+          </div>
+        </div>
+        <div class="booktile__stats">
+          <div class="bookstat"><div class="bookstat__n">18</div><div class="bookstat__l">Capítulos</div></div>
+          <div class="bookstat"><div class="bookstat__n">34</div><div class="bookstat__l">Mundo</div></div>
+          <div class="bookstat"><div class="bookstat__n">41%</div><div class="bookstat__l">Planejado</div></div>
+        </div>
+        <div class="booktile__side">
+          <div style="width:90px">
+            <div class="progress"><div class="progress__fill" style="--pct:41%;background:linear-gradient(90deg,var(--danger),#f08b90)"></div></div>
+          </div>
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--text-dim)"><path d="m9 6 6 6-6 6"/></svg>
+        </div>
+      </article>
+
+      <article class="booktile c--green" onclick="location.href='livro.html'">
+        <div class="booktile__cover">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+        </div>
+        <div class="booktile__main">
+          <div class="booktile__title">A Coroa de Sal</div>
+          <div class="booktile__sub">Fantasia épica · última edição há 2 semanas</div>
+          <div class="booktile__tags">
+            <span class="badge badge--warn">pausado</span>
+            <span class="badge">14 personagens</span>
+            <span class="badge">6 personagens globais</span>
+          </div>
+        </div>
+        <div class="booktile__stats">
+          <div class="bookstat"><div class="bookstat__n">32</div><div class="bookstat__l">Capítulos</div></div>
+          <div class="bookstat"><div class="bookstat__n">41</div><div class="bookstat__l">Mundo</div></div>
+          <div class="bookstat"><div class="bookstat__n">88%</div><div class="bookstat__l">Planejado</div></div>
+        </div>
+        <div class="booktile__side">
+          <div style="width:90px">
+            <div class="progress"><div class="progress__fill" style="--pct:88%;background:linear-gradient(90deg,var(--accent-world),#7ddcb5)"></div></div>
+          </div>
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--text-dim)"><path d="m9 6 6 6-6 6"/></svg>
+        </div>
+      </article>
+
+      <article class="booktile c--blue" onclick="location.href='livro.html'">
+        <div class="booktile__cover">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+        </div>
+        <div class="booktile__main">
+          <div class="booktile__title">Estação Inverno</div>
+          <div class="booktile__sub">Conto · Terror psicológico · última edição há 1 mês</div>
+          <div class="booktile__tags">
+            <span class="badge badge--ok">planejamento completo</span>
+            <span class="badge">3 personagens</span>
+          </div>
+        </div>
+        <div class="booktile__stats">
+          <div class="bookstat"><div class="bookstat__n">9</div><div class="bookstat__l">Capítulos</div></div>
+          <div class="bookstat"><div class="bookstat__n">3</div><div class="bookstat__l">Mundo</div></div>
+          <div class="bookstat"><div class="bookstat__n">100%</div><div class="bookstat__l">Planejado</div></div>
+        </div>
+        <div class="booktile__side">
+          <div style="width:90px">
+            <div class="progress"><div class="progress__fill" style="--pct:100%;background:linear-gradient(90deg,var(--ok),#5ad0d8)"></div></div>
+          </div>
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--text-dim)"><path d="m9 6 6 6-6 6"/></svg>
+        </div>
+      </article>
+
+      <article class="booktile" style="border-style:dashed;background:transparent;justify-items:center">
+        <div class="booktile__cover" style="--book-color:var(--text-dim)">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+        <div class="booktile__main">
+          <div class="booktile__title" style="color:var(--text-muted)">Novo livro</div>
+          <div class="booktile__sub">Comece um planejamento do zero ou importe um projeto .pdc</div>
+        </div>
+      </article>
+
+    </div>
+
+    <section class="panel" style="margin-top:22px">
+      <div class="panel__head panel__head--accent">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        <span class="panel__title">Personagens que atravessam livros</span>
+        <span class="spacer"></span>
+        <a class="btn btn--sm btn--ghost" href="personagens-biblioteca.html">Ver biblioteca completa</a>
+      </div>
+      <div class="panel__body panel__body--tight">
+        <div class="datalist">
+          <a class="dataline dataline--interactive" href="personagem.html">
+            <div class="portrait portrait--xs portrait--square portrait--amber"><img src="img/personagens/iara-vasquez.jpg" alt="Retrato de personagem" /></div>
+            <div class="dataline__main">
+              <div class="dataline__title">Iara Vasquez</div>
+              <div class="dataline__sub">3 vínculos · protagonista em A Órbita Silenciosa e O Jardim de Ossos</div>
+            </div>
+            <div class="dataline__side">
+              <span class="badge c--violet">A Órbita Silenciosa</span>
+              <span class="badge c--red">O Jardim de Ossos</span>
+              <span class="badge c--green">A Coroa de Sal</span>
+            </div>
+          </a>
+          <a class="dataline dataline--interactive" href="personagem.html">
+            <div class="portrait portrait--xs portrait--square portrait--blue"><img src="img/personagens/andarilho-9.jpg" alt="Retrato de personagem" /></div>
+            <div class="dataline__main">
+              <div class="dataline__title">Andarilho-9</div>
+              <div class="dataline__sub">2 vínculos · protagonista em um livro, antagonista no outro</div>
+            </div>
+            <div class="dataline__side">
+              <span class="badge c--violet">A Órbita Silenciosa</span>
+              <span class="badge c--red">O Jardim de Ossos</span>
+            </div>
+          </a>
+          <a class="dataline dataline--interactive" href="personagem.html">
+            <div class="portrait portrait--xs portrait--square portrait--red"><img src="img/personagens/kael-moreau.jpg" alt="Retrato de personagem" /></div>
+            <div class="dataline__main">
+              <div class="dataline__title">Kael Moreau</div>
+              <div class="dataline__sub">2 vínculos · antagonista em um livro, coadjuvante no outro</div>
+            </div>
+            <div class="dataline__side">
+              <span class="badge c--violet">A Órbita Silenciosa</span>
+              <span class="badge c--green">A Coroa de Sal</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="panel__foot">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        <span>A ficha do personagem é única. O papel e o arco mudam conforme o livro.</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

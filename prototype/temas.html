@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Temas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <a class="brandlink" href="index.html" title="Ir para o Início">
+    <div class="brand">
+      <div class="brand__mark">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      </div>
+      <div>
+          <div class="brand__name">Tale<span>Craft</span></div>
+        <span class="brand__book">Preferências</span>
+      </div>
+    </div>
+  </a>
+
+  <header class="topbar">
+    <div class="crumb">
+      <strong>Preferências</strong>
+      <span class="crumb__sep">/</span>
+      <span>Temas</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <a class="themebtn" href="index.html" onclick="history.back(); return false;" title="Voltar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+      Voltar
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">Início</div>
+    <a class="navitem" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Meus Livros<small>4 projetos</small></span>
+      <span class="navitem__count">4</span>
+    </a>
+    <a class="navitem navitem--characters" href="personagens-biblioteca.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Personagens<small>Fichas globais</small></span>
+      <span class="navitem__count">31</span>
+    </a>
+    <a class="navitem navitem--world" href="mundos.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Mundos</small></span>
+      <span class="navitem__count">3</span>
+    </a>
+
+    <div class="sidebar__label">Preferências</div>
+    <a class="navitem is-active" href="temas.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9Z"/></svg>
+      <span class="navitem__text">Temas<small>3 temas · Blade Byte, Old Tower, Tundra</small></span>
+    </a>
+
+    <div class="sidebar__label">Livro aberto</div>
+    <a class="navitem navitem--book" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">A Órbita Silenciosa<small>Painel do livro</small></span>
+    </a>
+
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Preferência salva localmente</span>
+    </div>
+  </aside>
+
+  <main class="main main--wide">
+
+    <div class="roothead">
+      <div style="flex:1">
+        <h1>Temas</h1>
+        <p>Escolha a aparência do TaleCraft. O tema muda cores e tipografia — a disposição das telas permanece a mesma.</p>
+      </div>
+      <button class="btn btn--primary">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+        Salvar preferências
+      </button>
+    </div>
+
+    <section class="panel" style="margin-bottom:16px">
+      <div class="panel__head panel__head--accent">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9Z"/></svg>
+        <span class="panel__title">Tema do aplicativo</span>
+        <span class="spacer"></span>
+        <span class="badge badge--accent" id="temaAtual">atual: Blade Byte</span>
+      </div>
+      <div class="panel__body">
+        <div class="themegrid">
+
+          <!-- Blade Byte -->
+          <a class="themecard is-selected" href="?tema=blade-byte" data-tema-opcao="blade-byte" role="radio" aria-checked="true">
+            <span class="themecard__check">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <div class="themepreview" style="background:#0f1218;color:#e4e8ef">
+              <div class="themepreview__bar" style="background:#0a0c10;border-bottom:1px solid #232a35"></div>
+              <div class="themepreview__side" style="background:#0a0c10;border-right:1px solid #232a35"></div>
+              <div class="themepreview__main">
+                <div class="themepreview__row themepreview__row--accent" style="width:52%;background:#7c5cff"></div>
+                <div class="themepreview__row" style="width:80%"></div>
+                <div class="themepreview__row" style="width:64%"></div>
+                <div class="themepreview__chips">
+                  <i style="background:#f2a13b"></i><i style="background:#3fb98a"></i>
+                  <i style="background:#4a9de8"></i><i style="background:#b56ce0"></i>
+                </div>
+              </div>
+            </div>
+            <div class="themecard__body">
+              <div class="themecard__title">
+                Blade Byte
+                <span class="badge badge--accent">padrão</span>
+              </div>
+              <div class="themecard__desc">Escuro e técnico, com acentos neon por módulo. Vibe de painel de nave e interface sci-fi.</div>
+              <div class="themecard__meta">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 19V5M20 12V5M4 12h16"/></svg>
+                Rajdhani · Inter · JetBrains Mono
+              </div>
+            </div>
+          </a>
+
+          <!-- Old Tower -->
+          <a class="themecard" href="?tema=old-tower" data-tema-opcao="old-tower" role="radio" aria-checked="false">
+            <span class="themecard__check">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <div class="themepreview" style="background:#f4ead4;color:#4a3826">
+              <div class="themepreview__bar" style="background:#e3d5b8;border-bottom:1px solid #d8c8a8"></div>
+              <div class="themepreview__side" style="background:#e3d5b8;border-right:1px solid #d8c8a8"></div>
+              <div class="themepreview__main">
+                <div class="themepreview__row themepreview__row--accent" style="width:52%;background:#b3532c"></div>
+                <div class="themepreview__row" style="width:80%"></div>
+                <div class="themepreview__row" style="width:64%"></div>
+                <div class="themepreview__chips">
+                  <i style="background:#c97a2b"></i><i style="background:#7d8a4f"></i>
+                  <i style="background:#6a8caf"></i><i style="background:#9a6b8f"></i>
+                </div>
+              </div>
+            </div>
+            <div class="themecard__body">
+              <div class="themecard__title">
+                Old Tower
+                <span class="badge">medieval</span>
+              </div>
+              <div class="themecard__desc">Pergaminho claro com tinta sépia, telha e oliva. Pensado para fantasia — salas de torre e mapas antigos.</div>
+              <div class="themecard__meta">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 19V5M20 12V5M4 12h16"/></svg>
+                Cinzel · Alegreya · IBM Plex Mono
+              </div>
+            </div>
+          </a>
+
+          <!-- Tundra -->
+          <a class="themecard" href="?tema=tundra" data-tema-opcao="tundra" role="radio" aria-checked="false">
+            <span class="themecard__check">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <div class="themepreview" style="background:#eef3f7;color:#2b3a45">
+              <div class="themepreview__bar" style="background:#d8e2ea;border-bottom:1px solid #ccd7e0"></div>
+              <div class="themepreview__side" style="background:#d8e2ea;border-right:1px solid #ccd7e0"></div>
+              <div class="themepreview__main">
+                <div class="themepreview__row themepreview__row--accent" style="width:52%;background:#2f7d5c"></div>
+                <div class="themepreview__row" style="width:80%"></div>
+                <div class="themepreview__row" style="width:64%"></div>
+                <div class="themepreview__chips">
+                  <i style="background:#c07a3a"></i><i style="background:#3f8f76"></i>
+                  <i style="background:#4a86b8"></i><i style="background:#8f6b95"></i>
+                </div>
+              </div>
+            </div>
+            <div class="themecard__body">
+              <div class="themecard__title">
+                Tundra
+                <span class="badge badge--accent">claro</span>
+              </div>
+              <div class="themecard__desc">Claro e frio: fundo cinza-gelo, painéis de vinho suave e botões em verde profundo. Clima de tundra.</div>
+              <div class="themecard__meta">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 19V5M20 12V5M4 12h16"/></svg>
+                Rajdhani · Inter · JetBrains Mono
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+      <div class="panel__foot">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        <span>Os temas compartilham os mesmos componentes. Um tema nunca muda a posição dos painéis, apenas as cores, as sombras e a fonte.</span>
+      </div>
+    </section>
+
+    <div class="grid grid--dash">
+
+      <div class="stack">
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>
+            <span class="panel__title">Cores por módulo</span>
+            <span class="spacer"></span>
+            <span class="badge">mesmos 4 domínios em qualquer tema</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="table" style="border:0">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Módulo</th>
+                    <th>Blade Byte</th>
+                    <th>Old Tower</th>
+                    <th>Tundra</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="dot" style="background:var(--accent-char);box-shadow:0 0 8px var(--accent-char)"></span> Personagens</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#f2a13b</code> âmbar</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#c97a2b</code> laranja queimado</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#c07a3a</code> âmbar queimado</td>
+                  </tr>
+                  <tr>
+                    <td><span class="dot" style="background:var(--accent-world);box-shadow:0 0 8px var(--accent-world)"></span> Worldbuilding</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#3fb98a</code> verde</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#7d8a4f</code> oliva</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#3f8f76</code> verde-frio</td>
+                  </tr>
+                  <tr>
+                    <td><span class="dot" style="background:var(--accent-chapter);box-shadow:0 0 8px var(--accent-chapter)"></span> Capítulos</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#4a9de8</code> azul</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#6a8caf</code> azul-poeira</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#4a86b8</code> azul-glacial</td>
+                  </tr>
+                  <tr>
+                    <td><span class="dot" style="background:var(--accent-book);box-shadow:0 0 8px var(--accent-book)"></span> Dados do Livro</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#b56ce0</code> violeta</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#9a6b8f</code> ameixa</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#8f6b95</code> ameixa fria</td>
+                  </tr>
+                  <tr>
+                    <td><span class="dot" style="background:var(--accent);box-shadow:0 0 8px var(--accent)"></span> Marca TaleCraft</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#7c5cff</code> roxo</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#b3532c</code> telha</td>
+                    <td><code style="font-family:var(--font-mono);font-size:11px">#2f7d5c</code> verde profundo</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span>A cor de acento é escolhida por tema; a cor do livro aberto continua sobrepondo tudo dentro do projeto.</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/></svg>
+            <span class="panel__title">Amostra de componentes</span>
+            <span class="spacer"></span>
+            <span class="badge badge--accent">prévia ao vivo</span>
+          </div>
+          <div class="panel__body">
+            <div class="row row--wrap" style="gap:8px;margin-bottom:14px">
+              <button class="btn btn--primary">Botão primário</button>
+              <button class="btn">Botão neutro</button>
+              <button class="btn btn--ghost">Discreto</button>
+              <span class="badge badge--accent">selo</span>
+              <span class="badge badge--ok">ok</span>
+              <span class="badge badge--warn">atenção</span>
+              <span class="badge badge--danger">perigo</span>
+            </div>
+
+            <div class="formgrid" style="margin-bottom:14px">
+              <div class="formfield">
+                <label>Nome do capítulo</label>
+                <input class="input" value="O eco do reator" />
+              </div>
+              <div class="formfield">
+                <label>Status</label>
+                <select class="select"><option>Em revisão</option><option>Finalizado</option><option>Esboço</option></select>
+              </div>
+            </div>
+
+            <div class="grid grid--4" style="margin-bottom:14px">
+              <div class="metric metric--char">
+                <div class="metric__icon">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+                </div>
+                <div><div class="metric__value">12</div><div class="metric__label">Elenco</div></div>
+              </div>
+              <div class="metric metric--world">
+                <div class="metric__icon">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg>
+                </div>
+                <div><div class="metric__value">48</div><div class="metric__label">Mundo</div></div>
+              </div>
+              <div class="metric metric--chap">
+                <div class="metric__icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/></svg>
+                </div>
+                <div><div class="metric__value">24</div><div class="metric__label">Capítulos</div></div>
+              </div>
+              <div class="metric metric--book">
+                <div class="metric__icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/></svg>
+                </div>
+                <div><div class="metric__value">62%</div><div class="metric__label">Planejado</div></div>
+              </div>
+            </div>
+
+            <div class="stack" style="gap:6px">
+              <div class="row"><span style="font-size:11.5px;color:var(--text-dim)">Progresso do ato II</span><span class="spacer"></span><span class="badge badge--warn">50%</span></div>
+              <div class="progress"><div class="progress__fill" style="--pct:50%"></div></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="stack">
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+            <span class="panel__title">Como o tema se aplica</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <div class="dataline">
+                <span class="badge badge--accent">global</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Tema por usuário</div>
+                  <div class="dataline__sub">Vale para todas as telas e livros</div>
+                </div>
+              </div>
+              <div class="dataline">
+                <span class="badge">Independente</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Cor do livro</div>
+                  <div class="dataline__sub">Continua valendo dentro de cada projeto</div>
+                </div>
+              </div>
+              <div class="dataline">
+                <span class="badge">Sem JS</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Troca por atributo</div>
+                  <div class="dataline__sub">data-theme no elemento &lt;html&gt;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span>A mesma folha de estilo serve os dois temas. Nenhum componente foi duplicado.</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            <span class="panel__title">Outras preferências</span>
+          </div>
+          <div class="panel__body">
+            <div class="formfield" style="margin-bottom:14px">
+              <label>Contraste das bordas</label>
+              <div class="toggle-set">
+                <span class="toggle is-on">Padrão</span>
+                <span class="toggle">Reforçado</span>
+                <span class="toggle">Suave</span>
+              </div>
+            </div>
+            <div class="formfield" style="margin-bottom:14px">
+              <label>Densidade</label>
+              <div class="toggle-set">
+                <span class="toggle is-on">Confortável</span>
+                <span class="toggle">Compacta</span>
+              </div>
+            </div>
+            <div class="formfield">
+              <label>Textura de fundo</label>
+              <div class="toggle-set">
+                <span class="toggle is-on">Ligada</span>
+                <span class="toggle">Desligada</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Preferências visuais não afetam os dados do planejamento.</span>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

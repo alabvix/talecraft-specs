@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Iara Vasquez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <a class="brandlink" href="index.html" title="Ir para o Início">
+    <div class="brand">
+      <div class="brand__mark">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      </div>
+      <div>
+          <div class="brand__name">Tale<span>Craft</span></div>
+        <span class="brand__book">Início</span>
+      </div>
+    </div>
+  </a>
+
+  <header class="topbar">
+    <div class="crumb">
+      <a href="personagens-biblioteca.html" style="color:var(--text-muted)">Personagens</a>
+      <span class="crumb__sep">/</span>
+      <strong>Iara Vasquez</strong>
+      <span class="badge badge--accent" style="margin-left:6px">ficha global</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <button class="btn btn--sm">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Vincular a um livro
+    </button>
+    <button class="btn btn--sm btn--ghost">Duplicar</button>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">Início</div>
+    <a class="navitem" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Meus Livros<small>4 projetos</small></span>
+      <span class="navitem__count">4</span>
+    </a>
+    <a class="navitem navitem--characters is-active" href="personagens-biblioteca.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Personagens<small>Fichas globais</small></span>
+      <span class="navitem__count">31</span>
+    </a>
+
+    <div class="sidebar__label">Livro aberto</div>
+    <a class="navitem navitem--book" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">A Órbita Silenciosa<small>Painel do livro</small></span>
+    </a>
+
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main main--wide">
+
+    <!-- Identidade global -->
+    <div class="roothead">
+      <div class="portrait portrait--hero portrait--amber portrait--framed">
+        <img src="img/personagens/iara-vasquez.jpg" alt="Retrato de Iara Vasquez" />
+        <span class="portrait__tag portrait__tag--left" title="Retrato da ficha">FOTO</span>
+      </div>
+      <div style="flex:1">
+        <h1>Iara Vasquez</h1>
+        <p>"A piloto que ouve o vazio" · humana · 34 anos · ficha global compartilhada por 3 livros</p>
+        <div class="row row--wrap" style="margin-top:9px;gap:6px">
+          <span class="badge badge--accent">Protagonista em 2 livros</span>
+          <span class="badge">Coadjuvante em 1</span>
+          <span class="badge badge--ok">ficha completa</span>
+          <span class="badge">criada há 3 meses</span>
+        </div>
+      </div>
+      <button class="btn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M7 8h10"/><path d="M7 15h10"/></svg>
+        Ver nos gráficos
+      </button>
+      <button class="btn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 4v12"/><path d="m8 12 4 4 4-4"/><path d="M5 20h14"/></svg>
+        Exportar Ficha
+      </button>
+      <button class="btn btn--primary">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+        Salvar alterações
+      </button>
+    </div>
+
+    <!-- Vínculos -->
+    <section class="panel panel--accent-char" style="margin-bottom:16px">
+      <div class="panel__head">
+        <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-char)"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
+        <span class="panel__title">Vínculos com livros</span>
+        <span class="spacer"></span>
+        <span class="badge">3 vínculos · cada um com arco próprio</span>
+        <span class="panel__collapse" title="Retrair Vínculos com livros" role="button" tabindex="0" aria-expanded="true" aria-controls="corpo-vinculos">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg>
+        </span>
+      </div>
+      <div class="panel__body panel__body--tight" id="corpo-vinculos">
+        <div class="datalist">
+          <div class="dataline dataline--interactive" style="border-left:3px solid var(--accent-book)">
+            <div class="avatar avatar--violet">OS</div>
+            <div class="dataline__main">
+              <div class="dataline__title">A Órbita Silenciosa</div>
+              <div class="dataline__sub">Protagonista · arco: ruptura · 19 capítulos · 41 cenas · ativo</div>
+            </div>
+            <div class="dataline__side">
+              <span class="badge badge--ok">arco definido</span>
+              <a class="btn btn--sm" href="personagens.html">Abrir no livro</a>
+            </div>
+          </div>
+          <div class="dataline dataline--interactive" style="border-left:3px solid var(--danger)">
+            <div class="avatar avatar--red">JO</div>
+            <div class="dataline__main">
+              <div class="dataline__title">O Jardim de Ossos</div>
+              <div class="dataline__sub">Protagonista · arco: queda inevitável · 14 capítulos · em revisão</div>
+            </div>
+            <div class="dataline__side">
+              <span class="badge badge--ok">arco definido</span>
+              <a class="btn btn--sm" href="livro.html">Abrir no livro</a>
+            </div>
+          </div>
+          <div class="dataline dataline--interactive" style="border-left:3px solid var(--accent-world)">
+            <div class="avatar avatar--green">CS</div>
+            <div class="dataline__main">
+              <div class="dataline__title">A Coroa de Sal</div>
+              <div class="dataline__sub">Coadjuvante · apenas citada · caps. 4–6 · sem arco próprio</div>
+            </div>
+            <div class="dataline__side">
+              <span class="badge badge--warn">arco não definido</span>
+              <a class="btn btn--sm" href="livro.html">Abrir no livro</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel__foot">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        Edições abaixo no bloco "Identidade global" valem para os três livros. O arco de cada livro é editado dentro do livro.
+      </div>
+    </section>
+
+    <!-- Abas -->
+    <div class="tabs" style="margin-bottom:16px">
+      <div class="tab is-active">Identidade global</div>
+      <div class="tab">Aparência</div>
+      <div class="tab">História e origem</div>
+      <div class="tab">Relações entre personagens</div>
+      <div class="tab">Aparições</div>
+    </div>
+
+    <div class="grid grid--dash">
+      <div class="stack">
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+            <span class="panel__title">Dados compartilhados</span>
+            <span class="spacer"></span>
+            <span class="badge badge--accent">usado por 3 livros</span>
+          </div>
+          <div class="panel__body">
+            <!-- Retrato do personagem: upload + galeria de imagens já enviadas -->
+            <div class="portraitpicker" style="margin-bottom:18px">
+              <div class="portraitpicker__preview">
+                <img src="img/personagens/iara-vasquez.jpg" alt="Retrato atual de Iara Vasquez" />
+                <span class="portrait__tag portrait__tag--left">atual</span>
+              </div>
+              <div class="portraitpicker__actions">
+                <div class="formfield" style="margin:0">
+                  <label>Retrato do personagem</label>
+                </div>
+                <label class="dropzone" for="retrato-upload">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+                  <strong>Enviar imagem</strong>
+                  <span>Arraste um arquivo aqui ou clique para escolher · JPG, PNG ou WEBP até 4 MB</span>
+                  <input id="retrato-upload" type="file" accept="image/*" hidden />
+                </label>
+                <div class="row" style="gap:8px">
+                  <button class="btn btn--sm">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                    Recortar
+                  </button>
+                  <button class="btn btn--sm btn--ghost">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>
+                    Remover
+                  </button>
+                </div>
+                <p class="portraitpicker__hint">
+                  Todas as imagens são exibidas no mesmo tamanho (proporção <strong>3:4</strong>, recorte centralizado no rosto).
+                  O arquivo original é preservado; o recorte é apenas de exibição.
+                </p>
+              </div>
+            </div>
+
+            <div class="libcard__label" style="margin-bottom:9px">Imagens deste personagem</div>
+            <div class="portraitgallery" style="margin-bottom:20px">
+              <figure>
+                <div class="portrait portrait--xl portrait--amber is-selected">
+                  <img src="img/personagens/iara-vasquez.jpg" alt="Retrato principal" />
+                </div>
+                <span class="portraitgallery__check">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                </span>
+                <span class="portraitgallery__label">Retrato</span>
+              </figure>
+              <figure>
+                <div class="portrait portrait--xl portrait--amber">
+                  <img src="img/personagens/iara-vasquez.jpg" alt="Estudo de traje" style="object-position:center 40%" />
+                </div>
+                <span class="portraitgallery__remove" title="Remover">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                </span>
+                <span class="portraitgallery__label">Traje de voo</span>
+              </figure>
+              <figure>
+                <div class="portrait portrait--xl portrait--amber">
+                  <img src="img/personagens/iara-vasquez.jpg" alt="Expressão alternativa" style="object-position:center 8%" />
+                </div>
+                <span class="portraitgallery__remove" title="Remover">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                </span>
+                <span class="portraitgallery__label">Ficha jovem</span>
+              </figure>
+              <figure>
+                <label class="dropzone" for="retrato-extra" style="aspect-ratio:3/4;padding:10px">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  <span>Adicionar</span>
+                  <input id="retrato-extra" type="file" accept="image/*" hidden />
+                </label>
+              </figure>
+            </div>
+
+            <div class="formgrid">
+              <div class="formfield">
+                <label>Nome completo</label>
+                <input class="input" value="Iara Vasquez" />
+              </div>
+              <div class="formfield">
+                <label>Alcunha</label>
+                <input class="input" value="A piloto que ouve o vazio" />
+              </div>
+              <div class="formfield">
+                <label>Espécie</label>
+                <input class="input" value="Humana" />
+              </div>
+              <div class="formfield">
+                <label>Idade</label>
+                <input class="input" value="34" />
+              </div>
+              <div class="formfield">
+                <label>Gênero</label>
+                <input class="input" value="Feminino" />
+              </div>
+              <div class="formfield">
+                <label>Origem</label>
+                <input class="input" value="Colônia Vega-3" />
+              </div>
+              <div class="formfield span-2">
+                <label>Biografia</label>
+                <textarea class="textarea">Nascida em uma colônia mineira, entrou na frota aos 19 anos como mecânica de casco. Tornou-se piloto de cápsula após o acidente da escuna Melian. Sobreviveu a uma deriva de seis meses em que precisou cortar o suporte de vida do módulo coletivo — o que ninguém no Consórcio sabe, e o que a persegue em qualquer história em que ela apareça.</textarea>
+              </div>
+              <div class="formfield span-2">
+                <label>Ferida permanente</label>
+                <textarea class="textarea" style="min-height:70px">Culpa por ter sobrevivido. Reaparece como tema em todos os livros, mas tratada de forma diferente em cada arco.</textarea>
+              </div>
+              <div class="formfield span-2">
+                <label>Traços (globais)</label>
+                <div class="toggle-set">
+                  <span class="toggle is-on">Pragmática</span>
+                  <span class="toggle is-on">Insone</span>
+                  <span class="toggle is-on">Leal</span>
+                  <span class="toggle">Impulsiva</span>
+                  <span class="toggle">Cética</span>
+                  <span class="toggle">+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Comparativo de arcos -->
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+            <span class="panel__title">Curva de arco em cada livro</span>
+            <span class="spacer"></span>
+            <div class="legend">
+              <span><i style="--lg:var(--accent-book)"></i> Órbita Silenciosa</span>
+              <span><i style="--lg:var(--danger)"></i> Jardim de Ossos</span>
+            </div>
+          </div>
+          <div class="panel__body">
+            <svg class="chart" viewBox="0 0 860 220" role="img" aria-label="Comparação da curva de arco da mesma personagem em dois livros">
+              <g class="gridlines">
+                <line x1="40" y1="30" x2="840" y2="30"/>
+                <line x1="40" y1="80" x2="840" y2="80"/>
+                <line x1="40" y1="130" x2="840" y2="130"/>
+                <line x1="40" y1="180" x2="840" y2="180"/>
+              </g>
+              <line x1="40" y1="20" x2="40" y2="180" stroke="#3a4553"/>
+              <line x1="40" y1="180" x2="840" y2="180" stroke="#3a4553"/>
+              <text class="axis-label" x="14" y="34">alto</text>
+              <text class="axis-label" x="10" y="184">baixo</text>
+              <text class="axis-label" x="40" y="196">cap. 1</text>
+              <text class="axis-label" x="420" y="196">meio</text>
+              <text class="axis-label" x="800" y="196">fim</text>
+
+              <!-- Órbita Silenciosa: ascendente -->
+              <polyline points="60,160 140,150 220,135 300,145 380,115 460,125 540,95 620,105 700,70 780,60 830,55"
+                        fill="none" stroke="#b56ce0" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+              <!-- Jardim de Ossos: descendente -->
+              <polyline points="60,70 140,80 220,75 300,95 380,105 460,100 540,125 620,140 700,155 780,168 830,172"
+                        fill="none" stroke="#e0575f" stroke-width="2.8" stroke-dasharray="7 4" stroke-linejoin="round" stroke-linecap="round"/>
+
+              <circle cx="830" cy="55" r="4" fill="#b56ce0"/>
+              <circle cx="830" cy="172" r="4" fill="#e0575f"/>
+            </svg>
+          </div>
+          <div class="panel__foot">
+            <span>Mesma personagem: em A Órbita Silenciosa ela sobe (ruptura); em O Jardim de Ossos ela desce (queda inevitável).</span>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="stack">
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
+            <span class="panel__title">Relações globais</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <div class="dataline">
+                <div class="portrait portrait--xs portrait--square portrait--red"><img src="img/personagens/kael-moreau.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Kael Moreau</div>
+                  <div class="dataline__sub">Rivalidade · 3 livros</div>
+                </div>
+              </div>
+              <div class="dataline">
+                <div class="portrait portrait--xs portrait--square portrait--blue"><img src="img/personagens/andarilho-9.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Andarilho-9</div>
+                  <div class="dataline__sub">Confiança relutante · 2 livros</div>
+                </div>
+              </div>
+              <div class="dataline">
+                <div class="portrait portrait--xs portrait--square portrait--green"><img src="img/personagens/sena-myr.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Sena Myr</div>
+                  <div class="dataline__sub">Mentoria · 1 livro</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <button class="btn btn--sm btn--ghost" style="width:100%;justify-content:center">Gerenciar relações</button>
+          </div>
+        </section>
+
+        <!-- Quadro Família — árvore familiar (RF005-TL002, RF005-CA008).
+             Ascendentes (mãe/pai, avós) ficam SEMPRE na primeira linha; o
+             personagem no meio; filhos e irmãos abaixo. -->
+        <section class="panel panel--accent-char">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v6M6 21v-3a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/><circle cx="12" cy="6" r="3"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>
+            <span class="panel__title">Família</span>
+            <span class="spacer"></span>
+            <span class="badge">3 familiares</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="familytree">
+              <svg class="familytree__svg" viewBox="0 0 560 400" role="img" aria-label="Árvore familiar da personagem">
+                <!-- Ligações primeiro, para ficarem atrás dos nós.
+                     As linhas partem do nó no seu centro (y+46). -->
+                <path class="familytree__filho" d="M 170 138 L 170 165 L 280 165 L 280 192" fill="none" />
+                <path class="familytree__filho" d="M 280 284 L 280 310" fill="none" />
+                <!-- Avó acima da mãe (primeira linha) -->
+                <path class="familytree__filho" d="M 122 46 L 122 138" fill="none" />
+
+                <!-- Linha 1: avó e cônjuge dela, com linha de união -->
+                <line class="familytree__uniao" x1="170" y1="46" x2="240" y2="46" />
+                <g class="familytree__no familytree__no--clicavel" transform="translate(64,0)">
+                  <rect class="familytree__caixa" width="108" height="92" rx="6" />
+                  <g transform="translate(36,8)">
+                    <rect class="familytree__avatar" width="36" height="45" rx="4" />
+                    <text class="familytree__iniciais" x="18" y="28" text-anchor="middle">MC</text>
+                  </g>
+                  <text class="familytree__nome" x="54" y="82" text-anchor="middle">Marta Calan</text>
+                </g>
+                <g class="familytree__no familytree__no--clicavel" transform="translate(240,0)">
+                  <rect class="familytree__caixa" width="108" height="92" rx="6" />
+                  <g transform="translate(36,8)">
+                    <rect class="familytree__avatar" width="36" height="45" rx="4" />
+                    <text class="familytree__iniciais" x="18" y="28" text-anchor="middle">HC</text>
+                  </g>
+                  <text class="familytree__nome" x="54" y="82" text-anchor="middle">Hugo Calan</text>
+                </g>
+
+                <!-- Linha 2: a mãe/pai — sempre na primeira linha depois dos avós -->
+                <g class="familytree__no familytree__no--clicavel" transform="translate(116,138)">
+                  <rect class="familytree__caixa" width="108" height="92" rx="6" />
+                  <g transform="translate(36,8)">
+                    <rect class="familytree__avatar" width="36" height="45" rx="4" />
+                    <text class="familytree__iniciais" x="18" y="28" text-anchor="middle">EC</text>
+                  </g>
+                  <text class="familytree__nome" x="54" y="82" text-anchor="middle">Esther Calan</text>
+                </g>
+
+                <!-- Linha 3: a própria personagem (borda de acento) -->
+                <g class="familytree__no familytree__no--eu familytree__no--clicavel" transform="translate(226,192)">
+                  <rect class="familytree__caixa" width="108" height="92" rx="6" />
+                  <g transform="translate(36,8)">
+                    <rect class="familytree__avatar" width="36" height="45" rx="4" />
+                    <text class="familytree__iniciais" x="18" y="28" text-anchor="middle">OC</text>
+                  </g>
+                  <text class="familytree__nome" x="54" y="82" text-anchor="middle">Ofélia Calan</text>
+                </g>
+
+                <!-- Linha 4: a filha, abaixo da personagem -->
+                <g class="familytree__no familytree__no--clicavel" transform="translate(226,284)">
+                  <rect class="familytree__caixa" width="108" height="92" rx="6" />
+                  <g transform="translate(36,8)">
+                    <rect class="familytree__avatar" width="36" height="45" rx="4" />
+                    <text class="familytree__iniciais" x="18" y="28" text-anchor="middle">AC</text>
+                  </g>
+                  <text class="familytree__nome" x="54" y="82" text-anchor="middle">Ariadne Calan</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+            <span>Clique em um nó para abrir a ficha. A árvore usa Filho/Filha, Mãe/Pai, Irmão/Irmã e Cônjuge (RF005-RN006).</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+            <span class="panel__title">Impacto de editar</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <div class="dataline">
+                <span class="badge badge--accent">Compartilhado</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Nome, biografia, traços</div>
+                  <div class="dataline__sub">Atualiza nos 3 livros ao salvar</div>
+                </div>
+              </div>
+              <div class="dataline">
+                <span class="badge">Por livro</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Papel, motivação, arco, relações locais</div>
+                  <div class="dataline__sub">Continua intacto em cada livro</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span class="dot" style="background:var(--warn);box-shadow:0 0 8px var(--warn)"></span>
+            <span>1 livro tem o arco desta personagem incompleto</span>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+context: |
+  Projeto: TaleCraft
+  Repositórios:
+    - talecraft-app: código executável Tauri 2 + Rust + React/Vite.
+    - talecraft-specs: este repositório, com requisitos, specs, protótipo e
+      conceitos. Não é compilado pelo build do aplicativo.
+  Tipo: aplicativo DESKTOP offline para planejamento de livros de ficção
+  científica, fantasia e terror. NÃO é ferramenta de escrita: é base de dados
+  e planejamento (personagens, worldbuilding, capítulos, dados do livro,
+  gráficos, exportação).
+
+  Domínios do sistema: Personagens, Worldbuilding (artefatos, armas, sistemas
+  de magia, localidades, raças, eventos...), Capítulos, Dados do Livro
+  (título, temas, pontos de conflito, voz narrativa, gênero, etc.), Gráficos
+  (curvas de personagem e capítulo) e Exportação (HTML, PDC, MD).
+
+  Stack tecnológica (fonte da verdade: documents/talecraft.md):
+    - Desktop: Tauri 2
+    - Back-end: Rust
+    - Front-end: React com JavaScript e Vite
+    - Banco de dados: SQLite (previsto para requisitos posteriores)
+    - Ambiente de desenvolvimento inicial: Windows
+
+  Idioma: todo conteúdo, comentário, nome de arquivo e identificador visível
+  ao usuário em português (BR).
+
+  Protótipo: a pasta prototype/ contém um protótipo visual navegável em
+  HTML + CSS (sem build) e é apenas REFERÊNCIA VISUAL e de conteúdo. Ele NÃO
+  define a stack. O protótipo tem 3 temas (Blade Byte, Old Tower, Tundra),
+  painéis modulares "builder" e acento por módulo (Personagens âmbar,
+  Worldbuilding verde, Capítulos azul, Dados do Livro violeta, marca verde/
+  roxa conforme o tema).
+
+  Documento de requisitos: documents/talecraft.md.
+  Requisitos são nomeados RFxxx, com regras de negócio RFxxx-RNxxx e
+  critérios de aceite RFxxx-CAxxx. Um requisito é "implementado" quando
+  todos os seus critérios de aceite são atendidos e há uma way to validate
+  (comando, tela ou teste) descrita na spec.
+
+  Convenções de requisito:
+    - "Fora do escopo" do requisito deve ser respeitado (não implementar
+      itens listados lá).
+    - A "Definição de pronto" do requisito é o alvo da spec.
+    - Uma spec deve referenciar explicitamente os códigos RF/RNF que cobre.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+rules:
+  specs:
+    - Escreva as specs em português (BR).
+    - Cada cenário (WHEN/THEN) deve citar o código do requisito/critério correspondente (por exemplo RF001-CA004) quando possível.
+    - Use a estrutura de cenários Given/When/Then.
+  tasks:
+    - Cada tarefa deve ser acionável e verificável, com o comando de validação quando existir.
+    - Marque dependências de ferramentas externas (Node, Rust, Tauri CLI).
+  proposal:
+    - Escreva a proposta em português (BR).
+    - Cite explicitamente os códigos RF cobertos e o que está fora do escopo.

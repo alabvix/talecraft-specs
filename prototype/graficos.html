@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Gráficos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app app--book" style="--book-color:var(--accent-book)">
+
+  <div class="bookband">
+    <div class="bookband__mark">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+    </div>
+    <div class="bookband__text">
+      <div class="bookband__title">A Órbita Silenciosa</div>
+      <div class="bookband__sub">Livro aberto · Kepler · 62%</div>
+    </div>
+    <a class="bookswitch bookband__switch" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h7M4 12h7M4 18h7"/><path d="m17 8 4 4-4 4"/></svg>
+      Trocar livro
+    </a>
+  </div>
+
+  <header class="topbar">
+    <div class="crumb">
+      <a href="index.html" style="color:var(--text-muted)">Início</a>
+      <span class="crumb__sep">/</span>
+      <a href="livro.html" style="color:var(--text-muted)">A Órbita Silenciosa</a>
+      <span class="crumb__sep">/</span>
+      <span>Gráficos</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <label class="field">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Buscar personagem ou capítulo…" />
+      <kbd>Ctrl K</kbd>
+    </label>
+    <button class="btn btn--icon btn--ghost" title="Exportar" onclick="location.href='exportar.html'">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+    </button>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">A Órbita Silenciosa</div>
+    <a class="navitem" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">Painel do Livro<small>Visão geral</small></span>
+    </a>
+    <a class="navitem navitem--characters" href="personagens.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Elenco<small>Arcos neste livro</small></span>
+      <span class="navitem__count">12</span>
+    </a>
+    <a class="navitem navitem--world" href="worldbuilding.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Entradas de Kepler</small></span>
+      <span class="navitem__count">48</span>
+    </a>
+    <a class="navitem navitem--chapters" href="capitulos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+      <span class="navitem__text">Capítulos<small>Estrutura e cenas</small></span>
+      <span class="navitem__count">24</span>
+    </a>
+    <a class="navitem navitem--book" href="dados-do-livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+      <span class="navitem__text">Dados do Livro<small>Premissa e temas</small></span>
+    </a>
+    <div class="sidebar__label">Análise</div>
+    <a class="navitem is-active" href="graficos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+      <span class="navitem__text">Gráficos<small>Curvas narrativas</small></span>
+    </a>
+    <a class="navitem" href="exportar.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+      <span class="navitem__text">Exportar<small>HTML · MD · PDC</small></span>
+    </a>
+    <a class="navitem" href="personagens-biblioteca.html" style="margin-top:6px">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Início<small>Sair do livro</small></span>
+    </a>
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div class="page-head__title">
+        <div class="page-head__emblem" style="color:var(--accent)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+        </div>
+        <div class="page-head__meta">
+          <h1>Gráficos</h1>
+          <p>Curvas de personagem e arco dos capítulos · 24 capítulos no eixo</p>
+        </div>
+      </div>
+      <div class="page-head__actions">
+        <button class="btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          Comparar
+        </button>
+        <button class="btn btn--primary">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Exportar gráficos
+        </button>
+      </div>
+    </div>
+
+    <div class="stack">
+
+      <!-- Curva de arcos de personagem -->
+      <section class="panel">
+        <div class="panel__head">
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-char)"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+          <span class="panel__title">Curva de arco dos personagens</span>
+          <span class="spacer"></span>
+          <div class="legend">
+            <span><i style="--lg:var(--accent-char)"></i> Iara Vasquez</span>
+            <span><i style="--lg:var(--danger)"></i> Kael Moreau</span>
+            <span><i style="--lg:var(--accent-chapter)"></i> Andarilho-9</span>
+            <span><i class="dashed" style="--lg:var(--text-dim)"></i> Tensão da trama</span>
+          </div>
+        </div>
+        <div class="panel__body">
+          <svg class="chart" viewBox="0 0 900 300" role="img" aria-label="Curva de arco dos personagens ao longo dos capítulos">
+            <!-- grade -->
+            <g class="gridlines">
+              <line x1="50" y1="30"  x2="880" y2="30"  />
+              <line x1="50" y1="90"  x2="880" y2="90"  />
+              <line x1="50" y1="150" x2="880" y2="150" />
+              <line x1="50" y1="210" x2="880" y2="210" />
+              <line x1="50" y1="270" x2="880" y2="270" />
+            </g>
+            <!-- eixos -->
+            <line x1="50" y1="20" x2="50" y2="270" stroke="#3a4553" stroke-width="1"/>
+            <line x1="50" y1="270" x2="880" y2="270" stroke="#3a4553" stroke-width="1"/>
+
+            <text class="axis-label" x="18" y="34">+10</text>
+            <text class="axis-label" x="24" y="154">0</text>
+            <text class="axis-label" x="20" y="274">−10</text>
+
+            <text class="axis-label" x="50"  y="288">1</text>
+            <text class="axis-label" x="215" y="288">6</text>
+            <text class="axis-label" x="380" y="288">12</text>
+            <text class="axis-label" x="545" y="288">16</text>
+            <text class="axis-label" x="710" y="288">20</text>
+            <text class="axis-label" x="860" y="288">24</text>
+
+            <!-- marcador de virada (cap 12) -->
+            <line x1="380" y1="20" x2="380" y2="270" stroke="rgba(124,92,255,.45)" stroke-width="1" stroke-dasharray="4 4"/>
+            <text class="axis-label" x="386" y="34" fill="#a894ff">virada · cap. 12</text>
+
+            <!-- tensão da trama (linha tracejada) -->
+            <polyline points="68,250 100,235 140,220 180,200 215,170 250,185 290,150 330,130 380,105 420,120 460,90 500,95 545,70 590,85 630,60 670,75 710,45 760,55 810,35 860,65"
+                      fill="none" stroke="#667085" stroke-width="2" stroke-dasharray="6 4" />
+
+            <!-- Iara — arco de ruptura ascendente -->
+            <polyline points="68,245 100,225 140,205 180,215 215,180 250,195 290,160 330,140 380,130 420,150 460,110 500,120 545,85 590,100 630,75 670,90 710,60 760,75 810,50 860,55"
+                      fill="none" stroke="#f2a13b" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" />
+
+            <!-- Kael — queda -->
+            <polyline points="68,120 100,110 140,125 180,140 215,150 250,140 290,165 330,175 380,190 420,185 460,205 500,215 545,230 590,240 630,235 670,250 710,262 760,265 810,266 860,266"
+                      fill="none" stroke="#e0575f" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" />
+
+            <!-- Andarilho-9 — despertar -->
+            <polyline points="68,150 100,150 140,148 180,152 215,145 250,150 290,140 330,135 380,120 420,130 460,115 500,105 545,110 590,95 630,100 670,85 710,90 760,70 810,75 860,60"
+                      fill="none" stroke="#4a9de8" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" />
+
+            <!-- pontos finais -->
+            <circle cx="860" cy="55"  r="3.5" fill="#f2a13b" />
+            <circle cx="860" cy="266" r="3.5" fill="#e0575f" />
+            <circle cx="860" cy="60"  r="3.5" fill="#4a9de8" />
+          </svg>
+        </div>
+        <div class="panel__foot">
+          <span class="badge badge--ok">Iara +0.8 (ascendente)</span>
+          <span class="badge badge--danger">Kael −1.2 (queda)</span>
+          <span class="badge badge--info">Andarilho-9 +0.3 (despertar)</span>
+          <span class="spacer"></span>
+          <span>Passe o mouse sobre o eixo para inspecionar um capítulo</span>
+        </div>
+      </section>
+
+      <div class="grid grid--2">
+
+        <!-- Tensão por capítulo -->
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-chapter)"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+            <span class="panel__title">Tensão por capítulo</span>
+            <span class="spacer"></span>
+            <span class="badge">clímax no 23</span>
+          </div>
+          <div class="panel__body">
+            <div class="arcbars">
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:32%"></div><span class="arcbar__no">1</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:40%"></div><span class="arcbar__no">3</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:48%"></div><span class="arcbar__no">5</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:44%"></div><span class="arcbar__no">7</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:58%"></div><span class="arcbar__no">9</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:52%"></div><span class="arcbar__no">11</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:70%"></div><span class="arcbar__no">13</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:64%"></div><span class="arcbar__no">15</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:76%"></div><span class="arcbar__no">17</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:82%"></div><span class="arcbar__no">19</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:88%"></div><span class="arcbar__no">21</span></div>
+              <div class="arcbar arcbar--chap"><div class="arcbar__col" style="height:100%"></div><span class="arcbar__no">23</span></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <span class="legend"><span><i style="--lg:var(--accent-chapter)"></i> Índice de tensão (1–10)</span></span>
+              <span class="spacer"></span>
+              <span class="badge badge--warn">vale no cap. 11</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Distribuição de POV -->
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-char)"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+            <span class="panel__title">Distribuição de POV</span>
+            <span class="spacer"></span>
+            <span class="badge">24 capítulos</span>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:14px">
+              <div>
+                <div class="row" style="margin-bottom:6px">
+                  <span style="font-size:12.5px">Iara Vasquez</span><span class="spacer"></span>
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">13 caps · 54%</span>
+                </div>
+                <div class="progress"><div class="progress__fill" style="--pct:54%;background:linear-gradient(90deg,var(--accent-char),#f7c477)"></div></div>
+              </div>
+              <div>
+                <div class="row" style="margin-bottom:6px">
+                  <span style="font-size:12.5px">Andarilho-9</span><span class="spacer"></span>
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">7 caps · 29%</span>
+                </div>
+                <div class="progress"><div class="progress__fill" style="--pct:29%;background:linear-gradient(90deg,var(--accent-chapter),#7bb6f5)"></div></div>
+              </div>
+              <div>
+                <div class="row" style="margin-bottom:6px">
+                  <span style="font-size:12.5px">Kael Moreau</span><span class="spacer"></span>
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">3 caps · 12%</span>
+                </div>
+                <div class="progress"><div class="progress__fill" style="--pct:12%;background:linear-gradient(90deg,var(--danger),#f08b90)"></div></div>
+              </div>
+              <div>
+                <div class="row" style="margin-bottom:6px">
+                  <span style="font-size:12.5px">Secundários</span><span class="spacer"></span>
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">1 cap · 5%</span>
+                </div>
+                <div class="progress"><div class="progress__fill" style="--pct:5%;background:linear-gradient(90deg,var(--text-dim),#8b93a1)"></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Mapa de calor: personagem × capítulo -->
+      <section class="panel">
+        <div class="panel__head">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span class="panel__title">Aparições por capítulo</span>
+          <span class="spacer"></span>
+          <span class="badge badge--accent">mapa de calor</span>
+        </div>
+        <div class="panel__body panel__body--tight" style="overflow-x:auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Personagem</th>
+                <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th>
+                <th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th>
+                <th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Iara Vasquez</td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.15)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(242,161,59,.55)"></span></td>
+              </tr>
+              <tr>
+                <td>Andarilho-9</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.85)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.85)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.55)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(74,157,232,.55)"></span></td>
+              </tr>
+              <tr>
+                <td>Kael Moreau</td>
+                <td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.35)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.85)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.85)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.55)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.85)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(224,87,95,.55)"></span></td>
+                <td></td><td></td><td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <td>Sena Myr</td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.55)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.35)"></span></td>
+                <td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.35)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.55)"></span></td>
+                <td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.55)"></span></td>
+                <td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.55)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(63,185,138,.85)"></span></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <td>Tomas Leal</td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.35)"></span></td>
+                <td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.55)"></span></td>
+                <td></td><td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.35)"></span></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.55)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.35)"></span></td>
+                <td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.55)"></span></td>
+                <td></td><td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.35)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(181,108,224,.55)"></span></td>
+                <td></td><td></td><td></td>
+              </tr>
+              <tr>
+                <td>Nadia Ferrer</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(152,162,179,.35)"></span></td>
+                <td></td>
+                <td><span style="display:block;height:14px;border-radius:3px;background:rgba(152,162,179,.35)"></span></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel__foot">
+          <div class="legend">
+            <span><i style="--lg:rgba(152,162,179,.5)"></i> aparição menor</span>
+            <span><i style="--lg:rgba(152,162,179,.8)"></i> cena</span>
+            <span><i style="--lg:var(--text)"></i> POV do capítulo</span>
+          </div>
+          <span class="spacer"></span>
+          <span>Nadia Ferrer aparece só 2× — ficha incompleta</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+</body>
+</html>

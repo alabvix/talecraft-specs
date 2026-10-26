@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Ravória</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <a class="brandlink" href="index.html" title="Ir para o Início">
+    <div class="brand">
+      <div class="brand__mark">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      </div>
+      <div>
+        <div class="brand__name">Tale<span>Craft</span></div>
+        <span class="brand__book">Início</span>
+      </div>
+    </div>
+  </a>
+
+  <header class="topbar">
+    <div class="crumb">
+      <strong>Início</strong>
+      <span class="crumb__sep">/</span>
+      <a href="mundos.html" style="color:var(--text-muted)">Worldbuilding</a>
+      <span class="crumb__sep">/</span>
+      <span>Ravória</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <label class="field">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Buscar entradas…" />
+      <kbd>Ctrl K</kbd>
+    </label>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">Início</div>
+    <a class="navitem" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Meus Livros<small>4 projetos</small></span>
+      <span class="navitem__count">4</span>
+    </a>
+    <a class="navitem navitem--characters" href="personagens-biblioteca.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Personagens<small>Fichas globais</small></span>
+      <span class="navitem__count">31</span>
+    </a>
+    <a class="navitem navitem--world" href="mundos.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Mundos</small></span>
+      <span class="navitem__count">3</span>
+    </a>
+
+    <div class="sidebar__label">Preferências</div>
+    <a class="navitem" href="temas.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9Z"/></svg>
+      <span class="navitem__text">Temas<small>3 temas · Blade Byte, Old Tower, Tundra</small></span>
+    </a>
+
+    <div class="sidebar__label">Livro aberto</div>
+    <a class="navitem navitem--book" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">A Órbita Silenciosa<small>Painel do livro</small></span>
+    </a>
+
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div class="page-head__title">
+        <div class="page-head__emblem" style="color:var(--accent-world);border-color:rgba(63,185,138,.35)">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+        </div>
+        <div class="page-head__meta">
+          <div class="row" style="margin-bottom:5px">
+            <span class="badge badge--accent">Medieval</span>
+            <span class="badge">4,1 mil palavras de contexto</span>
+          </div>
+          <h1>Ravória</h1>
+          <p>Arquipélago de Vell · nível tecnológico medieval · 41 entradas em 8 categorias</p>
+        </div>
+      </div>
+      <div class="page-head__actions">
+        <button class="btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Exportar mundo
+        </button>
+        <button class="btn btn--primary" style="background:var(--accent-world);box-shadow:0 0 0 1px rgba(63,185,138,.5),0 8px 20px -10px var(--accent-world)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Nova entrada
+        </button>
+      </div>
+    </div>
+
+    <!-- Vínculos com livros -->
+    <section class="panel panel--accent-world" style="margin-bottom:16px">
+      <div class="panel__head">
+        <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-world)"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
+        <span class="panel__title">Livros que usam este mundo</span>
+        <span class="spacer"></span>
+        <span class="badge">1 vínculo · entradas compartilhadas</span>
+      </div>
+      <div class="panel__body panel__body--tight">
+        <div class="notice" style="margin-bottom:10px;--notice-color:var(--accent-world)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+          <div>
+            <strong>Cada livro tem 1 e somente 1 mundo.</strong>
+            Este mundo pode servir a vários livros, mas cada livro aponta para um único mundo por vez.
+          </div>
+        </div>
+        <div class="datalist">
+          <div class="dataline dataline--interactive" style="border-left:3px solid var(--accent-world)">
+            <div class="avatar avatar--green">CS</div>
+            <div class="dataline__main">
+              <div class="dataline__title">A Coroa de Sal</div>
+              <div class="dataline__sub">Mundo principal · 41 de 41 entradas usadas · 18 locais aparecem em cena</div>
+            </div>
+            <div class="dataline__side">
+              <span class="badge badge--ok">principal</span>
+              <a class="btn btn--sm" href="livro.html">Abrir no livro</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel__foot">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        Editar uma ilha aqui altera o que A Coroa de Sal enxerga.
+      </div>
+    </section>
+
+    <div class="grid grid--dash">
+      <div class="stack">
+
+        <!-- Atributos do mundo -->
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-world)"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg>
+            <span class="panel__title">Dados do mundo</span>
+            <span class="spacer"></span>
+            <span class="badge badge--accent">compartilhado pelo livro</span>
+          </div>
+          <div class="panel__body">
+            <div class="formgrid">
+              <div class="formfield">
+                <label>Nome do mundo</label>
+                <input class="input" value="Ravória" />
+              </div>
+              <div class="formfield">
+                <label>Nível tecnológico</label>
+                <select class="select">
+                  <option>Medieval</option>
+                  <option>Interestelar</option>
+                  <option>Industrial</option>
+                  <option>Pré-histórico</option>
+                  <option>Pós-colapso</option>
+                  <option>Mágico</option>
+                </select>
+              </div>
+              <div class="formfield">
+                <label>Tipo de Mundo</label>
+                <select class="select">
+                  <option>Medieval</option>
+                  <option>Moderno</option>
+                  <option>Futurista</option>
+                  <option>Antigo</option>
+                </select>
+              </div>
+              <div class="formfield span-all">
+                <label>Gênero do mundo <span class="formfield__hint">· escolha quantos quiser</span></label>
+                <div class="toggle-set toggle-set--tags">
+                  <span class="toggle is-on">Alta Fantasia</span>
+                  <span class="toggle">Fantasia Sombria</span>
+                  <span class="toggle">Cyberpunk</span>
+                  <span class="toggle">SteamPunk</span>
+                  <span class="toggle">Urbano</span>
+                  <span class="toggle">Sci-Fi</span>
+                  <span class="toggle">SolarPunk</span>
+                  <span class="toggle is-on">Romantasia</span>
+                  <span class="toggle">Terror</span>
+                  <span class="toggle">Gótico</span>
+                  <span class="toggle">Sobrenatural</span>
+                </div>
+              </div>
+              <div class="formfield span-all">
+                <label>Descrição</label>
+                <textarea class="textarea" rows="4">Um arquipélago de ilhas salgadas onde o mar é mais poderoso que qualquer rei. As coroas se erguem e caem com as marés, e o sal é a moeda, o remédio e a maldição. Cada ilha guarda uma dívida antiga com o continente submerso, e as rotas de navegação entre elas são o verdadeiro mapa do poder.</textarea>
+              </div>
+            </div>
+            <div class="row row--wrap" style="margin-top:14px;gap:6px">
+              <span class="badge">magia de maré</span>
+              <span class="badge">corte e comércio</span>
+              <span class="badge">1 continente submerso</span>
+              <span class="badge badge--warn">2 ilhas em disputa</span>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span class="dot"></span>
+            <span>Última alteração na descrição: há 3 dias, 18:20</span>
+          </div>
+        </section>
+
+        <!-- Categorias de entradas -->
+        <section class="panel">
+          <div class="panel__head panel__head--accent">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+            <span class="panel__title">Entradas por categoria</span>
+            <span class="spacer"></span>
+            <span class="badge">41 entradas</span>
+          </div>
+          <div class="panel__body">
+            <div class="blockgrid">
+              <a class="block block--world" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+                <div class="block__name">Localidades</div>
+                <div class="block__desc">Ilhas, portos, fortalezas e pontos de cena.</div>
+                <div class="block__foot"><span>18 entradas</span></div>
+              </a>
+              <a class="block block--world" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18"/></svg></div>
+                <div class="block__name">Raças e povos</div>
+                <div class="block__desc">Casas nobres, clãs de mareantes e povos do mar.</div>
+                <div class="block__foot"><span>9 entradas</span></div>
+              </a>
+              <a class="block block--world" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 19 19 5"/><path d="M14 5h5v5"/><path d="M5 14v5h5"/></svg></div>
+                <div class="block__name">Artefatos</div>
+                <div class="block__desc">Coroas, relíquias de sal e objetos de poder.</div>
+                <div class="block__foot"><span>6 entradas</span></div>
+              </a>
+              <a class="block block--world" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m14 4 6 6-9 9H5v-6z"/><path d="m12 6 6 6"/></svg></div>
+                <div class="block__name">Armas</div>
+                <div class="block__desc">Aço, arpões e as lâminas de maré.</div>
+                <div class="block__foot"><span>4 entradas</span></div>
+              </a>
+              <a class="block block--world" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg></div>
+                <div class="block__name">Eventos</div>
+                <div class="block__desc">Guerras de maré e a linha do tempo das coroas.</div>
+                <div class="block__foot"><span>5 entradas</span></div>
+              </a>
+              <a class="block block--world" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3.5"/></svg></div>
+                <div class="block__name">Sistema de energia</div>
+                <div class="block__desc">Correntes, marés e o sal como combustível.</div>
+                <div class="block__foot"><span>2 entradas</span></div>
+              </a>
+              <a class="block block--book" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m12 3 2.6 5.6 6.4.8-4.6 4.4 1.2 6.2-5.6-3-5.6 3 1.2-6.2L3 9.4l6.4-.8z"/></svg></div>
+                <div class="block__name">Sistema de Magia <span class="badge badge--accent">novo</span></div>
+                <div class="block__desc">Magia de maré: regras, custos e limites.</div>
+                <div class="block__foot"><span>8 entradas</span></div>
+              </a>
+              <a class="block block--chap" href="worldbuilding.html">
+                <div class="block__slot"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m9 4 6 2 6-2v14l-6 2-6-2-6 2V6z"/><path d="M9 4v14M15 6v14"/></svg></div>
+                <div class="block__name">Mapa Geral <span class="badge badge--accent">novo</span></div>
+                <div class="block__desc">Carta do arquipélago, com marcações de cena.</div>
+                <div class="block__foot"><span>1 mapa</span></div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tabela de regras -->
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            <span class="panel__title">Regras do mundo — resumo</span>
+            <span class="spacer"></span>
+            <span class="badge badge--ok">alta fantasia</span>
+          </div>
+          <div class="panel__body panel__body--tight" style="overflow:hidden">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Aspecto</th>
+                  <th>O que o mundo permite</th>
+                  <th>Custo / limite</th>
+                  <th>Categoria</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Magia de maré</td>
+                  <td>Mover água salgada, nunca criá-la</td>
+                  <td><span class="badge badge--warn">custa memória</span></td>
+                  <td><span class="badge">Magia</span></td>
+                </tr>
+                <tr>
+                  <td>Navegação</td>
+                  <td>Rotas entre ilhas só com piloto de clã</td>
+                  <td><span class="badge">3 dias por travessia</span></td>
+                  <td><span class="badge">Energia</span></td>
+                </tr>
+                <tr>
+                  <td>Sal</td>
+                  <td>Moeda, remédio e componente ritual</td>
+                  <td><span class="badge badge--danger">escasso em Ravória</span></td>
+                  <td><span class="badge">Eventos</span></td>
+                </tr>
+                <tr>
+                  <td>Escala do mapa</td>
+                  <td>9 ilhas · 1 continente submerso</td>
+                  <td><span class="badge">mapa geral</span></td>
+                  <td><span class="badge">Mapa</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel__foot">
+            <span class="dot"></span>
+            <span>Regras valem para todos os livros que usam este mundo.</span>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="stack">
+
+        <section class="panel panel--accent-world">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3.5"/></svg>
+            <span class="panel__title">Ficha rápida</span>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:11px">
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:104px">Tipo de Mundo</span><span style="font-size:12.5px">Medieval</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:104px">Nível tecnológico</span><span style="font-size:12.5px">Medieval</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:104px">Ilhas</span><span style="font-size:12.5px">9</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:104px">Entradas</span><span style="font-size:12.5px">41</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:104px">Livros</span><span style="font-size:12.5px">1</span></div>
+            </div>
+            <div class="row row--wrap" style="margin-top:14px;gap:6px">
+              <span class="badge badge--accent">Alta Fantasia</span>
+              <span class="badge badge--accent">Romantasia</span>
+              <span class="badge">Intriga de corte</span>
+              <span class="badge">Mar e sal</span>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span>Mundo usado por 1 livro — é canônico para ele.</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="m9 4 6 2 6-2v14l-6 2-6-2-6 2V6z"/><path d="M9 4v14M15 6v14"/></svg>
+            <span class="panel__title">Mapa Geral</span>
+            <span class="spacer"></span>
+            <span class="badge badge--accent">territórios</span>
+          </div>
+          <div class="panel__body">
+            <div class="mapframe">
+              <svg class="terrainmap" viewBox="0 0 340 210">
+                <rect x="0" y="0" width="340" height="210" style="fill:var(--bg-inset)"></rect>
+
+                <!-- ilha grande ao norte-oeste -->
+                <path d="M40 34 L86 24 L124 32 L150 26 L172 40 L160 64 L168 84 L142 96 L110 92 L78 98 L54 82 L34 60 Z"
+                      style="fill:var(--bg-raised);stroke:var(--line-strong);stroke-width:1.4"></path>
+                <!-- ilha central -->
+                <path d="M186 78 L216 68 L244 78 L250 100 L232 118 L200 116 L180 98 Z"
+                      style="fill:var(--bg-raised);stroke:var(--line-strong);stroke-width:1.4"></path>
+                <!-- ilha ao sul -->
+                <path d="M120 138 L154 128 L186 138 L196 164 L172 184 L136 182 L112 162 Z"
+                      style="fill:var(--bg-raised);stroke:var(--line-strong);stroke-width:1.4"></path>
+                <!-- ilha pequena a leste -->
+                <path d="M262 132 L288 126 L306 140 L296 160 L270 158 L256 146 Z"
+                      style="fill:var(--bg-raised);stroke:var(--line);stroke-width:1"></path>
+                <!-- ilhota a nordeste -->
+                <path d="M262 42 L284 38 L292 52 L276 62 L260 54 Z"
+                      style="fill:var(--bg-raised);stroke:var(--line);stroke-width:1"></path>
+
+                <!-- montanhas na ilha grande -->
+                <g style="fill:none;stroke:var(--text-muted);stroke-width:1;opacity:.6">
+                  <path d="M62 62 L72 48 L82 62"></path>
+                  <path d="M82 68 L92 52 L102 68"></path>
+                  <path d="M100 62 L110 48 L120 62"></path>
+                </g>
+                <!-- florestas na ilha sul -->
+                <g style="stroke:var(--accent-world);stroke-width:1;opacity:.55">
+                  <path d="M132 150 l4-7 l4 7 z" style="fill:var(--accent-world);stroke:none"></path>
+                  <path d="M148 144 l4-7 l4 7 z" style="fill:var(--accent-world);stroke:none"></path>
+                  <path d="M164 150 l4-7 l4 7 z" style="fill:var(--accent-world);stroke:none"></path>
+                </g>
+
+                <!-- correntes / rotas marítimas -->
+                <g style="fill:none;stroke:var(--accent-chapter);stroke-width:1.3;opacity:.7">
+                  <path d="M168 84 C176 88 180 92 186 94"></path>
+                  <path d="M200 116 C188 126 176 130 166 136"></path>
+                  <path d="M244 132 C252 136 256 140 262 142"></path>
+                </g>
+                <!-- corrente fria (setas) -->
+                <g style="fill:none;stroke:var(--text-dim);stroke-width:.9;opacity:.6">
+                  <path d="M300 186 C280 190 250 190 224 186"></path>
+                  <path d="M234 184 l-8 2 l8 2"></path>
+                </g>
+
+                <!-- fronteiras entre casas (tracejado) -->
+                <g style="fill:none;stroke:var(--accent-book);stroke-width:1.2;stroke-dasharray:5 4;opacity:.75">
+                  <path d="M96 30 L104 60 L96 92"></path>
+                  <path d="M206 72 L210 96 L204 114"></path>
+                </g>
+
+                <!-- portos e castelos -->
+                <g>
+                  <circle cx="96" cy="58" r="4.5" style="fill:var(--accent-char)"></circle>
+                  <circle cx="146" cy="86" r="3.6" style="fill:var(--accent-book)"></circle>
+                  <circle cx="212" cy="96" r="4" style="fill:var(--accent-world)"></circle>
+                  <circle cx="150" cy="162" r="4" style="fill:var(--accent-chapter)"></circle>
+                  <circle cx="278" cy="146" r="3.2" style="fill:var(--text-muted)"></circle>
+                </g>
+
+                <!-- rótulos -->
+                <text class="t-title" x="12" y="20">ARQUIPÉLAGO DE VELL · CARTA DE MARÉ</text>
+                <text class="t-sea" x="300" y="196" text-anchor="end">MAR DE VELL</text>
+                <text class="t-sea" x="16" y="200">CONTINENTE SUBMERSO</text>
+
+                <text class="t-label" x="44" y="44">Ilha de Vell</text>
+                <text class="t-label" x="188" y="90">Ilha do Sal</text>
+                <text class="t-label" x="118" y="172">Ilha Quebrada</text>
+                <text class="t-label" x="266" y="172">Coroa</text>
+
+                <text class="t-city" x="100" y="54">Porto Real</text>
+                <text class="t-city" x="150" y="82">Torre de Maré</text>
+                <text class="t-city" x="216" y="92">Salina Maior</text>
+
+                <text class="t-label--small t-label" x="252" y="50">Ilhas Gêmeas</text>
+
+                <!-- marcador de cena: ponto do livro aberto -->
+                <circle cx="212" cy="96" r="9" style="fill:none;stroke:var(--accent-book);stroke-width:1.2;stroke-dasharray:3 3"></circle>
+
+                <!-- rosa dos ventos -->
+                <g transform="translate(310,32)" style="stroke:var(--text-dim);stroke-width:1;fill:var(--text-dim)">
+                  <path d="M0 -12 L3 0 L0 12 L-3 0 Z" style="fill:var(--text-muted);stroke:none"></path>
+                  <path d="M-12 0 L0 -3 L12 0 L0 3 Z" style="fill:none"></path>
+                  <text x="0" y="-15" text-anchor="middle" style="font-size:8px;stroke:none;fill:var(--text-dim)">N</text>
+                </g>
+              </svg>
+            </div>
+            <div class="maplegend">
+              <span class="maplegend__item"><span class="maplegend__swatch" style="background:var(--bg-raised)"></span>Ilha</span>
+              <span class="maplegend__item"><span class="maplegend__swatch" style="border-color:var(--accent-book);border-style:dashed"></span>Fronteira de casa</span>
+              <span class="maplegend__item"><span class="maplegend__swatch" style="background:var(--accent-world)"></span>Floresta</span>
+              <span class="maplegend__item"><span class="maplegend__swatch" style="background:var(--accent-chapter)"></span>Corrente / rota</span>
+              <span class="maplegend__item"><span class="maplegend__dot" style="background:var(--accent-char)"></span>Porto</span>
+              <span class="maplegend__item"><span class="maplegend__dot" style="background:var(--accent-book)"></span>Castelo</span>
+            </div>
+            <p style="font-size:11.5px;color:var(--text-dim);margin-top:10px;line-height:1.5">
+              Carta do arquipélago: nove ilhas entre o Mar de Vell e o continente submerso, com as casas nobres dividindo as terras maiores. As linhas claras são as correntes que os pilotos de clã usam para navegar. O círculo pontilhado marca o ponto de cena do livro aberto.
+            </p>
+          </div>
+          <div class="panel__foot">
+            <button class="btn btn--sm" style="width:100%;justify-content:center">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+              Substituir mapa
+            </button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+            <span class="panel__title">Impacto de editar</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <div class="dataline">
+                <span class="badge badge--accent">global</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Nome, descrição, nível tecnológico</div>
+                  <div class="dataline__sub">Vale para o livro que usa o mundo</div>
+                </div>
+              </div>
+              <div class="dataline">
+                <span class="badge badge--accent">global</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Todas as 41 entradas</div>
+                  <div class="dataline__sub">Ilhas, magia de maré, mapa — iguais em todo lugar</div>
+                </div>
+              </div>
+              <div class="dataline">
+                <span class="badge">por livro</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Quais entradas entram em cena</div>
+                  <div class="dataline__sub">Definido no Worldbuilding de cada livro</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span>Um mundo é canônico. Se um livro precisa de variação, crie outro Mundo.</span>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

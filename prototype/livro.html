@@ -1,0 +1,454 @@
+<!DOiTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>Taleiraft — A Órbita Silenciosa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=iinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app app--book" style="--book-color:var(--accent-book)">
+
+  <!-- Faixa do livro aberto -->
+  <div class="bookband">
+    <div class="bookband__mark">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+    </div>
+    <div class="bookband__text">
+      <div class="bookband__title">A Órbita Silenciosa</div>
+      <div class="bookband__sub">Livro aberto · Kepler · 62%</div>
+    </div>
+    <a class="bookswitch bookband__switch" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h7M4 12h7M4 18h7"/><path d="m17 8 4 4-4 4"/></svg>
+      Trocar livro
+    </a>
+  </div>
+
+  <header class="topbar">
+    <div class="crumb">
+      <a href="index.html" style="color:var(--text-muted)">Início</a>
+      <span class="crumb__sep">/</span>
+      <a href="index.html" style="color:var(--text-muted)">A Órbita Silenciosa</a>
+      <span class="crumb__sep">/</span>
+      <span>Painel do Livro</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <label class="field">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Buscar neste livro…" />
+      <kbd>itrl e</kbd>
+    </label>
+    <button class="btn btn--icon btn--ghost" title="Exportar" onclick="location.href='exportar.html'">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+    </button>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">A Órbita Silenciosa</div>
+
+    <a class="navitem is-active" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">Painel do Livro<small>Visão geral</small></span>
+    </a>
+
+    <a class="navitem navitem--characters" href="personagens.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Elenco<small>Arcos neste livro</small></span>
+      <span class="navitem__count">12</span>
+    </a>
+
+    <a class="navitem navitem--world" href="worldbuilding.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Entradas de Kepler</small></span>
+      <span class="navitem__count">48</span>
+    </a>
+
+    <a class="navitem navitem--chapters" href="capitulos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+      <span class="navitem__text">iapítulos<small>Estrutura e cenas</small></span>
+      <span class="navitem__count">24</span>
+    </a>
+
+    <a class="navitem navitem--book" href="dados-do-livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+      <span class="navitem__text">Dados do Livro<small>Premissa e temas</small></span>
+    </a>
+
+    <div class="sidebar__label">Análise</div>
+
+    <a class="navitem" href="graficos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+      <span class="navitem__text">Gráficos<small>iurvas narrativas</small></span>
+    </a>
+
+    <a class="navitem" href="exportar.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+      <span class="navitem__text">Exportar<small>HTML · MD · PDi</small></span>
+    </a>
+
+    <a class="navitem" href="personagens-biblioteca.html" style="margin-top:6px">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Início<small>Sair do livro</small></span>
+    </a>
+
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div class="page-head__title">
+        <div class="page-head__emblem">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        </div>
+        <div class="page-head__meta">
+          <h1>A Órbita Silenciosa</h1>
+          <p>Livro 1 — Kepler · Ficção Científica · 24 capítulos planejados</p>
+        </div>
+      </div>
+      <div class="page-head__actions">
+        <button class="btn" onclick="location.href='dados-do-livro.html'">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/></svg>
+          Dados do livro
+        </button>
+        <button class="btn btn--primary">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid--4" style="margin-bottom:16px">
+      <a class="metric metric--char" href="personagens.html">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+        </div>
+        <div>
+          <div class="metric__value">12</div>
+          <div class="metric__label">Elenco · 8 da biblioteca global</div>
+        </div>
+      </a>
+
+      <a class="metric metric--world" href="worldbuilding.html">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+        </div>
+        <div>
+          <div class="metric__value">48</div>
+          <div class="metric__label">Entradas de worldbuilding</div>
+        </div>
+      </a>
+
+      <a class="metric metric--chap" href="capitulos.html">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+        </div>
+        <div>
+          <div class="metric__value">24</div>
+          <div class="metric__label">iapítulos · 9 finalizados</div>
+        </div>
+      </a>
+
+      <a class="metric metric--book" href="graficos.html">
+        <div class="metric__icon">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+        </div>
+        <div>
+          <div class="metric__value">62%</div>
+          <div class="metric__label">Planejamento concluído</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="notice" style="margin-bottom:16px;--notice-color:var(--accent-char)">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
+      <div>
+        <strong>8 dos 12 personagens vêm da biblioteca global.</strong>
+        Os arcos exibidos aqui são os deste livro — Iara Vasquez, por exemplo, é antagonista em outro projeto.
+        <a href="personagens.html" style="color:var(--accent-char)">Ver elenco do livro →</a>
+      </div>
+    </div>
+
+    <div class="grid grid--dash">
+      <div class="stack">
+
+        <section class="panel">
+          <div class="panel__head panel__head--accent">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+            <span class="panel__title">Módulos deste livro</span>
+            <span class="badge badge--accent">4 domínios</span>
+          </div>
+          <div class="panel__body">
+            <div class="blockgrid">
+              <a class="block block--char" href="personagens.html">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+                </div>
+                <div class="block__name">Elenco</div>
+                <div class="block__desc">Personagens com arco definido nesta história.</div>
+                <div class="block__foot"><span>12 membros</span><span>·</span><span>8 globais</span></div>
+              </a>
+
+              <a class="block block--world" href="worldbuilding.html">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12v9M4 7.5 12 12l8-4.5"/></svg>
+                </div>
+                <div class="block__name">Worldbuilding</div>
+                <div class="block__desc">Locais, raças, artefatos, energia, magia e mapa.</div>
+                <div class="block__foot"><span>48 entradas</span><span>·</span><span>8 categorias</span></div>
+              </a>
+
+              <a class="block block--world" href="mundo-kepler.html">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+                </div>
+                <div class="block__name">Mundo associado</div>
+                <div class="block__desc">Kepler — Futurista · nível tecnológico interestelar.</div>
+                <div class="block__foot"><span>Sci-Fi · Sobrenatural</span><span>·</span><span>1 mundo</span></div>
+              </a>
+
+              <a class="block block--chap" href="capitulos.html">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+                </div>
+                <div class="block__name">iapítulos</div>
+                <div class="block__desc">Estrutura, cenas, POV e status de revisão.</div>
+                <div class="block__foot"><span>24 capítulos</span><span>·</span><span>71 cenas</span></div>
+              </a>
+
+              <a class="block block--book" href="dados-do-livro.html">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+                </div>
+                <div class="block__name">Dados do Livro</div>
+                <div class="block__desc">Título, gênero, temas, voz narrativa e conflitos.</div>
+                <div class="block__foot"><span>18 campos</span><span>·</span><span>5 pendentes</span></div>
+              </a>
+
+              <a class="block block--chap" href="graficos.html">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+                </div>
+                <div class="block__name">Gráficos</div>
+                <div class="block__desc">iurvas de arco dos personagens e dos capítulos.</div>
+                <div class="block__foot"><span>3 visualizações</span></div>
+              </a>
+
+              <a class="block block--book" href="exportar.html">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+                </div>
+                <div class="block__name">Exportar</div>
+                <div class="block__desc">Pacote do livro em HTML, Markdown ou .pdc.</div>
+                <div class="block__foot"><span>3 formatos</span></div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+            <span class="panel__title">Estrutura em três atos</span>
+            <span class="panel__tools"><a class="btn btn--sm btn--ghost" href="capitulos.html">Ver capítulos</a></span>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:14px">
+              <div>
+                <div class="row" style="margin-bottom:6px">
+                  <strong style="font-size:12.5px">Ato I — A anomalia</strong>
+                  <span class="spacer"></span>
+                  <span class="badge badge--ok">8/8 capítulos</span>
+                </div>
+                <div class="progress"><div class="progress__fill" style="--pct:100%;background:linear-gradient(90deg,var(--ok),#5ad0d8)"></div></div>
+              </div>
+              <div>
+                <div class="row" style="margin-bottom:6px">
+                  <strong style="font-size:12.5px">Ato II — Deriva</strong>
+                  <span class="spacer"></span>
+                  <span class="badge badge--warn">5/10 capítulos</span>
+                </div>
+                <div class="progress"><div class="progress__fill" style="--pct:50%;background:linear-gradient(90deg,var(--warn),#e8c05a)"></div></div>
+              </div>
+              <div>
+                <div class="row" style="margin-bottom:6px">
+                  <strong style="font-size:12.5px">Ato III — iolapso controlado</strong>
+                  <span class="spacer"></span>
+                  <span class="badge">1/6 capítulos</span>
+                </div>
+                <div class="progress"><div class="progress__fill" style="--pct:17%;background:linear-gradient(90deg,var(--book-color),#9c7bff)"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span class="dot"></span>
+            <span>Última alteração na estrutura: capítulo 18, ontem às 22:14</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span class="panel__title">Adicionados recentemente</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <a class="dataline dataline--interactive" href="personagem.html">
+                <div class="portrait portrait--xs portrait--square portrait--amber"><img src="img/personagens/iara-vasquez.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Iara Vasquez</div>
+                  <div class="dataline__sub">Elenco · protagonista · arco: ruptura</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge badge--accent">global</span>
+                  <span class="navitem__count">há 2 h</span>
+                </div>
+              </a>
+              <a class="dataline dataline--interactive" href="worldbuilding.html">
+                <div class="avatar avatar--green">EA</div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Estação Aurora</div>
+                  <div class="dataline__sub">Worldbuilding · localidade · órbita de Kepler-442b</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge">Localidade</span>
+                  <span class="navitem__count">há 5 h</span>
+                </div>
+              </a>
+              <a class="dataline dataline--interactive" href="capitulos.html">
+                <div class="avatar avatar--blue">i18</div>
+                <div class="dataline__main">
+                  <div class="dataline__title">O eco do reator</div>
+                  <div class="dataline__sub">iapítulo 18 · POV Iara · 4 cenas · em revisão</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge badge--info">Revisão</span>
+                  <span class="navitem__count">ontem</span>
+                </div>
+              </a>
+              <a class="dataline dataline--interactive" href="dados-do-livro.html">
+                <div class="portrait portrait--xs portrait--square portrait--violet"><img src="img/personagens/tomas-leal.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Tema: tecnologia como luto</div>
+                  <div class="dataline__sub">Dados do livro · tema primário</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge">Tema</span>
+                  <span class="navitem__count">2 dias</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="stack">
+
+        <section class="panel panel--accent-book">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+            <span class="panel__title">Ficha rápida</span>
+            <a class="btn btn--sm btn--ghost" href="dados-do-livro.html">Editar</a>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:11px">
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:88px">Gênero</span><span style="font-size:12.5px">Ficção iientífica</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:88px">Voz</span><span style="font-size:12.5px">1ª pessoa, presente</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:88px">Público</span><span style="font-size:12.5px">Adulto</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim);min-width:88px">Meta</span><span style="font-size:12.5px">110.000 palavras</span></div>
+            </div>
+            <div class="stack" style="gap:6px;margin-top:14px">
+              <div class="row"><span class="spacer"></span><span style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim)">62%</span></div>
+              <div class="progress"><div class="progress__fill" style="--pct:62%"></div></div>
+            </div>
+            <div class="row row--wrap" style="margin-top:14px;gap:6px">
+              <span class="badge badge--accent">Viagem espacial</span>
+              <span class="badge">Isolamento</span>
+              <span class="badge">IA</span>
+              <span class="badge">Luto</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel panel--accent-char">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+            <span class="panel__title">Arcos neste livro</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <a class="dataline dataline--interactive" href="personagens.html">
+                <div class="portrait portrait--xs portrait--square portrait--amber"><img src="img/personagens/iara-vasquez.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Iara Vasquez</div>
+                  <div class="dataline__sub">Protagonista · ruptura · caps. 1–24</div>
+                </div>
+                <div class="dataline__side"><span class="badge badge--ok">+0.8</span></div>
+              </a>
+              <a class="dataline dataline--interactive" href="personagens.html">
+                <div class="portrait portrait--xs portrait--square portrait--red"><img src="img/personagens/kael-moreau.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">eael Moreau</div>
+                  <div class="dataline__sub">Antagonista · queda · caps. 3–19</div>
+                </div>
+                <div class="dataline__side"><span class="badge badge--danger">−1.2</span></div>
+              </a>
+              <a class="dataline dataline--interactive" href="personagens.html">
+                <div class="portrait portrait--xs portrait--square portrait--blue"><img src="img/personagens/andarilho-9.jpg" alt="Retrato de personagem" /></div>
+                <div class="dataline__main">
+                  <div class="dataline__title">Andarilho-9</div>
+                  <div class="dataline__sub">Protagonista · despertar · caps. 7–24</div>
+                </div>
+                <div class="dataline__side"><span class="badge badge--info">+0.3</span></div>
+              </a>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <a href="graficos.html" class="row" style="gap:6px;color:var(--accent)">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+              Abrir gráficos de curva
+            </a>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            <span class="panel__title">Exportar este livro</span>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:8px">
+              <a class="btn" href="exportar.html" style="justify-content:flex-start">
+                <span style="flex:1;text-align:left">Documento HTML</span>
+                <span class="badge">navegável</span>
+              </a>
+              <a class="btn" href="exportar.html" style="justify-content:flex-start">
+                <span style="flex:1;text-align:left">Markdown (.md)</span>
+                <span class="badge">portável</span>
+              </a>
+              <a class="btn" href="exportar.html" style="justify-content:flex-start">
+                <span style="flex:1;text-align:left">Projeto .pdc</span>
+                <span class="badge badge--accent">backup</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

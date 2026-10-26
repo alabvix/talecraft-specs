@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Exportar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app app--book" style="--book-color:var(--accent-book)">
+
+  <div class="bookband">
+    <div class="bookband__mark">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+    </div>
+    <div class="bookband__text">
+      <div class="bookband__title">A Órbita Silenciosa</div>
+      <div class="bookband__sub">Livro aberto · Kepler · 62%</div>
+    </div>
+    <a class="bookswitch bookband__switch" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h7M4 12h7M4 18h7"/><path d="m17 8 4 4-4 4"/></svg>
+      Trocar livro
+    </a>
+  </div>
+
+  <header class="topbar">
+    <div class="crumb">
+      <a href="index.html" style="color:var(--text-muted)">Início</a>
+      <span class="crumb__sep">/</span>
+      <a href="livro.html" style="color:var(--text-muted)">A Órbita Silenciosa</a>
+      <span class="crumb__sep">/</span>
+      <span>Exportar</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <span class="badge badge--ok">
+      <span class="dot"></span> pronto · 0 conflitos
+    </span>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">A Órbita Silenciosa</div>
+    <a class="navitem" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">Painel do Livro<small>Visão geral</small></span>
+    </a>
+    <a class="navitem navitem--characters" href="personagens.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Elenco<small>Arcos neste livro</small></span>
+      <span class="navitem__count">12</span>
+    </a>
+    <a class="navitem navitem--world" href="worldbuilding.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Entradas de Kepler</small></span>
+      <span class="navitem__count">48</span>
+    </a>
+    <a class="navitem navitem--chapters" href="capitulos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+      <span class="navitem__text">Capítulos<small>Estrutura e cenas</small></span>
+      <span class="navitem__count">24</span>
+    </a>
+    <a class="navitem navitem--book" href="dados-do-livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+      <span class="navitem__text">Dados do Livro<small>Premissa e temas</small></span>
+    </a>
+    <div class="sidebar__label">Análise</div>
+    <a class="navitem" href="graficos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+      <span class="navitem__text">Gráficos<small>Curvas narrativas</small></span>
+    </a>
+    <a class="navitem is-active" href="exportar.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+      <span class="navitem__text">Exportar<small>HTML · MD · PDC</small></span>
+    </a>
+    <a class="navitem" href="personagens-biblioteca.html" style="margin-top:6px">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Início<small>Sair do livro</small></span>
+    </a>
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div class="page-head__title">
+        <div class="page-head__emblem">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+        </div>
+        <div class="page-head__meta">
+          <h1>Exportar planejamento</h1>
+          <p>Gere um pacote do livro em HTML, Markdown ou projeto .pdc</p>
+        </div>
+      </div>
+      <div class="page-head__actions">
+        <button class="btn">Pré-visualizar</button>
+        <button class="btn btn--primary">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Exportar agora
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid--dash">
+
+      <div class="stack">
+
+        <!-- Formatos -->
+        <section class="panel">
+          <div class="panel__head panel__head--accent">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/></svg>
+            <span class="panel__title">Formato de saída</span>
+            <span class="spacer"></span>
+            <span class="badge">1 selecionado</span>
+          </div>
+          <div class="panel__body">
+            <div class="blockgrid">
+
+              <div class="block block--chap" style="border-color:var(--accent-chapter);background:var(--bg-hover)">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+                </div>
+                <div class="block__name">HTML</div>
+                <div class="block__desc">Documento navegável com índice, fichas e gráficos embutidos.</div>
+                <div class="block__foot">
+                  <span class="badge badge--ok">selecionado</span>
+                  <span class="spacer"></span>
+                  <span>.html</span>
+                </div>
+              </div>
+
+              <div class="block block--world">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/></svg>
+                </div>
+                <div class="block__name">Markdown</div>
+                <div class="block__desc">Um arquivo por domínio, pronto para Obsidian, Git ou Word.</div>
+                <div class="block__foot"><span>.md</span></div>
+              </div>
+
+              <div class="block block--book">
+                <div class="block__slot">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12v9M4 7.5 12 12l8-4.5"/></svg>
+                </div>
+                <div class="block__name">Projeto .pdc</div>
+                <div class="block__desc">Backup completo e reimportável do planejamento.</div>
+                <div class="block__foot"><span class="badge badge--accent">completo</span></div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- Conteúdo -->
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+            <span class="panel__title">Incluir no pacote</span>
+            <span class="spacer"></span>
+            <span class="badge badge--accent">4 de 6 domínios</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <div class="dataline dataline--interactive">
+                <span class="avatar avatar--violet">DL</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Dados do Livro</div>
+                  <div class="dataline__sub">Identidade, premissa, temas, voz narrativa</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge badge--ok"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> incluído</span>
+                </div>
+              </div>
+              <div class="dataline dataline--interactive">
+                <span class="avatar avatar--amber">PE</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Personagens</div>
+                  <div class="dataline__sub">12 fichas · arcos, relações, aparências</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge badge--ok"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> incluído</span>
+                </div>
+              </div>
+              <div class="dataline dataline--interactive">
+                <span class="avatar avatar--green">WB</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Worldbuilding</div>
+                  <div class="dataline__sub">48 entradas · 6 categorias · vínculos</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge badge--ok"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> incluído</span>
+                </div>
+              </div>
+              <div class="dataline dataline--interactive">
+                <span class="avatar avatar--blue">CP</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Capítulos</div>
+                  <div class="dataline__sub">24 capítulos · 71 cenas · resumos</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge badge--ok"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> incluído</span>
+                </div>
+              </div>
+              <div class="dataline dataline--interactive">
+                <span class="avatar">GR</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Gráficos de curva</div>
+                  <div class="dataline__sub">Somente para HTML: imagens SVG embutidas</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge">desativado</span>
+                </div>
+              </div>
+              <div class="dataline dataline--interactive">
+                <span class="avatar">NT</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Notas e pendências</div>
+                  <div class="dataline__sub">Anotações soltas e campos incompletos</div>
+                </div>
+                <div class="dataline__side">
+                  <span class="badge">desativado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Opções -->
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+            <span class="panel__title">Opções do pacote</span>
+          </div>
+          <div class="panel__body">
+            <div class="formgrid">
+              <div class="formfield">
+                <label>Nome do arquivo</label>
+                <input class="input" value="a-orbita-silenciosa-planejamento" />
+              </div>
+              <div class="formfield">
+                <label>Pasta de destino</label>
+                <input class="input readonly" value="C:\Users\alabh\Documents\TaleCraft\export" readonly />
+              </div>
+              <div class="formfield span-2">
+                <label>Organização</label>
+                <div class="toggle-set">
+                  <span class="toggle is-on">Arquivo único</span>
+                  <span class="toggle">Uma pasta por domínio</span>
+                  <span class="toggle">Um arquivo por entidade</span>
+                </div>
+              </div>
+              <div class="formfield span-2">
+                <label>Detalhes</label>
+                <div class="toggle-set">
+                  <span class="toggle is-on">Incluir índice</span>
+                  <span class="toggle is-on">Incluir links entre entidades</span>
+                  <span class="toggle">Incluir campos vazios</span>
+                  <span class="toggle">Incluir metadados no topo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Coluna lateral: resumo e log -->
+      <div class="stack">
+
+        <section class="panel panel--accent-book">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/></svg>
+            <span class="panel__title">Resumo do pacote</span>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:11px">
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Formato</span><span class="spacer"></span><span style="font-size:12.5px">HTML navegável</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Domínios</span><span class="spacer"></span><span style="font-size:12.5px">4</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Entidades</span><span class="spacer"></span><span style="font-size:12.5px">84</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Tamanho est.</span><span class="spacer"></span><span style="font-size:12.5px">~1,4 MB</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Conflitos</span><span class="spacer"></span><span class="badge badge--ok">nenhum</span></div>
+            </div>
+            <div class="stack" style="gap:6px;margin-top:14px">
+              <div class="row"><span style="font-size:11.5px;color:var(--text-dim)">Validação do planejamento</span><span class="spacer"></span><span style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-dim)">72%</span></div>
+              <div class="progress"><div class="progress__fill" style="--pct:72%;background:linear-gradient(90deg,var(--accent-book),#7c5cff)"></div></div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <span class="dot"></span> 5 campos pendentes não bloqueiam a exportação
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span class="panel__title">Exportações recentes</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <div class="dataline">
+                <span class="avatar avatar--blue">HT</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">a-orbita-silenciosa.html</div>
+                  <div class="dataline__sub">1,3 MB · 4 domínios</div>
+                </div>
+                <div class="dataline__side"><span class="navitem__count">ontem</span></div>
+              </div>
+              <div class="dataline">
+                <span class="avatar avatar--green">MD</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">planejamento-md.zip</div>
+                  <div class="dataline__sub">412 KB · 6 arquivos</div>
+                </div>
+                <div class="dataline__side"><span class="navitem__count">3 dias</span></div>
+              </div>
+              <div class="dataline">
+                <span class="avatar avatar--violet">PD</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">ciclo-kepler.pdc</div>
+                  <div class="dataline__sub">2,1 MB · backup completo</div>
+                </div>
+                <div class="dataline__side"><span class="navitem__count">1 sem.</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 21c5-1.5 8-6 8-11V5l-8-2-8 2v5c0 5 3 9.5 8 11Z"/></svg>
+            <span class="panel__title">Privacidade</span>
+          </div>
+          <div class="panel__body">
+            <p class="formfield__hint" style="line-height:1.6">
+              Tudo é gerado localmente. Nenhuma parte do planejamento sai desta máquina — o TaleCraft não faz chamadas externas durante a exportação.
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

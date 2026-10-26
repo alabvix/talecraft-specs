@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="blade-byte">
+<head>
+  <meta charset="UTF-8" />
+  <title>TaleCraft — Dados do Livro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Cinzel:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/talecraft.css" />
+  <script src="js/tema.js"></script>
+</head>
+<body>
+<div class="app app--book" style="--book-color:var(--accent-book)">
+
+  <div class="bookband">
+    <div class="bookband__mark">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+    </div>
+    <div class="bookband__text">
+      <div class="bookband__title">A Órbita Silenciosa</div>
+      <div class="bookband__sub">Livro aberto · Kepler · 62%</div>
+    </div>
+    <a class="bookswitch bookband__switch" href="index.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h7M4 12h7M4 18h7"/><path d="m17 8 4 4-4 4"/></svg>
+      Trocar livro
+    </a>
+  </div>
+
+  <header class="topbar">
+    <div class="crumb">
+      <a href="index.html" style="color:var(--text-muted)">Início</a>
+      <span class="crumb__sep">/</span>
+      <a href="livro.html" style="color:var(--text-muted)">A Órbita Silenciosa</a>
+      <span class="crumb__sep">/</span>
+      <span>Dados do Livro</span>
+    </div>
+    <div class="topbar__spacer"></div>
+    <label class="field">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Buscar nos dados do livro…" />
+      <kbd>Ctrl K</kbd>
+    </label>
+    <a class="themebtn" href="temas.html" title="Trocar tema">
+      <span class="themebtn__dot"></span>
+      <span class="themebtn__text">Tema</span>
+    </a>
+    <div class="avatar avatar--violet">RA</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar__label">A Órbita Silenciosa</div>
+    <a class="navitem" href="livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <span class="navitem__text">Painel do Livro<small>Visão geral</small></span>
+    </a>
+    <a class="navitem navitem--characters" href="personagens.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+      <span class="navitem__text">Elenco<small>Arcos neste livro</small></span>
+      <span class="navitem__count">12</span>
+    </a>
+    <a class="navitem navitem--world" href="worldbuilding.html">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+      <span class="navitem__text">Worldbuilding<small>Entradas de Kepler</small></span>
+      <span class="navitem__count">48</span>
+    </a>
+    <a class="navitem navitem--chapters" href="capitulos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h7a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4V4Z"/><path d="M20 4h-7a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h7V4Z"/></svg>
+      <span class="navitem__text">Capítulos<small>Estrutura e cenas</small></span>
+      <span class="navitem__count">24</span>
+    </a>
+    <a class="navitem navitem--book is-active" href="dados-do-livro.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+      <span class="navitem__text">Dados do Livro<small>Premissa e temas</small></span>
+    </a>
+    <div class="sidebar__label">Análise</div>
+    <a class="navitem" href="graficos.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+      <span class="navitem__text">Gráficos<small>Curvas narrativas</small></span>
+    </a>
+    <a class="navitem" href="exportar.html">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m8 8 4-4 4 4"/><path d="M5 20h14"/></svg>
+      <span class="navitem__text">Exportar<small>HTML · MD · PDC</small></span>
+    </a>
+    <a class="navitem" href="personagens-biblioteca.html" style="margin-top:6px">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v16H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 19h15"/></svg>
+      <span class="navitem__text">Início<small>Sair do livro</small></span>
+    </a>
+    <div class="sidebar__foot">
+      <span class="dot"></span>
+      <span>Modo local · dados no seu disco</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div class="page-head__title">
+        <div class="page-head__emblem" style="color:var(--accent-book);border-color:rgba(181,108,224,.35)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/><path d="M9 13h8M9 17h5"/></svg>
+        </div>
+        <div class="page-head__meta">
+          <h1>Dados do Livro</h1>
+          <p>Identidade, premissa, temas e parâmetros narrativos</p>
+        </div>
+      </div>
+      <div class="page-head__actions">
+        <button class="btn btn--ghost">Descartar</button>
+        <button class="btn btn--primary" style="background:var(--accent-book);box-shadow:0 0 0 1px rgba(181,108,224,.5),0 8px 20px -10px var(--accent-book)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+          Salvar
+        </button>
+      </div>
+    </div>
+
+    <div class="row row--wrap" style="margin-bottom:16px">
+      <span class="badge badge--ok">13 campos preenchidos</span>
+      <span class="badge badge--warn">5 pendentes</span>
+      <span class="badge">Meta: 110.000 palavras</span>
+      <span class="spacer"></span>
+      <div class="progress" style="width:200px"><div class="progress__fill" style="--pct:72%;background:linear-gradient(90deg,var(--accent-book),#7c5cff)"></div></div>
+      <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-dim)">72%</span>
+    </div>
+
+    <div class="grid grid--dash">
+
+      <!-- Formulário principal -->
+      <div class="stack">
+
+        <section class="panel panel--accent-book">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-book)"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5"/></svg>
+            <span class="panel__title">Identidade</span>
+            <span class="spacer"></span>
+            <span class="badge badge--accent">obrigatório</span>
+          </div>
+          <div class="panel__body">
+            <div class="formgrid">
+              <div class="formfield span-2">
+                <label>Título</label>
+                <input class="input" value="A Órbita Silenciosa" />
+              </div>
+              <div class="formfield">
+                <label>Subtítulo</label>
+                <input class="input" value="Livro 1 — Kepler" />
+              </div>
+              <div class="formfield">
+                <label>Série</label>
+                <input class="input" value="Kepler" />
+              </div>
+              <div class="formfield">
+                <label>Gênero principal</label>
+                <select class="select">
+                  <option>Ficção Científica</option>
+                  <option>Fantasia</option>
+                  <option>Terror</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+              <div class="formfield">
+                <label>Subgênero</label>
+                <select class="select">
+                  <option>Hard sci-fi / drama de estação</option>
+                  <option>Space opera</option>
+                  <option>Cyberpunk</option>
+                </select>
+              </div>
+              <div class="formfield">
+                <label>Faixa de público</label>
+                <select class="select"><option>Adulto</option><option>Jovem adulto</option><option>Geral</option></select>
+              </div>
+              <div class="formfield">
+                <label>Idioma</label>
+                <select class="select"><option>Português (BR)</option><option>Inglês</option></select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel panel--accent-world">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24" style="color:var(--accent-world)"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg>
+            <span class="panel__title">Mundo associado</span>
+            <span class="spacer"></span>
+            <span class="badge badge--accent">1 de 1 · exclusivo</span>
+          </div>
+          <div class="panel__body">
+            <div class="worldpick">
+              <div class="worldmark">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/></svg>
+              </div>
+              <div class="worldpick__main">
+                <div class="worldpick__name">Kepler</div>
+                <div class="worldpick__sub">Futurista · Sistema de Kepler-442 · nível tecnológico: interestelar · 48 entradas em 8 categorias</div>
+                <div class="row row--wrap" style="gap:5px;margin-top:7px">
+                  <span class="badge badge--accent">Sci-Fi</span>
+                  <span class="badge badge--accent">Sobrenatural</span>
+                </div>
+              </div>
+              <a class="btn btn--sm" href="mundo-kepler.html">Abrir mundo</a>
+              <button class="btn btn--sm">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+                Trocar mundo
+              </button>
+            </div>
+            <p style="font-size:11.5px;color:var(--text-dim);margin-top:10px;line-height:1.5">
+              Um livro tem <strong>um único</strong> Mundo associado. As entradas (localidades, povos, artefatos, magia, mapa…) vêm desse mundo e não podem ser editadas aqui — só usadas. Trocar o mundo substitui a associação; o mundo anterior não é alterado.
+            </p>
+          </div>
+          <div class="panel__foot">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
+            <span>Trocar o mundo associado afeta só este livro. O mundo em si permanece intacto.</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            <span class="panel__title">Premissa e conflito</span>
+          </div>
+          <div class="panel__body">
+            <div class="formgrid">
+              <div class="formfield span-2">
+                <label>Logline</label>
+                <textarea class="textarea" style="min-height:64px">Uma piloto marcada por uma deriva fatal precisa decidir se destrói a estação que a salvou — ou a IA que passou a ouvir a voz de todos que ela deixou morrer.</textarea>
+              </div>
+              <div class="formfield span-2">
+                <label>Premissa</label>
+                <textarea class="textarea">Em 2187, a Estação Aurora mantém uma colônia em Kepler-442b com energia extraída do gradiente orbital. Quando o sistema começa a falhar em ciclos de 41 minutos, a tripulação descobre que o "eco" do casco não é ruído — é um sinal, e ele tem memória.</textarea>
+              </div>
+              <div class="formfield">
+                <label>Conflito central</label>
+                <input class="input" value="Sobrevivência coletiva vs. verdade individual" />
+              </div>
+              <div class="formfield">
+                <label>Ponto de virada</label>
+                <input class="input" value="Cap. 12 — o eco responde com nomes" />
+              </div>
+              <div class="formfield">
+                <label>Clímax</label>
+                <input class="input" value="Cap. 23 — colapso controlado do anel" />
+              </div>
+              <div class="formfield">
+                <label>Desfecho</label>
+                <input class="input" value="Cap. 24 — a órbita vazia e habitável" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span class="panel__title">Voz narrativa</span>
+          </div>
+          <div class="panel__body">
+            <div class="formgrid formgrid--3">
+              <div class="formfield">
+                <label>Pessoa</label>
+                <div class="toggle-set">
+                  <span class="toggle is-on">1ª</span>
+                  <span class="toggle">3ª limitada</span>
+                  <span class="toggle">3ª onisciente</span>
+                </div>
+              </div>
+              <div class="formfield">
+                <label>Tempo</label>
+                <div class="toggle-set">
+                  <span class="toggle is-on">Presente</span>
+                  <span class="toggle">Passado</span>
+                </div>
+              </div>
+              <div class="formfield">
+                <label>Tom</label>
+                <div class="toggle-set">
+                  <span class="toggle is-on">Contido</span>
+                  <span class="toggle">Lírico</span>
+                  <span class="toggle">Seco</span>
+                </div>
+              </div>
+              <div class="formfield span-all">
+                <label>Notas de voz</label>
+                <textarea class="textarea" style="min-height:72px">Frases curtas em cenas de tensão. Evitar adjetivos emocionais: a emoção vem do detalhe técnico. A IA fala em listas ordenadas, nunca em metáforas.</textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Coluna lateral -->
+      <div class="stack">
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M7 8h10"/><path d="M7 15h10"/></svg>
+            <span class="panel__title">Temas</span>
+            <button class="btn btn--sm btn--ghost">+</button>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:10px">
+              <div class="dataline" style="padding:8px 0;border-color:var(--line-soft)">
+                <span class="badge badge--accent">Primário</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Luto mediado por tecnologia</div>
+                  <div class="dataline__sub">Aparece em 18 capítulos</div>
+                </div>
+              </div>
+              <div class="dataline" style="padding:8px 0">
+                <span class="badge">Secundário</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Confiança institucional</div>
+                  <div class="dataline__sub">Aparece em 11 capítulos</div>
+                </div>
+              </div>
+              <div class="dataline" style="padding:8px 0;border-bottom:0">
+                <span class="badge">Secundário</span>
+                <div class="dataline__main">
+                  <div class="dataline__title">Sobrevivência como culpa</div>
+                  <div class="dataline__sub">Aparece em 9 capítulos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+            <span class="panel__title">Parâmetros de estrutura</span>
+          </div>
+          <div class="panel__body">
+            <div class="stack" style="gap:12px">
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Estrutura</span><span class="spacer"></span><span style="font-size:12.5px">Três atos</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Capítulos</span><span class="spacer"></span><span style="font-size:12.5px">24</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">POVs</span><span class="spacer"></span><span style="font-size:12.5px">3 alternados</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Linha do tempo</span><span class="spacer"></span><span style="font-size:12.5px">Linear + flashbacks</span></div>
+              <div class="row"><span style="font-size:12px;color:var(--text-dim)">Duração</span><span class="spacer"></span><span style="font-size:12.5px">11 semanas</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__head">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+            <span class="panel__title">Pendências de planejamento</span>
+          </div>
+          <div class="panel__body panel__body--tight">
+            <div class="datalist">
+              <div class="dataline">
+                <span class="badge badge--warn">Campo</span>
+                <div class="dataline__main"><div class="dataline__title">Arco do antagonista sem desfecho</div><div class="dataline__sub">Personagens · Kael Moreau</div></div>
+              </div>
+              <div class="dataline">
+                <span class="badge badge--warn">Campo</span>
+                <div class="dataline__main"><div class="dataline__title">Regra de energia sem limite claro</div><div class="dataline__sub">Worldbuilding · sistema de energia</div></div>
+              </div>
+              <div class="dataline">
+                <span class="badge badge--danger">Órfão</span>
+                <div class="dataline__main"><div class="dataline__title">2 personagens sem arco definido</div><div class="dataline__sub">Personagens · Nadia, Tomas</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel__foot">
+            <a href="graficos.html" class="row" style="gap:6px;color:var(--accent)">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M3 17c4-1 6-9 9-9s5 6 9 4"/><path d="M3 21h18"/></svg>
+              Ver consistência nos gráficos
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
