@@ -1,0 +1,7 @@
+# Sistema e editores
+.DS_Store
+Thumbs.db
+*.local
+
+# Dependências auxiliares (se o OpenSpec for instalado localmente)
+node_modules/
