@@ -195,3 +195,39 @@ criada aqui (RF003-CA012, RF004-CA020).
 - **THEN** ele as cria por uma nova migração versionada, sem modificar a
   migração original do RF003 (RF004-CA020)
 
+### Requirement: Esquema de livros
+O sistema SHALL criar, na migração **v7** aditiva, as tabelas `livro` e `livro_subgenero`, sem alterar os passos publicados da v1 à v6 e preservando os dados de bancos existentes (RF011-RN002, RF011-RN003, RF011-RN004, RF011-RN005, RF011-RN006, RF011-RN007).
+
+#### Scenario: Banco v6 migra para v7
+- **GIVEN** um banco criado e migrado até a v6 (RF010)
+- **WHEN** o aplicativo abre o banco com o RF011
+- **THEN** as tabelas `livro` e `livro_subgenero` são criadas e os dados anteriores permanecem intactos (RF011-RN007)
+
+#### Scenario: Título único garantido pelo banco
+- **GIVEN** a tabela `livro` existe
+- **WHEN** o desenvolvedor inspeciona o esquema
+- **THEN** `titulo` é `NOT NULL`, `UNIQUE` e `COLLATE NOCASE`, e as listas fechadas de gênero, faixa de público, idioma e subgênero têm `CHECK` (RF011-RN002 a RF011-RN006)
+
+#### Scenario: Subgêneros pertencem ao livro
+- **GIVEN** a tabela `livro_subgenero` existe
+- **WHEN** um livro é gravado com subgêneros
+- **THEN** cada subgênero é uma linha associada ao `livro_id`, com chave primária composta que impede repetição (RF011-RN004)
+
+### Requirement: Migração v8 dos subgêneros de Fantasia
+O sistema SHALL aplicar a migração **v8** aditiva, recriando `livro_subgenero` com o `CHECK` que inclui os doze subgêneros de **Fantasia**, sem editar o passo v7 e preservando os livros e subgêneros existentes (RF011-RN004).
+
+#### Scenario: Banco v7 migra para v8
+- **GIVEN** um banco na v7 com um livro e um subgênero de Fantasia já gravados
+- **WHEN** o aplicativo abre o banco com este ajuste
+- **THEN** a tabela `livro_subgenero` é recriada com o `CHECK` ampliado e o livro e o subgênero anterior continuam gravados (RF011-RN004)
+
+#### Scenario: Novos subgêneros aceitos
+- **GIVEN** um livro com Gênero Principal **Fantasia**
+- **WHEN** o escritor grava **Grindark**, **Mitológica** ou **Espada e Feitiçaria**
+- **THEN** o banco aceita os subgêneros e a leitura devolve a seleção (RF011-RN004, RF011-CA008)
+
+#### Scenario: Subgênero fora da lista continua recusado
+- **GIVEN** um livro com Gênero Principal **Fantasia**
+- **WHEN** o escritor tenta gravar um subgênero que não pertence à lista de Fantasia
+- **THEN** a gravação é recusada com mensagem útil (RF011-RN004)
+

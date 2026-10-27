@@ -5,6 +5,14 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
+> **Ponto de parada (27/10/2026):** RF001–RF011 estão implementados e arquivados;
+> a spec consolidada `book-library` reflete a listagem real de Meus Livros, com
+> métricas ligadas aos vínculos, e a nova capability `book-workspace` cobre a
+> página do livro e Dados Gerais, incluindo os doze subgêneros de Fantasia e a
+> seleção preservada por gênero. São **18 capabilities** e
+> `openspec validate --all` passa com 18/18. Não há change ativo. **Amanhã:**
+> escrever o RF012 em `documents/talecraft.md` e só depois criar o change.
+
 Memória de trabalho do projeto. Leia este arquivo **antes** de mexer no código.
 A documentação do *produto* (como o app funciona, tokens, telas do protótipo)
 está em `prototype/README.md`; os **requisitos e a stack** estão em
@@ -66,12 +74,15 @@ talecraft/
 │   ├── entradasMundo.js       metadados das entidades do mundo (RF008)
 │   ├── faccoesApi.js          chamadas aos comandos de facções (RF009)
 │   ├── faccoes.js             metadados de tipos e papéis (RF009)
+│   ├── livrosApi.js           chamadas aos comandos de livros (RF011)
+│   ├── livros.js              seções e metadados do livro (RF011)
 │   ├── fichaModo.js           marcador `#ficha=<id>` da janela de exportação (RF006)
 │   ├── mundoModo.js           marcador `#mundo=<id>` da exportação do mundo (RF007)
 │   ├── nomeArquivo.js         nome seguro para o diálogo de salvar (RF006/RF007)
 │   ├── talecraft.css          design system (cópia do protótipo)
 │   ├── personagens.css        estilos das telas de personagens (RF004/RF005)
 │   ├── mundos.css             estilos de mundos, entradas e facções (RF007–RF009)
+│   ├── livros.css             estilos da página do livro e Tab Panel (RF011)
 │   ├── fontes.css + fontes/   fontes locais (`@font-face`, 20 `.woff2`)
 │   └── componentes/           Marca, Topbar, Sidebar, TelaVazia, TelaTemas,
 │                              Splash, Icone, TelaPersonagens, TelaPersonagem,
@@ -80,12 +91,13 @@ talecraft/
 │                              DocumentoMundo, TelaDocumentoMundo,
 │                              TabelaEntradas, ModalEntradaMundo,
 │                              TabelaFaccoes, ModalFaccao,
-│                              ModalFaccaoPersonagem
+│                              ModalFaccaoPersonagem, TelaLivro, SidebarLivro,
+│                              Bookband, PainelAbas
 ├── src-tauri/                 BACK-END Rust + configuração do Tauri
 │   ├── src/main.rs            binário
 │   ├── src/lib.rs             comandos Tauri + estado gerenciado do banco
-│   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF009)
-│   ├── src/banco/migracoes.rs DDL versionado (v1–v6)
+│   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF011)
+│   ├── src/banco/migracoes.rs DDL versionado (v1–v8)
 │   ├── src/erro.rs            ErroDominio + CodigoErro + Resultado<T>
 │   ├── src/test_support.rs    DiretorioTemporario (tempfile, cfg test)
 │   ├── src/personagem.rs      domínio dos personagens (RF004)
@@ -94,6 +106,7 @@ talecraft/
 │   ├── src/mundo.rs           domínio dos mundos (RF007)
 │   ├── src/entradas_mundo.rs  domínio das entradas do mundo (RF008)
 │   ├── src/faccao.rs          domínio das facções e associações (RF009)
+│   ├── src/livro.rs           domínio dos livros e dados gerais (RF011)
 │   ├── src/documento_mundo.rs agregado do Documento do Mundo (RF007–RF009)
 │   ├── src/ficha.rs           montagem da Ficha do Personagem (RF006)
 │   ├── src/pdf.rs             gravação do PDF pelo WebView2 (RF006)
@@ -111,6 +124,8 @@ talecraft/
 │   ├── verificar-rf007.mjs    mundos: lista, detalhe, imagem, entradas e PDF (33/33)
 │   ├── verificar-rf008.mjs    entradas do mundo: abas, tabela e regras (21/21)
 │   └── verificar-rf009.mjs    facções: aba, associação e reflexo (16/16)
+│   ├── verificar-rf010.mjs    Meus Livros em estado vazio e listagem real (18/18)
+│   └── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (30/30)
 ├── index.html                 HTML do Vite (monta o React)
 ├── vite.config.js             configuração do Vite (porta 1420)
 ├── package.json               scripts: dev, build, tauri, verificar:rust
@@ -715,6 +730,48 @@ personagens (RF009).
   de 2 a 4 caracteres, repetindo até estabilizar, e confere `U+FFFD`, BOM e o
   build do CSS. Detalhes na seção 2.
 
+### Livros: página do livro e Dados Gerais (RF011)
+
+O RF011 abriu o nível do livro. **Meus Livros** deixou de ser só estado vazio e
+o botão **+ Novo Livro** passou a abrir a página do livro.
+
+| Decisão | Motivo |
+|---|---|
+| **Salvar cria o livro** | O clique em **+ Novo Livro** abre a página com um objeto local (`id: null`); o `INSERT` só acontece no primeiro **Salvar** com título válido. Evita livros órfãos com título provisório. |
+| **Página do livro com casca própria** | `TelaLivro` monta `Bookband`, `Topbar` e `SidebarLivro`; o `App` só troca entre a casca da raiz e a do livro (design D2). |
+| **Menu do livro na ordem do requisito** | Painel do Livro, Dados do Livro, Personagens, Capítulos, Worldbuilding; Análise com Gráficos/Exportar; Início. A ordem **não** é a do protótipo (que põe Elenco/Worldbuilding antes de Dados do Livro). |
+| **Tab Panel reutilizável** | `PainelAbas.jsx` usa `.booktabs` e já aceita novas abas; nesta entrega só existe **Dados Gerais** (RF011-RN012). |
+| **Listas fechadas no back-end** | Gêneros, subgêneros por gênero, faixas de público e idiomas vêm de `listas_livro`; o front-end não duplica valores. |
+| **Subgêneros por gênero validados no domínio** | O `CHECK` do SQLite cobre a união das listas; a relação gênero → subgênero é validada em Rust (`SubgeneroForaDoGenero`). |
+| **Seleção de subgêneros por gênero** | `DadosLivro` mantém um mapa `{ gênero: seleção }`. Trocar o gênero guarda a seleção atual e carrega a do novo; voltar ao gênero original devolve os valores salvos. Só o gênero atual é gravado, e o mapa é reinicializado em **Salvar**/**Descartar**. |
+| **Métricas em um comando** | `estatisticas_biblioteca` devolve livros, personagens, personagens em 2+ livros, capítulos e entradas de mundo numa chamada só. |
+| **Métricas ligadas aos livros** | Personagens e Entradas de worldbuilding contam somente o que está associado a livros. Sem vínculo personagem–livro e sem associação livro–mundo, exibem **0** — não somam a biblioteca global nem os mundos soltos (RF011-RN017). |
+| **Fantasia com 12 subgêneros** | Entram Gótico, Baixa Fantasia, Grindark, Mitológica, Histórica, Científica e Espada e Feitiçaria. O `CHECK` ampliado exigiu a migração **v8** (o SQLite não altera `CHECK` in-place), recriando `livro_subgenero` e copiando as linhas. |
+| **Seções futuras informativas** | Personagens (elenco), Capítulos, Worldbuilding, Gráficos e Exportar existem no menu e abrem uma tela de requisito posterior, sem antecipar domínio. |
+
+**Armadilhas encontradas ao implementar (RF011):**
+
+- **O `NOCASE` do SQLite só dobra ASCII.** `A Órbita Silenciosa` e `a órbita
+  silenciosa` passavam pelo `UNIQUE COLLATE NOCASE` por causa do `Ó`. A
+  unicidade foi feita no domínio com `to_lowercase()` do Rust; o `UNIQUE` exato
+  do banco ficou como backstop. A busca de livros também filtra e ordena no
+  Rust pelo mesmo motivo.
+- **`+ Novo Livro` mudou de comportamento.** O `verificar-rf010.mjs` esperava
+  que o botão não navegasse e que **Grade** fosse um `<button>`. Com o RF011,
+  o botão abre o livro e **Grade/Lista** virou radio; o verificador foi
+  atualizado para **18/18**.
+- **Salvar sem linhas afetadas:** o `UPDATE livro ... WHERE id = ?` precisa
+  checar `afetadas`; um id inexistente devolve `LivroNaoEncontrado`, não
+  sucesso.
+- **Trocar o gênero não pode apagar a seleção.** A primeira versão filtrava
+  `form.subgeneros` no `onChange` do gênero. Ao voltar ao gênero original sem
+  salvar, os subgêneros salvos apareciam desmarcados. A correção mantém um mapa
+  de seleções por gênero no formulário; o back-end continua recebendo apenas os
+  subgêneros do gênero atual.
+- **O título é atualizado na casca:** depois de salvar, a faixa do livro, o
+  rótulo do menu, o breadcrumb e o card precisam refletir o novo título. O
+  estado vive em `TelaLivro` e desce para a casca.
+
 ### Refatoração de qualidade Rust (out/2026)
 
 | Decisão | Motivo |
@@ -1021,27 +1078,69 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   **Entradas do Mundo** e **Facções**. **2 testes novos** (agregado completo e
   mundo sem associações); a suíte passou a **79** testes após a refatoração de
   qualidade (erro tipado, `TipoEntidade`, grafo familiar e `tempfile`).
+- **RF010 — Livros: Meus Livros** (changes `rf010-livros-meus-livros` e
+  `rf010-meus-livros-estado-vazio`, arquivados em
+  `2026-10-27-rf010-livros-meus-livros` e
+  `2026-10-27-rf010-meus-livros-estado-vazio`): a página inicial agora é a tela
+  **Meus Livros**, com `TelaLivros.jsx`. Como ainda não há livros, as quatro
+  métricas exibem **0**, a seção **Todos os livros** mostra **0 resultados** e
+  estado vazio, e o painel de personagens não tem linhas. Não há dados fictícios,
+  cards de livros, card **Novo livro**, `Importar .pdc`, cadastro, detalhe,
+  entidade Livro, migração ou comando Tauri; o botão **+ Novo Livro** não navega.
+  Verificação `scripts/verificar-rf010.mjs` **17/17** (atualizada para o RF011:
+  **18/18**).
+- **RF011 - Livros: página do livro, navegação e Dados Gerais** (changes
+  `rf011-livro-dados-gerais`, `rf011-ajuste-metricas-subgeneros` e
+  `rf011-preservar-subgeneros-por-genero`): o botão **+ Novo Livro** abre a
+  página do livro em modo de criação; o registro só é
+  gravado ao salvar um título válido em **Dados do Livro**. A página do livro tem
+  faixa do livro aberto, menu lateral próprio (**Painel do Livro**, **Dados do
+  Livro**, **Personagens**, **Capítulos**, **Worldbuilding**, **Análise** com
+  **Gráficos**/**Exportar**, **Início**) e as seções futuras com tela
+  informativa.
+  - **Esquema:** migração **v7** aditiva com `livro` (título único, gênero,
+    faixa de público, idioma) e `livro_subgenero` (chave composta); a **v8**
+    recria `livro_subgenero` com o `CHECK` ampliado para os doze subgêneros de
+    Fantasia. A v6 migra para a v7 e a v7 para a v8 sem perder dados.
+  - **Domínio:** `src-tauri/src/livro.rs` com listas fechadas (3 gêneros; 6/12/5
+    subgêneros; 4 faixas; 3 idiomas), unicidade sem diferenciar caixa com
+    `to_lowercase()` do Rust (o `NOCASE` do SQLite só dobra ASCII) e gravação
+    transacional de livro + subgêneros.
+  - **Métricas:** `estatisticas_biblioteca` conta somente o que está associado a
+    livros; **Personagens**, **0 em 2+ livros**, **Capítulos planejados** e
+    **Entradas de worldbuilding** exibem **0** enquanto não houver vínculo
+    personagem–livro, capítulos e associação livro–mundo (RF011-RN017).
+  - **Comandos:** `listar_livros`, `obter_livro`, `salvar_livro`, `listas_livro`
+    e `estatisticas_biblioteca`.
+  - **Front-end:** `livrosApi.js`, `livros.js`, `livros.css`, `TelaLivro.jsx`,
+    `SidebarLivro.jsx`, `Bookband.jsx` e o Tab Panel reutilizável
+    `PainelAbas.jsx`; `TelaLivros.jsx` passa a listar livros reais em grade ou
+    lista, com busca, métricas e abertura do livro.
+  - **Testes Rust:** 16 novos; **95** no total.
+  - **Verificação:** `scripts/verificar-rf011.mjs` **30/30** no app real;
+    `verificar-rf010.mjs` atualizado para **18/18**; RF002–RF009 sem regressão.
 - **Specs principais** em `openspec/specs/`: `app-shell`, `dev-tooling`,
   `rust-bridge`, `setup-guide` (RF001); `app-layout`, `page-navigation`,
   `theme-system`, `splash-screen` (RF002); `database-foundation` (RF003);
   `character-library` (RF004); `family-tree` (RF005); `character-sheet-export`
   (RF006); `world-library` e `world-sheet-export` (RF007); `world-entries`
-  (RF008); `factions` (RF009). São **16** capabilities.
-  `openspec validate --all` → 16 passed, 0 failed.
+  (RF008); `factions` (RF009); `book-library` (RF010/RF011); `book-workspace`
+  (RF011). São **18** capabilities.
+  `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 79 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 95 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
-- **Comandos Rust (37 no total):** `mensagem_inicial` (RF001),
+- **Comandos Rust (42 no total):** `mensagem_inicial` (RF001),
   `estado_inicial`/`verificar_banco` (RF002/RF003), os comandos de personagens
   e relações + `arvore_familiar` (RF004/RF005), os de ficha/PDF (RF006), os de
-  mundos (RF007), os de entradas (RF008), os de facções (RF009) e
-  `montar_documento_mundo` (Documento do Mundo completo). Todos no
+  mundos (RF007), os de entradas (RF008), os de facções (RF009), os de livros
+  (RF011) e `montar_documento_mundo` (Documento do Mundo completo). Todos no
   `invoke_handler`.
-- **Pendências conhecidas do app:** RF001–RF009 concluídos, validados e
-  **ARQUIVADOS**. Nenhum change ativo. O documento hoje define RF001–RF009; os
-  próximos requisitos (RF010+) ainda precisam ser escritos em
+- **Pendências conhecidas do app:** RF001–RF011 concluídos, validados e
+  **ARQUIVADOS**. Nenhum change ativo. O documento hoje define RF001–RF011; os
+  próximos requisitos (RF012+) ainda precisam ser escritos em
   `documents/talecraft.md` antes de virarem change.
 
 ### Protótipo (referência visual — HTML + CSS)
@@ -1085,18 +1184,20 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
 ### Próximo passo combinado
 
 O protótipo é a **referência visual**; o aplicativo Tauri/React é onde o código
-vive. **RF001–RF009 estão implementados, validados e arquivados** — nenhum
+vive. **RF001–RF011 estão implementados, validados e arquivados** — nenhum
 change ativo. O RF006 (painel retrátil, exportação da ficha e contraste dos
 botões) fechou com `verificar-rf006.mjs` **29/29** no app real. O RF007
-(mundos), o RF008 (entradas do mundo) e o RF009 (facções) fecharam com
-`verificar-rf007.mjs` **33/33**, `verificar-rf008.mjs` **21/21** e
-`verificar-rf009.mjs` **16/16**, respectivamente, sobre **79 testes Rust** e sem
-regressão dos verificadores RF002–RF008. A correção da exportação completa do
-Mundo (change `rf007-exportacao-mundo-dados-associados`) também está arquivada.
+(mundos), o RF008 (entradas do mundo), o RF009 (facções), o RF010 (Meus Livros) e
+o RF011 (página do livro e Dados Gerais) fecharam com `verificar-rf007.mjs`
+**33/33**, `verificar-rf008.mjs` **21/21**, `verificar-rf009.mjs` **16/16**,
+`verificar-rf010.mjs` **18/18** e `verificar-rf011.mjs` **30/30**,
+respectivamente, sobre **95 testes Rust** e sem regressão dos verificadores
+RF002–RF010. A correção da exportação completa do Mundo (change
+`rf007-exportacao-mundo-dados-associados`) também está arquivada.
 
 Seguem os demais requisitos de `documents/talecraft.md` (cada um virando um
 change OpenSpec), portando a interface do protótipo à medida que chegarem. O
-documento hoje define **RF001–RF009**; os próximos requisitos (RF010+) ainda
+documento hoje define **RF001–RF011**; os próximos requisitos (RF012+) ainda
 precisam ser escritos antes de virarem change.
 
 O padrão para um domínio novo (o RF004 é o primeiro) já está definido e provado:

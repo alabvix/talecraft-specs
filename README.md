@@ -10,7 +10,7 @@ O código executável (Tauri + Rust + React) fica no repositório irmão
 ## Conteúdo
 
 ```text
-documents/talecraft.md     requisitos RF001–RF009 e stack
+documents/talecraft.md     requisitos RF001–RF011 e stack
 openspec/                  config, specs consolidadas e changes/archive
 prototype/                 referência visual HTML + CSS
 concepts/                  imagens de conceito

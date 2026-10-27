@@ -635,6 +635,338 @@ Criar o cadastro e gerenciamento de **Faccoes** no Worldbuilding e a associacao 
 - **Data de criacao:** 23/10/2026
 
 
+### RF010 - Livros - Meus Livros
+
+Este requisito cria a **tela inicial do menu Meus Livros**, que passa a ser a
+entrada do domínio de Livros. A tela reutiliza a casca visual do aplicativo
+(marca, topbar, sidebar e temas) e reproduz o conteúdo e a disposição do
+protótipo `prototype/index.html`, com as exceções explicitadas neste requisito.
+
+Como ainda não existe nenhum livro cadastrado, a tela representa o **estado
+inicial vazio**: todas as métricas ficam zeradas, não há cards de livros e o
+painel de personagens não tem linhas. Não são usados dados fictícios do
+protótipo.
+
+O escopo é **somente a tela inicial e o botão de novo livro**. Não são criados
+neste requisito: cadastro/edição de livro, tela de detalhe do livro, entidade
+Livro no banco, migração, importação/exportação `.pdc`, associação livro–mundo ou
+livro–personagem e dados reais de livros.
+
+- **Data de criacao:** 26/10/2026
+
+#### Telas
+
+- **RF010-TL001** - Tela Meus Livros (nova): ao clicar em **Meus Livros** na
+  sidebar, a área principal exibe a tela inicial do domínio de Livros, com:
+  título **Meus Livros**; subtítulo com contadores zerados; botão primário
+  **+ Novo Livro**; quatro cartões de métricas com valor **0**; seção **Todos os
+  livros** com badge **0 resultados** e controle **Grade**; estado vazio da
+  listagem; e o painel **Personagens que atravessam livros** em estado vazio.
+- **RF010-TL002** - Cabeçalho e ação principal: o cabeçalho da tela exibe o
+  título **Meus Livros**, o subtítulo e **apenas** o botão **+ Novo Livro**. O
+  botão **Importar .pdc** do protótipo **não** existe nesta tela.
+- **RF010-TL003** - Estado vazio da listagem: a seção **Todos os livros** exibe
+  o badge **0 resultados**, o controle **Grade** e uma mensagem de estado vazio
+  informando que ainda não há livros. Não há cards de livros nem card tracejado
+  **Novo livro** enquanto não existir um livro cadastrado.
+- **RF010-TL004** - Painel de personagens compartilhados: o painel
+  **Personagens que atravessam livros** permanece abaixo da listagem, com o
+  título e o link **Ver biblioteca completa**, mas sem linhas de personagens
+  enquanto não houver livros/personagens compartilhados. O link abre a tela de
+  Personagens existente (RF004).
+
+#### Fluxos
+
+- **RF010-FL001** - Acessar Meus Livros: o escritor clica em **Meus Livros** na
+  sidebar e a tela inicial do domínio de Livros é exibida.
+- **RF010-FL002** - Acionar + Novo Livro: o escritor clica no botão **+ Novo
+  Livro**. Neste requisito o clique não abre cadastro, não cria registro e não
+  navega para uma tela inexistente; o fluxo de cadastro pertence a requisito
+  posterior.
+- **RF010-FL003** - Consultar a listagem vazia: como não há livros, a seção
+  **Todos os livros** mostra o estado vazio, sem cards e sem navegação para
+  detalhe de livro.
+- **RF010-FL004** - Consultar a tela: a busca superior, o badge de resultados e
+  o controle **Grade** são exibidos conforme o protótipo. Nesta entrega eles são
+  visuais; filtragem e alternância real de visualização pertencem ao requisito
+  de listagem/cadastro de livros.
+
+#### Regras de Negócio
+
+- **RF010-RN001** - Escopo somente da tela inicial: este requisito não cria a
+  página de cadastro do livro nem a tela de detalhe do livro.
+- **RF010-RN002** - Sem entidade Livro no banco: não há tabela, migração,
+  comando Tauri ou persistência de livros neste requisito.
+- **RF010-RN003** - Estado inicial vazio: as métricas **Livros na biblioteca**,
+  **Personagens**, **Capítulos planejados** e **Entradas de worldbuilding**
+  exibem **0**; a listagem exibe **0 resultados** e nenhum card; o painel de
+  personagens exibe estado vazio.
+- **RF010-RN004** - Sem importação `.pdc`: o botão **Importar .pdc** do
+  protótipo não deve ser criado, nem qualquer ação de importação.
+- **RF010-RN005** - Apenas + Novo Livro: o cabeçalho da tela tem somente o botão
+  **+ Novo Livro** como ação principal. Não há card tracejado **Novo livro** na
+  listagem vazia.
+- **RF010-RN006** - Label da seção: o título **Todos os projetos** do protótipo
+  passa a ser **Todos os livros**.
+- **RF010-RN007** - Sem dados fictícios: a tela não deve exibir os livros,
+  personagens, contadores ou imagens de demonstração do protótipo. O estado
+  inicial é vazio.
+- **RF010-RN008** - Sem navegação para livro: como não há cards, não existe
+  navegação para detalhe/cadastro de livro nesta entrega.
+- **RF010-RN009** - Sem regressão: a casca do aplicativo, a navegação, os temas,
+  o splash e as telas de Personagens e Worldbuilding continuam funcionando.
+- **RF010-RN010** - Sem exclusão, edição ou associação: este requisito não cria
+  operações de excluir, editar, associar ou abrir livros.
+
+#### Critérios de Aceite
+
+- **RF010-CA001** - Acesso à tela: clicar em **Meus Livros** na sidebar abre a
+  nova tela inicial.
+- **RF010-CA002** - Cabeçalho: a tela exibe **Meus Livros**, o subtítulo com
+  contadores zerados e o botão **+ Novo Livro**.
+- **RF010-CA003** - Sem Importar .pdc: o botão **Importar .pdc** não aparece em
+  nenhum ponto da tela.
+- **RF010-CA004** - Métricas zeradas: os quatro cartões exibem valor **0**:
+  **Livros na biblioteca**, **Personagens · 0 em 2+ livros**, **Capítulos
+  planejados** e **Entradas de worldbuilding**.
+- **RF010-CA005** - Label corrigida: a seção exibe **Todos os livros**, e não
+  **Todos os projetos**.
+- **RF010-CA006** - Badge e Grade: o badge **0 resultados** e o controle
+  **Grade** aparecem ao lado do título da seção.
+- **RF010-CA007** - Listagem vazia: não há cards de livros nem card **Novo
+  livro**; a seção mostra uma mensagem de estado vazio.
+- **RF010-CA008** - Sem dados fictícios: nenhum livro, personagem, contador ou
+  imagem de demonstração do protótipo aparece na tela.
+- **RF010-CA009** - Painel de personagens vazio: o painel **Personagens que
+  atravessam livros** é exibido com o link **Ver biblioteca completa**, mas sem
+  linhas de personagens.
+- **RF010-CA010** - Sem cadastro: clicar em **+ Novo Livro** não abre cadastro,
+  não cria livro e não navega para tela inexistente.
+- **RF010-CA011** - Sem detalhe de livro: como não há cards, não existe
+  navegação para detalhe/cadastro de livro nesta entrega.
+- **RF010-CA012** - Sem banco: o requisito não cria migração, tabela ou comando
+  de persistência de livros.
+- **RF010-CA013** - Sem regressão: temas, splash, navegação, Personagens e
+  Worldbuilding permanecem funcionando.
+- **RF010-CA014** - Testes automatizados: a verificação da interface cobre a
+  abertura da tela, ausência de **Importar .pdc**, presença de **+ Novo Livro**,
+  métricas zeradas, label **Todos os livros**, badge **0 resultados**, listagem
+  vazia, painel vazio e ausência de dados fictícios.
+
+### RF011 - Livros - Página do livro, navegação e Dados Gerais
+
+Este requisito transforma o botão **+ Novo Livro** da tela Meus Livros em
+entrada para o domínio do livro. Ao acioná-lo, o escritor passa a ver a **página
+do livro**, com faixa do livro aberto, menu lateral próprio e a página principal
+(**Painel do Livro**). Também é criada a página **Dados do Livro**, com um
+componente **Tab Panel** cuja única aba desta entrega é **Dados Gerais**.
+
+O livro é uma entidade persistida no banco. O cadastro acontece na própria
+página do livro: o clique em **+ Novo Livro** abre a página em modo de criação e
+o registro só é gravado quando o escritor salva com um Título válido. Sair sem
+salvar descarta o rascunho.
+
+A página do livro substitui a casca da raiz enquanto um livro está aberto: a
+marca TaleCraft dá lugar à faixa do livro aberto, o menu lateral da raiz dá lugar
+ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
+
+- **Data de criacao:** 27/10/2026
+
+#### Telas
+
+- **RF011-TL001** - Página do livro (nova): exibida ao clicar em **+ Novo
+  Livro** ou em um card de livro já cadastrado. É composta por: faixa do livro
+  aberto (`bookband`) com o nome do livro, o rótulo **Livro aberto** e o botão
+  **Trocar livro**; barra superior com breadcrumb **Início / [nome do livro] /
+  [seção]**; menu lateral do livro; e a área principal da seção ativa.
+- **RF011-TL002** - Menu lateral do livro: o rótulo do grupo é o **nome do
+  livro** (ou **Novo livro** enquanto não salvo) e os itens aparecem nesta
+  ordem: **Painel do Livro**, **Dados do Livro**, **Personagens**, **Capítulos**
+  e **Worldbuilding**. Abaixo, o grupo **Análise** mantém **Gráficos** e
+  **Exportar**, como no protótipo. Por fim, o item **Início** com o subtítulo
+  **Sair do livro** retorna à tela Meus Livros. A ordem dos itens do livro é
+  diferente da do protótipo e deve ser respeitada exatamente como descrita.
+- **RF011-TL003** - Painel do Livro: página principal do livro. Exibe o título
+  do livro (ou **Novo livro**), um subtítulo com os dados já preenchidos
+  (gênero principal, subgêneros, faixa de público e idioma) e o botão **Dados do
+  livro**. Enquanto os módulos do livro não existem, as quatro métricas
+  (**Personagens**, **Entradas de worldbuilding**, **Capítulos planejados** e
+  **Planejamento concluído**) exibem **0** e a grade de módulos apresenta
+  **Personagens**, **Worldbuilding**, **Capítulos**, **Dados do Livro**,
+  **Gráficos** e **Exportar**, cada um levando à sua seção do menu lateral.
+- **RF011-TL004** - Dados do Livro: página com o componente **Tab Panel**. Nesta
+  entrega o painel tem **uma única aba**, **Dados Gerais**, e a estrutura já
+  aceita novas abas em requisitos posteriores. A aba contém: **Título do livro**
+  (texto, único obrigatório); **Gênero Principal** (lista fechada: Ficção
+  Científica, Terror, Fantasia); **Subgêneros** (seleção múltipla, filtrada pelo
+  Gênero Principal); **Faixa de Público** (lista fechada: Infantil, Young Adult,
+  Adulto, Geral); e **Idioma** (lista fechada: Português, Inglês, Espanhol).
+  A página tem os botões **Descartar** (volta aos últimos dados salvos) e
+  **Salvar**.
+- **RF011-TL005** - Meus Livros com livros: a tela inicial passa a listar os
+  livros cadastrados, em **grade** (padrão) ou **lista**, com busca por título.
+  Os cards mostram o título, o gênero principal com os subgêneros, a faixa de
+  público, o idioma e as métricas do livro (capítulos, mundo e planejamento),
+  que permanecem **0** enquanto os módulos não existem. As métricas gerais e o
+  badge de resultados passam a refletir os livros cadastrados.
+- **RF011-TL006** - Seções em requisito posterior: **Personagens**,
+  **Capítulos**, **Worldbuilding**, **Gráficos** e **Exportar** existem no menu
+  lateral e abrem uma tela informativa do módulo, sem conteúdo de domínio e sem
+  navegação para tela inexistente. **Personagens** aqui é o elenco do livro, e
+  não a biblioteca global de fichas do RF004.
+
+#### Fluxos
+
+- **RF011-FL001** - Criar livro: o escritor clica em **+ Novo Livro** na tela
+  Meus Livros. A página do livro abre em modo de criação, com o título vazio e o
+  menu lateral rotulado **Novo livro**.
+- **RF011-FL002** - Salvar o primeiro cadastro: na aba **Dados Gerais**, o
+  escritor informa ao menos o **Título do livro** e clica em **Salvar**. O livro
+  é criado, a faixa do livro e o menu lateral passam a exibir o título e o
+  registro aparece na listagem de Meus Livros.
+- **RF011-FL003** - Abrir um livro: o escritor clica em um card de livro na tela
+  Meus Livros. A página do livro abre no **Painel do Livro**.
+- **RF011-FL004** - Editar os dados: no menu lateral do livro, o escritor clica
+  em **Dados do Livro**, altera os campos da aba **Dados Gerais** e clica em
+  **Salvar**. Os dados são atualizados e a faixa do livro reflete o novo título.
+- **RF011-FL005** - Descartar alterações: o escritor clica em **Descartar** e os
+  campos voltam aos últimos dados salvos, sem gravar nada.
+- **RF011-FL006** - Navegar no livro: o escritor usa os itens do menu lateral do
+  livro. **Painel do Livro** e **Dados do Livro** abrem suas páginas; os demais
+  itens abrem a tela informativa da seção.
+- **RF011-FL007** - Sair do livro: o escritor clica em **Trocar livro** na faixa
+  do livro ou em **Início — Sair do livro** no menu lateral e retorna à tela Meus
+  Livros. Um rascunho não salvo é descartado.
+- **RF011-FL008** - Buscar e alternar visualização: na tela Meus Livros, o
+  escritor digita no campo **Buscar livros…** para filtrar a listagem pelo
+  título e escolhe **Grade** ou **Lista** para alternar a forma de visualização.
+- **RF011-FL009** - Trocar o gênero principal: ao trocar o **Gênero Principal**
+  na aba **Dados Gerais**, a lista de subgêneros é refiltrada, mas a seleção de
+  cada gênero é preservada. Ao voltar ao gênero anterior sem salvar, os
+  subgêneros já marcados — inclusive os salvos — reaparecem selecionados. Ao
+  salvar, somente os subgêneros do gênero atual são gravados.
+
+#### Regras de Negócio
+
+- **RF011-RN001** - Página do livro, não modal: o clique em **+ Novo Livro**
+  abre a página do livro em modo de criação; não existe modal de cadastro.
+- **RF011-RN002** - Título obrigatório e único: o **Título do livro** é o único
+  campo obrigatório, é gravado sem espaços nas extremidades e não pode repetir
+  outro título, sem diferenciar maiúsculas de minúsculas.
+- **RF011-RN003** - Gênero Principal é lista fechada de três valores: **Ficção
+  Científica**, **Terror** e **Fantasia**. O campo é opcional na criação.
+- **RF011-RN004** - Subgêneros são lista fechada por gênero e seleção múltipla:
+  - **Ficção Científica:** Hard SciFi, Distopia, Cyberpunk, Space Opera, Militar
+    e Fantasia Científica;
+  - **Fantasia:** Alta Fantasia, Fantasia Sombria, Distopia, Fantasia Urbana,
+    Romantasia, Gótico, Baixa Fantasia, Grindark, Mitológica, Histórica,
+    Científica e Espada e Feitiçaria;
+  - **Terror:** Psicológico, Sobrenatural, Gótico, Cósmico e Slasher.
+  Sem gênero principal escolhido, não há subgêneros disponíveis. A gravação
+  recusa subgênero fora da lista do gênero escolhido. A seleção é mantida por
+  gênero no formulário: trocar o gênero não apaga os subgêneros já marcados dos
+  outros gêneros enquanto o livro não for salvo nem descartado.
+- **RF011-RN005** - Faixa de Público é lista fechada: **Infantil**, **Young
+  Adult**, **Adulto** e **Geral**. O campo é opcional.
+- **RF011-RN006** - Idioma é lista fechada: **Português**, **Inglês** e
+  **Espanhol**. O campo é opcional.
+- **RF011-RN007** - Gravação transacional: o livro e os seus subgêneros são
+  gravados juntos; uma falha no meio não deixa o livro com parte da seleção.
+- **RF011-RN008** - Rascunho não persistido: o livro em modo de criação não
+  existe no banco até o primeiro **Salvar**; sair da página sem salvar descarta
+  o rascunho. Não há criação automática de livro com título provisório.
+- **RF011-RN009** - Sem exclusão: este requisito não cria operação de excluir
+  livro. A edição dos dados é feita pela própria página **Dados do Livro**.
+- **RF011-RN010** - Escopo dos módulos: personagens do livro, capítulos,
+  associação livro–mundo, gráficos e exportação pertencem a requisitos
+  posteriores. Neste requisito esses itens do menu abrem apenas a tela
+  informativa da seção.
+- **RF011-RN011** - Menu lateral do livro na ordem definida: **Painel do
+  Livro**, **Dados do Livro**, **Personagens**, **Capítulos** e
+  **Worldbuilding**; depois o grupo **Análise** com **Gráficos** e **Exportar**;
+  por fim **Início — Sair do livro**.
+- **RF011-RN012** - Tab Panel com uma aba: o painel de **Dados do Livro** tem
+  somente a aba **Dados Gerais** nesta entrega, mas o componente é reutilizável
+  para as abas de requisitos futuros.
+- **RF011-RN013** - Nome do livro sempre atualizado: depois de salvar, o título
+  novo aparece na faixa do livro, no rótulo do menu lateral, no breadcrumb e no
+  card da listagem.
+- **RF011-RN014** - Sem dados fictícios: a listagem e a página do livro não usam
+  os livros, personagens, contadores ou imagens de demonstração do protótipo.
+- **RF011-RN015** - Listagem real: a busca e a alternância **Grade/Lista** da
+  tela Meus Livros deixam de ser apenas visuais e passam a operar sobre os
+  livros cadastrados.
+- **RF011-RN016** - Sem regressão: a casca da raiz, a navegação, os temas, o
+  splash, Personagens, Worldbuilding e a exportação do Mundo continuam
+  funcionando.
+- **RF011-RN017** - Métricas do painel ligadas aos livros: as métricas
+  **Personagens**, **Personagens · N em 2+ livros**, **Capítulos planejados** e
+  **Entradas de worldbuilding** contam somente o que está associado aos livros.
+  Enquanto não existirem vínculo personagem–livro, capítulos ou associação
+  livro–mundo, essas métricas exibem **0**, mesmo que existam personagens,
+  capítulos ou entradas globais no banco.
+
+#### Critérios de Aceite
+
+- **RF011-CA001** - Abrir a página do livro: clicar em **+ Novo Livro** abre a
+  página do livro em modo de criação.
+- **RF011-CA002** - Estado de novo livro: a página mostra **Novo livro**, o menu
+  lateral do livro e a aba **Dados Gerais** com o título vazio; o banco ainda
+  não tem registro.
+- **RF011-CA003** - Título obrigatório: salvar sem título exibe mensagem útil e
+  não cria o livro.
+- **RF011-CA004** - Título único: salvar um título já existente, mesmo com
+  caixa diferente, exibe mensagem útil e não grava.
+- **RF011-CA005** - Criar livro: com um título válido, **Salvar** cria o livro,
+  atualiza a faixa do livro e o menu lateral e faz o livro aparecer em **Meus
+  Livros**.
+- **RF011-CA006** - Reabrir livro: clicar no card do livro abre o **Painel do
+  Livro** com os dados gravados.
+- **RF011-CA007** - Gênero Principal: o controle oferece exatamente **Ficção
+  Científica**, **Terror** e **Fantasia**.
+- **RF011-CA008** - Subgêneros: a seleção múltipla é filtrada pelo gênero
+  escolhido e apresenta exatamente as listas definidas no requisito, incluindo
+  os doze subgêneros de **Fantasia**.
+- **RF011-CA009** - Troca de gênero: ao mudar o gênero principal, os subgêneros
+  de outros gêneros não são gravados; ao voltar ao gênero original sem salvar,
+  os subgêneros salvos reaparecem selecionados.
+- **RF011-CA010** - Faixa de Público: o controle oferece **Infantil**, **Young
+  Adult**, **Adulto** e **Geral**.
+- **RF011-CA011** - Idioma: o controle oferece **Português**, **Inglês** e
+  **Espanhol**.
+- **RF011-CA012** - Menu lateral: os itens aparecem na ordem **Painel do
+  Livro**, **Dados do Livro**, **Personagens**, **Capítulos**,
+  **Worldbuilding**, **Gráficos**, **Exportar** e **Início**, com o grupo
+  **Análise** antes de **Gráficos** e **Exportar**.
+- **RF011-CA013** - Painel do Livro: exibe título, subtítulo com os dados do
+  livro, métricas zeradas, os seis módulos e o botão **Dados do livro**.
+- **RF011-CA014** - Seções futuras: **Personagens**, **Capítulos**,
+  **Worldbuilding**, **Gráficos** e **Exportar** abrem a tela informativa da
+  seção, sem erro e sem tela em branco.
+- **RF011-CA015** - Tab Panel: **Dados do Livro** renderiza o componente de
+  abas com **Dados Gerais** selecionada e o formulário correspondente.
+- **RF011-CA016** - Busca de livros: digitar no campo **Buscar livros…** filtra
+  a listagem pelo título.
+- **RF011-CA017** - Grade/Lista: a alternância entre **Grade** e **Lista**
+  muda a visualização dos livros sem perder a busca.
+- **RF011-CA018** - Métricas reais: **Livros na biblioteca** conta os livros
+  cadastrados; **Personagens** conta somente os personagens associados a livros;
+  **Personagens · N em 2+ livros** conta somente personagens com vínculo em dois
+  ou mais livros; **Capítulos planejados** conta somente capítulos dos livros; e
+  **Entradas de worldbuilding** conta somente entradas dos mundos associados a
+  livros. Sem vínculo personagem–livro e sem associação livro–mundo, essas
+  métricas exibem **0**, mesmo com personagens e entradas globais cadastrados.
+- **RF011-CA019** - Sem dados fictícios: nenhum livro, personagem, contador ou
+  imagem do protótipo aparece na tela.
+- **RF011-CA020** - Sair do livro: **Trocar livro** e **Início — Sair do livro**
+  retornam à tela Meus Livros; um rascunho não salvo não é gravado.
+- **RF011-CA021** - Sem regressão: temas, splash, navegação, Personagens,
+  Worldbuilding e exportação do Mundo continuam funcionando.
+- **RF011-CA022** - Testes automatizados: a verificação cobre a abertura da
+  página, criação com título obrigatório e único, todos os campos, filtragem de
+  subgêneros, menu na ordem definida, Tab Panel, listagem, busca, grade/lista e
+  reabertura do livro.
+
 ## Arquitetura
 
 O TaleCraft será construído para Desktop, usando a linguagem Rust com o Framework Tauri 2.0. Para o front-end, será utilizado o React, com JavaScript e Vite. Para o banco de dados, será utilizado o banco SQLite. 
