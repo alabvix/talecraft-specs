@@ -290,3 +290,123 @@ O sistema SHALL acrescentar, na migração **v11** aditiva, as colunas `periodo_
 - **WHEN** o escritor grava **De** = `Século XXII` e **Até** = `2189`
 - **THEN** os dois valores ficam gravados no mesmo registro do livro (RF011-RN018, RF011-CA023)
 
+### Requirement: Migração v12 dos personagens do livro
+O sistema SHALL acrescentar, na migração **v12** aditiva, a tabela `livro_personagem` com o par `livro_id` + `personagem_id` como chave primária, referências ao livro e ao personagem global, `CHECK` do **Papel** e as colunas de texto do vínculo, sem editar passos publicados da v1 à v11 e preservando os dados de bancos existentes (RF014-RN006, RF014-RN007, RF014-CA013).
+
+#### Scenario: Banco v11 migra para v12
+- **GIVEN** um banco criado e migrado até a v11 (RF011/RF013)
+- **WHEN** o aplicativo abre o banco com o RF014
+- **THEN** a tabela `livro_personagem` é criada e os livros, subgêneros, abas narrativas, humor, personagens, relações, mundos, entradas e facções permanecem intactos (RF014-RN006, RF014-CA013)
+
+#### Scenario: Livro existente começa sem elenco
+- **GIVEN** um livro foi criado antes da v12
+- **WHEN** o banco migra para a v12
+- **THEN** o livro não tem nenhum personagem associado, sem erro e sem conteúdo fictício (RF014-RN012, RF014-CA013)
+
+#### Scenario: Vínculo duplicado é recusado pelo esquema
+- **GIVEN** a tabela `livro_personagem` existe e o par livro–personagem já foi gravado
+- **WHEN** o desenvolvedor tenta inserir o mesmo par novamente
+- **THEN** a chave primária composta recusa a gravação e o vínculo existente não é alterado (RF014-RN005, RF014-CA013)
+
+#### Scenario: Papel fora da lista é recusado pelo esquema
+- **GIVEN** o esquema da v12 está aplicado
+- **WHEN** o desenvolvedor tenta gravar um **Papel** fora dos seis valores definidos e do valor vazio
+- **THEN** o `CHECK` do SQLite recusa a gravação (RF014-RN004, RF014-CA008, RF014-CA013)
+
+#### Scenario: Personagem em vários livros
+- **GIVEN** um personagem global já está associado a um livro
+- **WHEN** o mesmo personagem é associado a um segundo livro
+- **THEN** existem dois vínculos distintos, um por livro, e a ficha global continua única (RF014-RN001, RF014-CA014)
+
+#### Scenario: Referências exigem livro e personagem existentes
+- **GIVEN** a tabela `livro_personagem` existe
+- **WHEN** o desenvolvedor tenta gravar um vínculo com `livro_id` ou `personagem_id` inexistente
+- **THEN** a chave estrangeira recusa a gravação (RF014-RN006)
+
+### Requirement: Migração v13 dos papéis do vínculo
+O sistema SHALL ampliar, na migração **v13** aditiva, o `CHECK` do **Papel** de `livro_personagem` para os treze valores definidos no RF014, recriando a tabela, copiando os vínculos existentes com os seus textos e recriando o índice por `personagem_id`, sem editar passos publicados da v1 à v12 (RF014-RN004, RF014-RN006, RF014-CA008, RF014-CA013).
+
+#### Scenario: Banco v12 migra para v13
+- **GIVEN** um banco na v12 com vínculos livro–personagem gravados
+- **WHEN** o aplicativo abre o banco com o ajuste do RF014
+- **THEN** a tabela `livro_personagem` passa a aceitar os treze papéis, e os vínculos, papéis e textos anteriores permanecem intactos (RF014-RN004, RF014-CA013)
+
+#### Scenario: Papéis novos aceitos pelo esquema
+- **GIVEN** o esquema da v13 está aplicado
+- **WHEN** o desenvolvedor grava um vínculo com **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**, **Mentor**, **Herói** ou **Vilão**
+- **THEN** o `CHECK` do SQLite aceita cada um dos novos valores (RF014-RN004, RF014-CA008)
+
+#### Scenario: Papel fora da lista continua recusado
+- **GIVEN** o esquema da v13 está aplicado
+- **WHEN** o desenvolvedor tenta gravar um **Papel** fora dos treze valores e do valor vazio
+- **THEN** o `CHECK` do SQLite recusa a gravação (RF014-RN004, RF014-CA008)
+
+#### Scenario: Chave composta e referências continuam valendo
+- **GIVEN** a tabela `livro_personagem` foi recriada na v13
+- **WHEN** o desenvolvedor tenta inserir o mesmo par livro–personagem ou uma referência inexistente
+- **THEN** a chave primária composta ou a chave estrangeira recusa a gravação (RF014-RN005, RF014-RN006)
+
+### Requirement: Migração v14 dos capítulos
+O sistema SHALL acrescentar, na migração **v14** aditiva, as tabelas `capitulo` (livro, número inteiro único por livro, título, status, tipo, textos de planejamento, cenário e datas) e `capitulo_personagem` (personagem, evento e tipo de evento com `CHECK` da combinação), sem editar passos publicados da v1 à v13 e preservando os dados de bancos existentes (RF015-RN003, RF015-RN006, RF015-RN012, RF015-CA011).
+
+#### Scenario: Banco v13 migra para v14
+- **GIVEN** um banco na v13 com livros, personagens, vínculos de elenco e demais dados
+- **WHEN** o aplicativo abre o banco com o RF015
+- **THEN** as tabelas `capitulo` e `capitulo_personagem` são criadas e os dados anteriores permanecem intactos (RF015-RN006, RF015-CA011)
+
+#### Scenario: Capítulo nasce com os padrões
+- **GIVEN** o esquema da v14 está aplicado
+- **WHEN** o desenvolvedor insere um capítulo apenas com o livro e o número
+- **THEN** o status é **Esboço**, o tipo é **Não definido** e a data de criação é preenchida (RF015-RN002, RF015-RN004)
+
+#### Scenario: Número único por livro
+- **GIVEN** um livro já tem o capítulo de número 1
+- **WHEN** o desenvolvedor tenta inserir outro capítulo de número 1 no mesmo livro
+- **THEN** a chave única recusa a gravação; o mesmo número em outro livro é aceito (RF015-RN003, RF015-CA003)
+
+#### Scenario: Par evento/tipo inválido é recusado
+- **GIVEN** a associação capítulo–personagem existe
+- **WHEN** o desenvolvedor tenta gravar **Ponto de Virada** com **Ascensão** ou **Neutro** com **Apogeu**
+- **THEN** o `CHECK` do SQLite recusa a gravação (RF015-RN005, RF015-CA008, RF015-CA011)
+
+#### Scenario: Referências exigem livro e personagem existentes
+- **GIVEN** as tabelas da v14 existem
+- **WHEN** o desenvolvedor tenta gravar um capítulo com livro inexistente ou uma associação com personagem inexistente
+- **THEN** a chave estrangeira recusa a gravação (RF015-RN001, RF015-RN006)
+
+### Requirement: Migração v15 do motivo do evento
+O sistema SHALL acrescentar, na migração **v15** aditiva, a coluna `motivo` em `capitulo_personagem`, com texto livre e valor padrão vazio, sem recriar a tabela nem editar passos publicados da v1 à v14, preservando os capítulos, os personagens do arco e os dados dos livros (RF015-RN005, RF015-RN006, RF015-CA008, RF015-CA018).
+
+#### Scenario: Banco v14 migra para v15
+- **GIVEN** um banco na v14 com livros, capítulos e personagens do arco
+- **WHEN** o aplicativo abre o banco com o ajuste do RF015
+- **THEN** a coluna `motivo` é criada e os capítulos e vínculos anteriores permanecem intactos (RF015-RN006, RF015-CA018)
+
+#### Scenario: Vínculo antigo ganha motivo vazio
+- **GIVEN** um vínculo capítulo–personagem gravado antes da v15, com Evento e Tipo de Evento
+- **WHEN** a migração v15 termina
+- **THEN** o Evento e o Tipo de Evento continuam os mesmos e o **Motivo do Evento** fica vazio (RF015-RN005, RF015-CA018)
+
+#### Scenario: Motivo é gravado e relido
+- **GIVEN** a coluna `motivo` existe
+- **WHEN** o desenvolvedor grava um texto no vínculo e lê de volta
+- **THEN** o mesmo texto é devolvido, sem alterar o Evento nem o Tipo de Evento (RF015-RN005, RF015-CA008)
+
+### Requirement: Migração v16 do motivo do tipo
+O sistema SHALL acrescentar, na migração **v16** aditiva, a coluna `motivo_tipo` em `capitulo`, com texto livre e valor padrão vazio, sem recriar a tabela nem editar passos publicados da v1 à v15, preservando os capítulos, os personagens do arco e os dados dos livros (RF015-RN006, RF015-RN013, RF015-CA019).
+
+#### Scenario: Banco v15 migra para v16
+- **GIVEN** um banco na v15 com livros, capítulos e personagens do arco
+- **WHEN** o aplicativo abre o banco com o ajuste do RF015
+- **THEN** a coluna `motivo_tipo` é criada e os capítulos anteriores permanecem intactos (RF015-RN006, RF015-CA019)
+
+#### Scenario: Capítulo antigo ganha motivo vazio
+- **GIVEN** um capítulo gravado antes da v16, com Tipo definido
+- **WHEN** a migração v16 termina
+- **THEN** o Tipo continua o mesmo e o **Motivo do Tipo** fica vazio (RF015-RN013, RF015-CA019)
+
+#### Scenario: Motivo do Tipo é gravado e relido
+- **GIVEN** a coluna `motivo_tipo` existe
+- **WHEN** o desenvolvedor grava um texto no capítulo e lê de volta
+- **THEN** o mesmo texto é devolvido, sem alterar o Tipo nem os demais campos (RF015-RN013, RF015-CA019)
+

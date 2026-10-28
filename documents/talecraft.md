@@ -102,7 +102,7 @@ Deve exibir a página exatamente igual ao protótipo, com o tema Blade Byte sele
 
 Deixar na tela apenas o painel de seleção de temas.
 - **RF002-TL006** — Tela Livro Aberto: Exibir a tela vazia.
-- **RF002-TL007** — Tela Splash: Exibir uma janela Splesh antes de abrir a tela principal.
+- **RF002-TL007** — Tela Splash: Exibir uma janela Splash antes de abrir a tela principal, com o **ícone grande**, o nome **TaleCraft ao lado do ícone** e a **versão atual abaixo dos dois, em fonte menor**. A splash permanece visível por um tempo mínimo legível, mesmo com a inicialização rápida, e a janela não abre branca antes dela.
 
 #### Fluxos
 
@@ -111,6 +111,7 @@ Deixar na tela apenas o painel de seleção de temas.
 #### Regras de Negócio
 
 - **RF002-RN001** — Tema Corrente: O aplicativo ao ser aberto pela primeira vez deve sempre usar o tema Blade Byte.
+- **RF002-RN002** — Splash legível: a tela de carregamento fica visível por pelo menos 1,2 s, mesmo que a inicialização do banco termine antes, e o fundo da janela antes do CSS/React usa a cor-base do tema, sem piscada branca.
 
 #### Critérios de Aceite
 
@@ -122,6 +123,8 @@ Deixar na tela apenas o painel de seleção de temas.
 - **RF002-CA006** — Tema - persistência: O tema escolhido permanece ativo após fechar e reabrir a aplicação.
 - **RF002-CA007** — Aderência: Os componentes respeitam o tema ativo, sem estilos incompatíveis ou cores indevidamente fixas.
 - **RF002-CA008** — Compatibilidade stack tech: A aplicação permanece compatível com React, JavaScript, Vite, Tauri e Rust, e compila corretamente.
+- **RF002-CA009** — Splash legível: a splash permanece na tela por pelo menos 1,2 s e a janela não exibe fundo branco antes dela; a aplicação só aparece depois do carregamento e do tempo mínimo.
+- **RF002-CA010** — Layout da splash: o ícone aparece grande, o nome **TaleCraft** fica ao lado direito do ícone e a versão atual fica abaixo dos dois, em fonte menor que o nome.
 
 ### RF003 — Infraestrutura do banco de dados
 
@@ -194,15 +197,22 @@ Deve permir invcluir novo personagem.
 
 Ao se clicar em um card o personagem ou em seu nome se a exibição for lista, acessar a Tela de detalhe do personagem.
 
-Nessa tela, exibir como no protótipo. A parte de Vínculos com livros e Curva de arco em cada livro nesse momento não terá dados.
+Nessa tela, exibir como no protótipo. Os **Vínculos com livros** e a **Curva de
+arco em cada livro** passaram a ser preenchidos pelo RF014: o painel mostra os
+livros vinculados e o papel do personagem, e a curva continua sem dados até os
+capítulos serem cadastrados.
 
 O campo listbox Filtrar Por Livro não deve apresentar ainda nenhum dado.
 
 Protótipo da tela de personagens: C:/Users/alabh/workspace/apps/java/talecraft/prototype/personagens-biblioteca.html
 - **RF004-TL002** — Tela de Detalhe de Personagem: Essa tela lista os dados do personagem, conforme o protótipo em: file:///C:/Users/alabh/workspace/apps/java/talecraft/prototype/personagem.html
-O card de Vínculos com Livros ainda não deve apresentar nada, pois a funcionalidade de associar personagem ao livro ainda não foi feita.
+O card de Vínculos com Livros exibe os livros aos quais o personagem está
+associado, com o **Papel** do personagem e o **Total de Capítulos em que
+aparece** (ajuste do RF014; o total depende do cadastro de Capítulos).
 
-A sessão de Curva de Arco em cada livro também não deve apresentar o gráfico, pois ainda não temos a ligação do persagem com o livro.
+A sessão de Curva de Arco em cada livro lista os livros vinculados e informa
+que **não há dados por enquanto**, pois a curva será calculada a partir dos
+capítulos (ajuste do RF014).
 
 Seguir a disposição e elementos visuais conforme o protótipo, contudo, usar os campos que estão definidos no requisito, pois nem todos existem no protótipo.
 
@@ -244,7 +254,7 @@ Ela deve abrir como um ajanela Modal, listando os personagens cadastrados em uma
 - **RF004-CA006** — Busca por nome: A barra de busca filtra os personagens exibidos pelo nome, sem diferenciar maiúsculas de minúsculas.
 - **RF004-CA007** — Acesso ao detalhe: Clicar em um card ou no nome de um personagem (na exibição em lista) abre a tela de detalhe do personagem selecionado.
 - **RF004-CA008** — Detalhe do personagem: A tela de detalhe exibe os dados do personagem e permite editá-los e salvar as alterações.
-- **RF004-CA009** — Vínculos e curva sem dados: Na tela de detalhe, o card de Vínculos com Livros e a seção de Curva de Arco em cada livro não apresentam dados, pois a associação entre personagem e livro ainda não existe.
+- **RF004-CA009** — Vínculos e curva na ficha global: a tela de detalhe exibe, no card de Vínculos com Livros, os livros aos quais o personagem está associado com o Papel e o Total de Capítulos em que aparece (0 enquanto os capítulos não existem); a seção de Curva de Arco em cada livro lista esses livros e informa que não há dados por enquanto. Sem vínculos, o card fica retraído e as duas áreas ficam vazias (ajustado pelo RF014).
 - **RF004-CA010** — Filtrar por livro vazio: O campo de seleção "Filtrar por livro" da tela principal não apresenta nenhuma opção de livro cadastrado.
 - **RF004-CA011** — Painel de relações: A tela de detalhe exibe o painel de Relações Globais, listando os personagens relacionados do personagem atual.
 - **RF004-CA012** — Gerenciar relações: O botão Gerenciar Relações abre a janela modal de Relações de Personagem.
@@ -1195,6 +1205,539 @@ Tempo, Estilo e Ritmo aceitam um valor cada. Os valores "Objetivo" e
 - **RF013-CA012** - Testes automatizados: a verificação cobre as seis abas, os
   tipos de campo, as listas fechadas, o humor múltiplo, a gravação, a
   reabertura, a preservação entre abas e a migração v10.
+
+### RF014 - Livros - Personagens do livro
+
+Este requisito abre a seção **Personagens** do livro aberto. O escritor associa
+personagens da biblioteca global ao livro e registra, no vínculo, como cada um
+participa daquela história: o papel narrativo, o resumo do papel, o papel no
+mundo, os títulos/outros nomes locais e o resumo da atuação.
+
+A ficha do personagem continua **global** e é a fonte dos dados herdados; o
+vínculo guarda somente os dados que variam de livro para livro e não altera o
+cadastro global (RF004). A ficha global passa a ler os vínculos: o painel
+**Vínculos com Livros** mostra os livros, o papel e o total de capítulos em que
+o personagem aparece, e a **Curva de arco em cada livro** lista os livros
+vinculados, ainda sem dados (RF014-TL007). O RF014 revoga, para
+**Personagens**, a tela informativa prevista em RF011-TL006 e RF011-CA014. Não
+há remoção de personagem do livro neste requisito.
+
+- **Data de criacao:** 28/10/2026
+- **Ajuste de 28/10/2026:** a modal de seleção ganhou busca por nome e grade
+  paginada (RF014-TL003, RF014-RN014, RF014-CA003) e o **Papel** passou a ter
+  treze valores (RF014-RN004, RF014-CA008). O campo **Alcunha** do vínculo
+  passou a se chamar **Títulos/Outros Nomes** (RF014-TL004, RF014-RN003); a
+  **Alcunha** global continua com esse nome e somente leitura. A ficha global
+  passou a mostrar os vínculos no painel **Vínculos com Livros** e na **Curva de
+  arco em cada livro** (RF014-TL007, RF014-RN015, RF014-CA018); o nome do livro
+  é um link para a página do livro e o card da lista global mostra a quantidade
+  real de livros vinculados.
+
+#### Telas
+
+- **RF014-TL001** - Seção Personagens: o item **Personagens** do menu do livro
+  deixa de abrir a tela informativa (RF011-TL006) e passa a listar os
+  personagens associados ao livro em **cards** (padrão) ou em **lista**, com
+  alternância entre as duas visualizações, no mesmo padrão da biblioteca global
+  (RF004). Cada item mostra o retrato e o nome do personagem e o **Papel** do
+  vínculo; sem papel, mostra **Papel não definido**. Sem vínculos, a seção mostra
+  um estado vazio com orientação para usar **Adicionar Personagens**.
+- **RF014-TL002** - Botão Adicionar Personagens: fica no cabeçalho da seção,
+  visível em cards e em lista, e abre a modal de seleção. Enquanto o livro não
+  estiver salvo (modo de criação), o botão fica desabilitado e uma mensagem
+  orienta a salvar o livro antes de associar personagens.
+- **RF014-TL003** - Modal de seleção: tem o título **Adicionar Personagens**,
+  campo de busca por nome e os personagens da biblioteca global organizados em
+  uma **grade paginada**, com caixa de seleção, retrato e nome. A busca filtra
+  pelo nome e a paginação divide a grade em páginas; a seleção marcada é mantida
+  ao trocar de página ou de busca. Personagens já associados ao livro aparecem
+  com o selo **Já associado** e não podem ser marcados. A modal tem os botões
+  **Associar** e **Fechar**. Sem personagens globais, mostra um estado vazio com
+  orientação para cadastrá-los na biblioteca global; sem resultado para a busca,
+  informa que nenhum personagem corresponde.
+- **RF014-TL004** - Modal de detalhe do personagem no livro: abre ao clicar no
+  card ou na linha do personagem. Tem duas áreas: **Dados do personagem**,
+  herdados do cadastro global e somente leitura, e **Vínculo com o livro**,
+  editável. A área herdada mostra retrato, Nome, Idade, Raça, Personalidade,
+  Força, Fraqueza, Interesses, Alcunha e Biografia. A área do vínculo tem
+  **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e
+  **Resumo da atuação na história**. A modal tem os botões **Salvar** e
+  **Fechar**.
+- **RF014-TL005** - Tipos dos campos do vínculo: **Papel** é uma lista fechada;
+  **Resumo do Papel**, **Papel no mundo** e **Títulos/Outros Nomes** são texto
+  curto, de uma linha; **Resumo da atuação na história** é texto longo, de
+  várias linhas. Todos os campos são opcionais.
+- **RF014-TL006** - Ações da modal de detalhe: **Salvar** grava os campos do
+  vínculo e fecha a modal; **Fechar** fecha sem gravar as alterações pendentes.
+  Se a gravação falhar, a modal permanece aberta com mensagem útil e os valores
+  anteriores não são alterados.
+- **RF014-TL007** - Vínculos na ficha global e na lista: na tela **Detalhe do
+  Personagem** (RF004-TL002), o painel **Vínculos com Livros** lista os livros
+  aos quais o personagem está associado, com as colunas **Livro**, **Papel** e
+  **Total de Capítulos em que aparece** (contagem real; 0 quando não houver). O
+  nome do livro é um **link** que abre a página
+  daquele livro. O quadro **Curva de arco em cada livro** lista o nome de cada
+  livro vinculado com a indicação **sem dados por enquanto**. Na lista global de
+  personagens, o rodapé de cada card mostra a **quantidade de livros
+  vinculados** (0 quando não há), em vez de um valor fixo. O painel continua
+  retrátil: retraído sem vínculos e expandido com ao menos um (RF006-RN001 a
+  RF006-RN003).
+
+#### Fluxos
+
+- **RF014-FL001** - Associar personagens: com o livro salvo, o escritor abre
+  **Personagens**, clica em **Adicionar Personagens**, marca um ou mais
+  personagens e clica em **Associar**; os vínculos são criados, a modal fecha, a
+  lista é atualizada e os personagens passam a contar nas métricas.
+- **RF014-FL002** - Tentar associar um personagem já associado: o personagem
+  aparece com **Já associado** e não pode ser marcado; se a seleção chegar ao
+  servidor com um vínculo já existente (por exemplo, estado desatualizado da
+  modal), o sistema não cria um segundo vínculo, associa somente os novos e
+  exibe uma mensagem informando quais já estavam no livro.
+- **RF014-FL003** - Editar o vínculo: o escritor clica no personagem na seção
+  **Personagens**, preenche ou altera os campos do **Vínculo com o livro** e
+  clica em **Salvar**; a modal fecha, o card ou a linha mostra o novo **Papel** e
+  a reabertura do personagem exibe os valores gravados.
+- **RF014-FL004** - Fechar sem salvar: o escritor altera os campos do vínculo e
+  clica em **Fechar**; as alterações pendentes são descartadas e o vínculo
+  anterior permanece.
+- **RF014-FL005** - Livro ainda não salvo: na página do livro em modo de criação,
+  o botão **Adicionar Personagens** fica desabilitado; depois de salvar o livro
+  em **Dados do Livro**, o botão é habilitado e o fluxo de associação funciona.
+
+#### Regras de Negocio
+
+- **RF014-RN001** - Vínculo N:N: um livro tem vários personagens e um personagem
+  pode estar em vários livros; cada par livro–personagem tem no máximo um
+  vínculo. O vínculo não altera a ficha global nem cria uma cópia do personagem.
+- **RF014-RN002** - Dados herdados somente leitura: os dados globais exibidos na
+  modal vêm do cadastro do personagem (RF004) e não podem ser editados nela. As
+  relações globais continuam somente na ficha global e não fazem parte da modal.
+  Para alterar um dado global, o escritor usa a biblioteca de personagens.
+- **RF014-RN003** - Campos do vínculo: **Papel**, **Resumo do Papel**, **Papel
+  no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**,
+  todos opcionais. O campo **Títulos/Outros Nomes** (a alcunha local, gravada na
+  coluna `alcunha`) é independente da **Alcunha** global e pode ser diferente; a
+  global permanece somente leitura (RF004).
+- **RF014-RN004** - Papel: lista fechada com **Protagonista**, **Antagonista**,
+  **Coadjuvante**, **Aliado**, **Falso Antagonista**, **Falso Protagonista**,
+  **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**, **Mentor**,
+  **Herói** e **Vilão**, além do valor vazio **Não definido**. Cada vínculo
+  aceita um valor.
+- **RF014-RN005** - Duplicidade recusada: o domínio e a chave primária composta
+  do banco impedem dois vínculos do mesmo personagem com o mesmo livro; a
+  tentativa não cria nem altera o vínculo existente e gera mensagem útil.
+- **RF014-RN006** - Persistência no livro: a migração **v12** aditiva cria a
+  tabela `livro_personagem`, com o par livro–personagem como chave primária,
+  referências ao livro e ao personagem global, `CHECK` do **Papel** e os cinco
+  campos do vínculo. Bancos v11 migram preservando livros, personagens, abas e
+  humor; nenhum passo publicado é editado.
+- **RF014-RN007** - Gravação do vínculo: **Salvar** grava somente os cinco campos
+  do vínculo, sem tocar no personagem global nem nos dados do livro; a
+  atualização confere as linhas afetadas e uma falha não deixa o vínculo com
+  parte dos dados.
+- **RF014-RN008** - Livro salvo: só é possível associar personagens e editar
+  vínculos de um livro com registro no banco. Em modo de criação, além do botão
+  desabilitado, o back-end recusa a operação com mensagem útil.
+- **RF014-RN009** - Sem remoção: este requisito não desvincula personagens do
+  livro nem cria botão, ícone ou ação equivalente; a seção apenas acrescenta
+  personagens e edita os dados do vínculo.
+- **RF014-RN010** - Escopo da seção: a seção **Personagens** pertence ao livro
+  aberto. A ficha global não edita os campos do vínculo, mas lê os vínculos no
+  painel **Vínculos com Livros** e na **Curva de arco em cada livro**
+  (RF014-TL007); o **Papel** do vínculo não é gravado no cadastro global.
+- **RF014-RN011** - Métricas: a partir dos vínculos, as métricas **Personagens**
+  e **Personagens · N em 2+ livros** de **Meus Livros** passam a contar os
+  personagens associados a pelo menos um livro e os associados a dois ou mais
+  livros, respectivamente, sem somar personagens soltos da biblioteca global
+  (RF011-RN017).
+- **RF014-RN012** - Sem dados fictícios: a seção começa sem personagens
+  associados e a modal de seleção não pré-marca nem inventa vínculos, papéis ou
+  textos do protótipo.
+- **RF014-RN013** - Sem regressão: página do livro, navegação, Dados do Livro,
+  abas, Meus Livros, temas, splash, biblioteca de personagens, relações
+  familiares, Worldbuilding, facções e exportação do Mundo continuam
+  funcionando.
+- **RF014-RN014** - Busca e paginação da seleção: a modal de seleção filtra os
+  personagens da biblioteca global pelo nome, sem diferenciar maiúsculas, e
+  organiza o resultado em uma grade paginada. A seleção já marcada é mantida ao
+  trocar de página ou de busca; os personagens já associados continuam fora da
+  seleção.
+- **RF014-RN015** - Leitura dos vínculos na ficha global: o painel **Vínculos
+  com Livros** e o quadro **Curva de arco em cada livro** da ficha global leem a
+  tabela `livro_personagem` em modo somente leitura. O **Total de Capítulos em
+  que aparece** é a contagem real dos capítulos do livro em que o personagem
+  atua; 0 quando não houver. A curva exibe **sem dados por enquanto**. O nome do
+  livro no painel é um link para a página do livro. A lista global de
+  personagens exibe no rodapé do card a quantidade real de livros vinculados.
+  Personagens sem vínculo continuam com o painel retraído, as áreas vazias e
+  **0 livros** no card.
+
+#### Critérios de Aceite
+
+- **RF014-CA001** - Seção real: clicar em **Personagens** no menu do livro abre a
+  lista de personagens do livro, não a tela informativa de requisito posterior.
+- **RF014-CA002** - Botão: a seção exibe **Adicionar Personagens**; em livro não
+  salvo, o botão fica desabilitado com mensagem.
+- **RF014-CA003** - Modal de seleção: o botão abre a modal com os personagens
+  globais em grade paginada, campo de busca por nome, marca os já associados
+  como **Já associado** e mostra **Associar** e **Fechar**; a busca filtra pelo
+  nome e a seleção marcada permanece ao trocar de página.
+- **RF014-CA004** - Associação múltipla: marcar vários personagens e clicar em
+  **Associar** cria todos os vínculos, fecha a modal e atualiza a lista.
+- **RF014-CA005** - Duplicidade: tentar associar um personagem já associado não
+  cria um segundo vínculo e exibe mensagem.
+- **RF014-CA006** - Listagem: os personagens do livro aparecem em cards, com
+  alternância para lista, mostrando retrato, nome e papel; sem vínculos, a seção
+  mostra o estado vazio.
+- **RF014-CA007** - Detalhe: clicar no personagem abre a modal com os dados
+  globais somente leitura e os cinco campos do vínculo editáveis.
+- **RF014-CA008** - Papel: a lista de **Papel** tem exatamente os treze valores
+  definidos, além do valor vazio.
+- **RF014-CA009** - Salvar vínculo: preencher os cinco campos e clicar em
+  **Salvar** grava os dados, fecha a modal, atualiza o papel na listagem e mantém
+  a ficha global inalterada; reabrir mostra os valores gravados.
+- **RF014-CA010** - Fechar: alterar campos e clicar em **Fechar** descarta as
+  alterações e mantém o vínculo anterior.
+- **RF014-CA011** - Sem personagens globais: a modal de seleção mostra estado
+  vazio, orienta o cadastro global e **Fechar** funciona.
+- **RF014-CA012** - Sem seleção: clicar em **Associar** sem personagens marcados
+  exibe mensagem e não grava nada.
+- **RF014-CA013** - Migração v12: um banco v11 migra aditivamente para a v12 sem
+  perder livros, personagens, subgêneros, abas, humor ou relações; o esquema
+  recusa vínculo duplicado e **Papel** fora da lista.
+- **RF014-CA014** - Métricas: depois das associações, **Personagens** e
+  **Personagens · N em 2+ livros** refletem os vínculos e não contam personagens
+  sem livro.
+- **RF014-CA015** - Sem remoção: não existe botão, ícone ou ação de desvincular
+  personagem na seção.
+- **RF014-CA016** - Sem regressão: os fluxos do RF004, do RF011, do RF012, do
+  RF013 e dos demais requisitos anteriores continuam funcionando.
+- **RF014-CA017** - Testes automatizados: a verificação cobre a seção, o botão, a
+  modal de seleção, a associação múltipla, a duplicidade, os cards/lista, o
+  detalhe, o papel, a gravação, o fechamento sem salvar, o estado vazio, a
+  migração v12, as métricas e os vínculos na ficha global.
+- **RF014-CA018** - Vínculos na ficha global: ao abrir a tela de detalhe de um
+  personagem vinculado, o painel **Vínculos com Livros** aparece expandido e
+  lista **Livro**, **Papel** e **Total de Capítulos em que aparece** (contagem
+  real; 0 quando não houver); o nome do livro é um link que abre a página do livro. A **Curva de
+  arco em cada livro** mostra o nome de cada livro vinculado com **sem dados por
+  enquanto**. Sem vínculo, o painel abre retraído e a curva mostra o estado
+  vazio. Na lista global, o rodapé do card mostra a quantidade real de livros
+  vinculados (0 quando não há).
+
+### RF015 - Livros - Capítulos
+
+Este requisito abre a seção **Capítulos** do livro. O escritor planeja a
+estrutura da história em um quadro com os quatro status — **Esboço**,
+**Rascunho**, **Revisão** e **Finalizado** —, cria capítulos em cada status,
+edita os dados no painel abaixo e arrasta os cards para mudar o status. Cada
+capítulo pertence ao livro e pode ter personagens do elenco, com o evento de
+arco que aquele capítulo representa para cada um.
+
+O layout segue o protótipo `capitulos.html`, com as cores e a tipografia do tema
+ativo do aplicativo. A associação livro–mundo ainda pertence a requisito
+posterior; por isso o **Cenário Worldbuilding** fica sem opções enquanto não
+houver um mundo associado, exibindo o aviso correspondente.
+
+- **Data de criacao:** 28/10/2026
+
+#### Telas
+
+- **RF015-TL001** - Seção Capítulos: o item **Capítulos** do menu do livro abre
+  o quadro da história, não a tela informativa de requisito posterior. O
+  cabeçalho tem o título, a contagem de capítulos e o botão **Novo Capítulo**.
+  Em livro não salvo, a seção orienta a salvar o livro e o botão fica
+  desabilitado.
+- **RF015-TL002** - Quadro de status: quatro colunas fixas — **Esboço**,
+  **Rascunho**, **Revisão** e **Finalizado** —, cada uma com contador, lista de
+  cards e rolagem própria no corpo. O rodapé de cada coluna tem **Adicionar
+  Capítulo**, que cria um capítulo naquele status. Cada card mostra o número, o
+  título, o tipo e a quantidade de personagens.
+- **RF015-TL003** - Ordenação por coluna: o cabeçalho de cada coluna permite
+  ordenar os capítulos por **Número** ou **Data de Criação**, em ordem
+  **Ascendente** ou **Descendente**. A escolha é independente por coluna.
+- **RF015-TL004** - Botão Novo Capítulo: no cabeçalho da página, cria um capítulo
+  no status **Esboço**, abre o painel de edição e atualiza o quadro, mesmo que o
+  escritor esteja em outra coluna.
+- **RF015-TL005** - Painel de edição: ao clicar em um card, o painel **abaixo do
+  quadro** abre com os dados do capítulo em modo de edição. O cabeçalho do painel
+  exibe o número, o título, o status e o botão **Salvar** no canto superior
+  direito. Os campos são: **Número**, **Título**, **Status**, **Tipo**,
+  **Motivo do Tipo**, **Meta**, **Foreshadowing**, **Plot Twist**,
+  **Cliffhanger**, **Punch**, **K.O**, **Personagens** (com Evento, Tipo de
+  Evento e Motivo por personagem), **Cenário Worldbuilding**, **Cenário
+  Descritivo** e **Resumo**. O **Motivo do Tipo** é um texto médio logo abaixo
+  do Tipo. O **Punch** é texto curto e o **K.O**, texto curto com a **mesma
+  altura** do Punch, fica ao lado dele; o **Cenário Descritivo** usa altura
+  curta. O painel só edita um capítulo existente; **Salvar** não cria um capítulo
+  novo.
+- **RF015-TL006** - Ajuda do Tipo: o campo **Tipo** tem o botão **?** ao lado do
+  rótulo, como o Nível Tecnológico do Mundo. Ao passar o mouse ou focar, explica
+  em **linhas separadas**: “**Ação:** o capítulo se move para a conclusão da
+  trama ou resolução do conflito principal.”; “**Suspensão:** o capítulo não se
+  move para a conclusão, mas apresenta informações relevantes ou prepara para a
+  ação.”; “**Direto:** o protagonista atua diretamente no tipo.”; “**Indireto:**
+  outro personagem atua no tipo.”
+
+#### Fluxos
+
+- **RF015-FL001** - Criar pelo cabeçalho: o escritor clica em **Novo Capítulo**;
+  um capítulo é criado no **Esboço**, com o próximo número do livro, e o painel
+  abre para edição.
+- **RF015-FL002** - Criar pelo rodapé da coluna: o escritor clica em **Adicionar
+  Capítulo** no rodapé de **Rascunho**, **Revisão** ou **Finalizado**; o capítulo
+  nasce naquele status e o painel abre para edição.
+- **RF015-FL003** - Editar e salvar: o escritor clica em um card, altera os
+  campos e clica em **Salvar**; os dados e os personagens do capítulo são
+  gravados, o card permanece na coluna do status e passa a mostrar o novo título,
+  tipo e contagem de personagens.
+- **RF015-FL004** - Arrastar entre status: o escritor arrasta um card de uma
+  coluna para outra; o status do capítulo muda para o da coluna de destino e o
+  quadro é atualizado. Se o capítulo arrastado estiver aberto no painel, o campo
+  **Status** acompanha.
+- **RF015-FL005** - Ordenar uma coluna: o escritor escolhe **Número** ou **Data
+  de Criação** e a direção no cabeçalho da coluna; somente aquela coluna muda de
+  ordem.
+
+#### Regras de Negocio
+
+- **RF015-RN001** - Vínculo com o livro: cada capítulo pertence a um livro salvo.
+  Em modo de criação, o quadro não cria capítulos e o back-end recusa a operação
+  com mensagem útil.
+- **RF015-RN002** - Status: lista fechada com **Esboço**, **Rascunho**,
+  **Revisão** e **Finalizado**. O cabeçalho cria no Esboço; o rodapé cria no
+  status da coluna; o arrastar muda para o status de destino.
+- **RF015-RN003** - Número: obrigatório, inteiro maior que zero e único dentro
+  do livro. O próximo número é calculado ao criar. Os demais campos são
+  opcionais.
+- **RF015-RN004** - Tipo: lista fechada com **Ação Direta**, **Ação Indireta**,
+  **Suspensão Direta** e **Suspensão Indireta**, além do valor vazio **Não
+  definido**. O capítulo recém-criado começa como **Não definido**.
+- **RF015-RN005** - Personagens do capítulo: somente personagens associados ao
+  livro (elenco do RF014). Cada personagem tem **Evento** — **Neutro**, **Ponto
+  de Ligação** ou **Ponto de Virada** —, **Tipo de Evento**, conforme o evento:
+  **Neutro** → **Neutro**; **Ponto de Ligação** → **Ascensão** ou **Declínio**;
+  **Ponto de Virada** → **Apogeu** ou **Queda**, e **Motivo do Evento**, texto
+  livre que descreve por que o evento acontece. O mesmo personagem não pode
+  repetir no capítulo.
+- **RF015-RN006** - Persistência: a migração **v14** aditiva cria `capitulo` e
+  `capitulo_personagem`, com `CHECK` de status, tipo, evento e tipo de evento,
+  chave estrangeira para o livro/personagem e unicidade do número por livro; a
+  migração **v15** aditiva acrescenta o **Motivo do Evento** em
+  `capitulo_personagem`, com texto vazio para os vínculos existentes, e a
+  migração **v16** aditiva acrescenta o **Motivo do Tipo** em `capitulo`, também
+  com texto vazio para os capítulos existentes. Bancos v13, v14 e v15 migram
+  preservando livros, personagens, vínculos e capítulos.
+- **RF015-RN007** - Gravação: **Salvar** atualiza somente o capítulo e os
+  personagens do capítulo; não altera a ficha global, o vínculo do personagem
+  com o livro nem os dados do livro. Uma falha não deixa o capítulo pela metade.
+- **RF015-RN008** - Métricas: **Capítulos planejados** em Meus Livros e no
+  Painel do Livro conta os capítulos reais de todos os livros. Sem capítulos,
+  continua **0**.
+- **RF015-RN009** - Ficha global: o **Total de Capítulos em que aparece** do
+  painel **Vínculos com Livros** passa a contar os capítulos reais em que o
+  personagem atua, por livro.
+- **RF015-RN010** - Sem remoção: este requisito não exclui capítulos nem cria
+  ação de remover; o foco é criar, editar e mover entre status.
+- **RF015-RN011** - Sem dados fictícios: o quadro começa vazio, sem capítulos,
+  títulos ou números do protótipo.
+- **RF015-RN012** - Sem regressão: página do livro, navegação, Dados do Livro,
+  abas, Meus Livros, temas, splash, biblioteca de personagens, relações, mundos,
+  entradas, facções e exportação do Mundo continuam funcionando.
+- **RF015-RN013** - Motivo do Tipo: texto médio e opcional, logo abaixo do Tipo,
+  gravado no próprio capítulo e relido com ele. A migração **v16** acrescenta a
+  coluna `motivo_tipo` e preserva os capítulos existentes com o motivo vazio. O
+  **K.O** é texto curto com a mesma altura do **Punch**.
+
+#### Critérios de Aceite
+
+- **RF015-CA001** - Seção real: **Capítulos** abre o quadro com os quatro status,
+  não a tela informativa.
+- **RF015-CA002** - Quadro: as quatro colunas têm tamanho fixo, contador, corpo
+  com rolagem e rodapé **Adicionar Capítulo**; sem capítulos, mostram o estado
+  vazio.
+- **RF015-CA003** - Ordenação: cada coluna ordena por **Número** ou **Data de
+  Criação**, em ordem ascendente ou descendente, sem afetar as demais.
+- **RF015-CA004** - Novo Capítulo: o botão do cabeçalho cria no **Esboço** e abre
+  o painel de edição.
+- **RF015-CA005** - Adicionar Capítulo: o rodapé de cada coluna cria no status
+  daquela coluna.
+- **RF015-CA006** - Painel: clicar em um card abre o painel abaixo, com os campos
+  do requisito e **Salvar** no canto superior direito do cabeçalho.
+- **RF015-CA007** - Tipo: o campo tem a lista fechada e o **?** com a explicação
+  de Ação/Suspensão/Direto/Indireto.
+- **RF015-CA008** - Personagens do capítulo: é possível adicionar personagens do
+  elenco, escolher Evento e o Tipo de Evento correspondente, preencher o
+  **Motivo do Evento** e remover um personagem do capítulo.
+- **RF015-CA009** - Gravação: preencher os campos e **Salvar** grava tudo,
+  mantém o capítulo no status escolhido e a reabertura mostra os valores.
+- **RF015-CA010** - Arrastar: mover um card entre colunas grava o novo status e,
+  se o capítulo estiver aberto, atualiza o campo **Status**.
+- **RF015-CA011** - Migração v14: um banco v13 migra aditivamente para a v14 sem
+  perder livros, personagens, vínculos ou capítulos anteriores; o esquema recusa
+  status, tipo, evento, número duplicado e par evento/tipo inválidos.
+- **RF015-CA012** - Métricas: **Capítulos planejados** reflete os capítulos
+  reais em Meus Livros e no Painel do Livro.
+- **RF015-CA013** - Ficha global: o total de capítulos em que o personagem
+  aparece reflete os capítulos criados.
+- **RF015-CA014** - Sem remoção: não existe botão, ícone ou ação para excluir
+  capítulo.
+- **RF015-CA015** - Sem dados fictícios: o quadro começa vazio e não usa os
+  capítulos do protótipo.
+- **RF015-CA016** - Sem regressão: os fluxos dos requisitos anteriores continuam
+  funcionando.
+- **RF015-CA017** - Testes automatizados: a verificação cobre o quadro, os quatro
+  status, a ordenação, a criação pelos dois caminhos, o painel, os campos, o
+  tipo e a ajuda, os personagens com evento, a gravação, o arrastar, as métricas
+  e a migração v14.
+- **RF015-CA018** - Ajustes do painel: o **K.O** fica ao lado do **Punch**, com
+  a mesma altura dele; a ajuda do **Tipo** apresenta Ação, Suspensão, Direto e
+  Indireto em linhas separadas; o **Cenário Descritivo** usa altura curta; e cada
+  personagem do capítulo tem o campo **Motivo do Evento** abaixo do Evento/Tipo
+  de Evento, gravado e relido com o capítulo. A migração v15 preserva os
+  vínculos existentes com o motivo vazio.
+- **RF015-CA019** - Motivo do Tipo: o campo **Motivo do Tipo** aparece logo
+  abaixo do Tipo, como texto médio, é gravado e relido com o capítulo; a
+  migração v16 preserva os capítulos existentes com o motivo vazio.
+
+### RF016 - Livros - Gráficos
+
+Este requisito abre a seção **Gráficos** do livro. Ela lê os capítulos e os
+eventos de arco dos personagens já cadastrados e apresenta duas visualizações:
+a **Curva de Progressão por Capítulo** e a **Evolução de Personagem**. Não há
+cadastro novo, nem migração: os gráficos são somente leitura sobre o RF015 e o
+RF014.
+
+A tela usa um **Tab Panel** com duas abas. A primeira mostra a curva de
+progressão do livro inteiro; a segunda mostra um gráfico por personagem,
+empilhados na vertical. As cores das bolinhas são semânticas — azul para
+ascensão e apogeu, vermelho para declínio e queda — e acompanham o tema ativo
+no restante do desenho.
+
+- **Data de criacao:** 28/10/2026
+
+#### Telas
+
+- **RF016-TL001** - Seção Gráficos: o item **Gráficos** do menu do livro abre a
+  tela real com o Tab Panel de duas abas, não a tela informativa de requisito
+  posterior. O cabeçalho mostra o título **Gráficos** e a quantidade de
+  capítulos usados no eixo.
+- **RF016-TL002** - Aba **Curva de Progressão por Capítulo**: gráfico de linha
+  com os capítulos no eixo X, ordenados por **Número**, e o progresso no eixo Y.
+  A linha sobe um nível a cada capítulo de **Ação** e permanece horizontal nos
+  capítulos de **Suspensão** e de tipo **Não definido**. Ao passar o mouse sobre
+  um ponto, um tooltip mostra o número do capítulo e o **Tipo** (Ação, Suspensão
+  ou Não definido). A aba traz a legenda
+  “Ação sobe · Suspensão mantém · Não definido segue reto”.
+- **RF016-TL003** - Aba **Evolução de Personagem**: um gráfico por personagem,
+  empilhados um embaixo do outro. Cada gráfico tem o nome do personagem, o eixo
+  X com os capítulos e o eixo Y com o valor acumulado do arco. Os marcadores
+  seguem o Evento: **Ascensão** é uma bolinha azul pequena, **Declínio** uma
+  bolinha vermelha pequena, **Apogeu** uma bolinha azul maior e **Queda** uma
+  bolinha vermelha maior; **Neutro** não desenha marcador.
+- **RF016-TL004** - Tab Panel: as duas abas ficam no topo, a primeira abre
+  selecionada e a troca de aba não recarrega a página nem perde o estado do
+  livro. O componente de abas do livro é reutilizado, com `role="tablist"` e
+  navegação por teclado.
+- **RF016-TL005** - Estados vazios: em livro não salvo, a seção orienta a salvar
+  o livro; sem capítulos, as duas abas mostram a mensagem de quadro vazio; sem
+  personagens com evento, a segunda aba explica que ainda não há arco para
+  desenhar.
+
+#### Fluxos
+
+- **RF016-FL001** - Abrir os gráficos: o escritor clica em **Gráficos** no menu
+  do livro e a aba **Curva de Progressão por Capítulo** abre selecionada.
+- **RF016-FL002** - Alternar as abas: o escritor clica em **Evolução de
+  Personagem** e vê os gráficos de todos os personagens que atuam em algum
+  capítulo; voltar para a primeira aba mantém os dados já carregados.
+- **RF016-FL003** - Ler o arco: em cada gráfico de personagem, o escritor
+  acompanha a subida ou descida da linha e identifica os pontos de ligação
+  (bolinhas pequenas) e os pontos de virada (bolinhas maiores), com o eixo X
+  indicando em que capítulo cada evento aconteceu.
+
+#### Regras de Negocio
+
+- **RF016-RN001** - Fonte somente leitura: os dois gráficos usam os capítulos do
+  livro (`capitulo`), os personagens do capítulo (`capitulo_personagem`), o
+  papel no elenco (`livro_personagem`) e o nome global
+  (`personagem_global`). Nenhum dado é gravado, alterado ou apagado.
+- **RF016-RN002** - Capítulos do eixo: entram **todos** os capítulos do livro,
+  independentemente do status — Esboço, Rascunho, Revisão ou Finalizado —,
+  ordenados por **Número**. Sem capítulos, não há eixo nem linha.
+- **RF016-RN003** - Curva de Progressão: o valor começa em **0** e é acumulado
+  capítulo a capítulo. **Ação Direta** e **Ação Indireta** somam **+1**;
+  **Suspensão Direta**, **Suspensão Indireta** e **Não definido** somam **0**.
+  A linha sobe na diagonal quando soma +1 e fica horizontal quando soma 0.
+- **RF016-RN004** - Evolução de Personagem: para cada personagem, o valor começa
+  em **0** e é acumulado na ordem dos capítulos em que ele aparece. **Neutro**
+  soma **0** e não desenha marcador; **Ascensão** soma **+1** e desenha bolinha
+  azul pequena; **Declínio** soma **-1** e desenha bolinha vermelha pequena;
+  **Apogeu** soma **+2** e desenha bolinha azul maior; **Queda** soma **-2** e
+  desenha bolinha vermelha maior.
+- **RF016-RN005** - Ausência do personagem: o eixo X continua com todos os
+  capítulos do livro, mas a linha do personagem é interrompida nos capítulos em
+  que ele não aparece; ao reaparecer, começa um novo segmento a partir do valor
+  acumulado anterior.
+- **RF016-RN006** - Ordem dos gráficos: personagens com papel **Protagonista**
+  aparecem primeiro. Se não houver protagonista definido, vale a ordem de
+  primeira aparição nos capítulos e, no empate, a ordem alfabética do nome.
+  Personagens sem nenhuma aparição em capítulo não geram gráfico.
+- **RF016-RN007** - Cores e marcadores: azul para Ascensão e Apogeu, vermelho
+  para Declínio e Queda. Os pontos de virada (Apogeu e Queda) usam marcador
+  maior que os pontos de ligação (Ascensão e Declínio). As cores acompanham o
+  tema ativo, sem valores fixos do protótipo.
+- **RF016-RN008** - Leitura no back-end: um comando somente leitura
+  `dados_graficos_livro` devolve os capítulos e as séries já calculadas; o
+  front-end só desenha. Não há migração e o esquema continua na **v15**.
+- **RF016-RN009** - Sem dados fictícios: livro sem capítulos, capítulo sem
+  personagens ou personagem sem evento não inventam pontos, linhas ou
+  marcadores.
+- **RF016-RN010** - Sem regressão: página do livro, menu, Painel do Livro,
+  Dados do Livro, abas, Personagens, Capítulos, Worldbuilding, temas, splash,
+  biblioteca de personagens, mundos, entradas, facções e exportações continuam
+  funcionando.
+
+#### Critérios de Aceite
+
+- **RF016-CA001** - Seção real: **Gráficos** abre o Tab Panel com as abas
+  **Curva de Progressão por Capítulo** e **Evolução de Personagem**, não a tela
+  informativa.
+- **RF016-CA002** - Eixos: a primeira aba mostra os capítulos no eixo X,
+  ordenados por Número, e o progresso no eixo Y, com legendas legíveis.
+- **RF016-CA003** - Progressão: um capítulo de Ação sobe um nível; um de
+  Suspensão mantém a linha horizontal; um de tipo Não definido também mantém a
+  linha horizontal.
+- **RF016-CA004** - Empilhamento: a segunda aba mostra um gráfico por personagem,
+  um embaixo do outro, com nome e eixo X de capítulos.
+- **RF016-CA005** - Marcadores: Ascensão é bolinha azul pequena, Declínio
+  vermelha pequena, Apogeu azul maior e Queda vermelha maior; Neutro não desenha
+  marcador.
+- **RF016-CA006** - Ausência: a linha do personagem é interrompida nos capítulos
+  em que ele não aparece e recomeça quando ele volta.
+- **RF016-CA007** - Protagonista primeiro: o gráfico do protagonista aparece no
+  topo; sem protagonista, vale a primeira aparição e, no empate, a ordem
+  alfabética.
+- **RF016-CA008** - Todos os status: capítulos em Esboço, Rascunho, Revisão e
+  Finalizado entram nos gráficos na ordem do Número.
+- **RF016-CA009** - Estados vazios: livro não salvo, livro sem capítulos e livro
+  sem personagens com evento mostram mensagens claras, sem gráfico quebrado.
+- **RF016-CA010** - Tema: as cores do desenho, dos eixos e dos marcadores
+  acompanham o tema ativo; azul e vermelho continuam distinguindo ascensão e
+  declínio.
+- **RF016-CA011** - Somente leitura: abrir e alternar as abas não grava nada no
+  banco e nenhuma migração é criada.
+- **RF016-CA012** - Testes automatizados: a verificação cobre a seção real, as
+  duas abas, os eixos, a progressão, os marcadores, a ausência, a ordem dos
+  personagens, os estados vazios e a leitura pelo comando.
+- **RF016-CA013** - Sem dados fictícios: sem capítulos ou sem eventos, os
+  gráficos ficam vazios e não usam as curvas do protótipo.
+- **RF016-CA014** - Sem regressão: os fluxos dos requisitos anteriores continuam
+  funcionando.
+- **RF016-CA015** - Tooltip da progressão: ao passar o mouse sobre um ponto da
+  Curva de Progressão, o tooltip identifica o capítulo e o Tipo (Ação, Suspensão
+  ou Não definido).
 
 ## Arquitetura
 

@@ -5,20 +5,35 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
-> **Ponto de parada (27/10/2026, fim do dia):** RF001–RF013 estão implementados e
-> arquivados; o RF013 acrescenta as abas **Sinopse**, **Tema**, **Conflito** e
+> **Ponto de parada (28/10/2026):** RF001-RF016 estão implementados e
+> arquivados; o RF016 abre a seção **Gráficos** do livro (curva de progressão e
+> evolução dos personagens, somente leitura, sem migração). O RF015 abre
+> **Capítulos** (migrações **v14**
+> `capitulo`/`capitulo_personagem`, **v15** com o **Motivo do Evento** e **v16**
+> com o **Motivo do Tipo**, quadro
+> de status, edição, arrastar e
+> métricas reais); o RF014 abre **Personagens** (migração **v13**
+> `livro_personagem`, seleção em grade paginada com busca, 13 papéis) e o RF013
+> acrescenta as abas **Sinopse**, **Tema**, **Conflito** e
 > **Voz Narrativa/Tom/Tempo**, com **Humor** de seleção múltipla. Ajustes do
 > RF011: os módulos do Painel começam por **Dados do Livro** e Dados Gerais tem o
 > **Período da História** (**De**/**Até**, migração **v11**). A janela abre
 > **sempre maximizada**, com a barra de título nativa (ajuste do RF001 em
 > `tauri.conf.json`), validada por `verificar-janela-maximizada.mjs` **3/3**. A
-> capability `book-workspace` cobre as seis abas e a `database-foundation`
-> registra as migrações **v10** e **v11**. São **18 capabilities** e
-> `openspec validate --all` passa com 18/18; **102 testes Rust**;
-> `verificar-rf011.mjs` **31/31**, `verificar-rf012.mjs` **15/15** e
-> `verificar-rf013.mjs` **15/15**. Não há change ativo. **Retomada em
-> 28/10/2026:** definir o RF014 em `documents/talecraft.md` e só depois criar o
-> change.
+> capability `book-workspace` cobre as abas e as seções do livro e a
+> `database-foundation` registra as migrações **v10**, **v11**, **v12**, **v13**,
+> **v14**, **v15** e **v16**. São **18 capabilities** e `openspec validate --all`
+> passa com 18/18;
+> **141 testes Rust**; `verificar-rf016.mjs` **14/14**,
+> `verificar-rf015.mjs` **19/19**,
+> `verificar-rf014.mjs` **37/37**, `verificar-rf011.mjs` **34/34**,
+> `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15** e
+> `verificar-rf002.mjs` **20/20**. Em 28/10/2026 o **RF016** (gráficos do
+> livro), o **RF015** (capítulos do
+> livro), o **RF014** (personagens do livro) e os ajustes de seleção/papéis, do
+> rótulo **Títulos/Outros Nomes**, dos vínculos na ficha global e da
+> contagem/link de livros foram implementados, validados e arquivados; a
+> **splash do RF002** também foi ajustada. Nenhum change ativo.
 
 Memória de trabalho do projeto. Leia este arquivo **antes** de mexer no código.
 A documentação do *produto* (como o app funciona, tokens, telas do protótipo)
@@ -83,6 +98,7 @@ talecraft/
 │   ├── faccoes.js             metadados de tipos e papéis (RF009)
 │   ├── livrosApi.js           chamadas aos comandos de livros (RF011)
 │   ├── livros.js              seções e metadados do livro (RF011)
+│   ├── livroPersonagensApi.js chamadas ao elenco do livro (RF014)
 │   ├── fichaModo.js           marcador `#ficha=<id>` da janela de exportação (RF006)
 │   ├── mundoModo.js           marcador `#mundo=<id>` da exportação do mundo (RF007)
 │   ├── nomeArquivo.js         nome seguro para o diálogo de salvar (RF006/RF007)
@@ -99,12 +115,16 @@ talecraft/
 │                              TabelaEntradas, ModalEntradaMundo,
 │                              TabelaFaccoes, ModalFaccao,
 │                              ModalFaccaoPersonagem, TelaLivro, SidebarLivro,
-│                              Bookband, PainelAbas
+│                              Bookband, PainelAbas, DadosLivro,
+│                              TelaPersonagensLivro, ModalSelecaoPersonagens,
+│                              ModalPersonagemLivro, TelaCapitulosLivro,
+│                              PainelCapitulo, TelaGraficosLivro,
+│                              GraficoProgressao, GraficoArco
 ├── src-tauri/                 BACK-END Rust + configuração do Tauri
 │   ├── src/main.rs            binário
 │   ├── src/lib.rs             comandos Tauri + estado gerenciado do banco
-│   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF011)
-│   ├── src/banco/migracoes.rs DDL versionado (v1–v8)
+│   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF016)
+│   ├── src/banco/migracoes.rs DDL versionado (v1-v16)
 │   ├── src/erro.rs            ErroDominio + CodigoErro + Resultado<T>
 │   ├── src/test_support.rs    DiretorioTemporario (tempfile, cfg test)
 │   ├── src/personagem.rs      domínio dos personagens (RF004)
@@ -113,7 +133,10 @@ talecraft/
 │   ├── src/mundo.rs           domínio dos mundos (RF007)
 │   ├── src/entradas_mundo.rs  domínio das entradas do mundo (RF008)
 │   ├── src/faccao.rs          domínio das facções e associações (RF009)
-│   ├── src/livro.rs           domínio dos livros e dados gerais (RF011)
+│   ├── src/livro.rs           domínio dos livros e abas narrativas (RF011–RF013)
+│   ├── src/livro_personagem.rs vínculo livro-personagem (RF014)
+│   ├── src/capitulo.rs        capítulos e personagens do arco (RF015)
+│   ├── src/grafico.rs         séries dos gráficos do livro (RF016)
 │   ├── src/documento_mundo.rs agregado do Documento do Mundo (RF007–RF009)
 │   ├── src/ficha.rs           montagem da Ficha do Personagem (RF006)
 │   ├── src/pdf.rs             gravação do PDF pelo WebView2 (RF006)
@@ -122,7 +145,7 @@ talecraft/
 │   └── icons/                 ícones do aplicativo
 ├── scripts/                   verificações headless (Edge/Tauri via CDP)
 │   ├── verificar-rust.ps1     cargo fmt + clippy -D warnings + testes
-│   ├── verificar-rf002.mjs    interface, navegação, temas e splash (18/18)
+│   ├── verificar-rf002.mjs    interface, navegação, temas e splash (20/20)
 │   ├── verificar-rf003.mjs    inicialização do banco (3/3)
 │   ├── verificar-rf004.mjs    personagens: lista, busca, detalhe, modal, retrato (20/20)
 │   ├── verificar-rf005.mjs    relações bidirecionais e árvore familiar (29/29)
@@ -132,9 +155,12 @@ talecraft/
 │   ├── verificar-rf008.mjs    entradas do mundo: abas, tabela e regras (21/21)
 │   ├── verificar-rf009.mjs    facções: aba, associação e reflexo (16/16)
 │   ├── verificar-rf010.mjs    Meus Livros em estado vazio e listagem real (18/18)
-│   ├── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (31/31)
+│   ├── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (34/34)
 │   ├── verificar-rf012.mjs    aba Resumo, textos longos e sem Descartar (15/15)
 │   ├── verificar-rf013.mjs    abas Sinopse/Tema/Conflito/Voz e Humor (15/15)
+│   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (37/37)
+│   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (19/19)
+│   ├── verificar-rf016.mjs    gráficos: progressão, arcos e marcadores (14/14)
 │   └── verificar-janela-maximizada.mjs  janela maximizada com barra (3/3)
 ├── index.html                 HTML do Vite (monta o React)
 ├── vite.config.js             configuração do Vite (porta 1420)
@@ -757,7 +783,7 @@ o botão **+ Novo Livro** passou a abrir a página do livro.
 | **Métricas em um comando** | `estatisticas_biblioteca` devolve livros, personagens, personagens em 2+ livros, capítulos e entradas de mundo numa chamada só. |
 | **Métricas ligadas aos livros** | Personagens e Entradas de worldbuilding contam somente o que está associado a livros. Sem vínculo personagem–livro e sem associação livro–mundo, exibem **0** — não somam a biblioteca global nem os mundos soltos (RF011-RN017). |
 | **Fantasia com 12 subgêneros** | Entram Gótico, Baixa Fantasia, Grindark, Mitológica, Histórica, Científica e Espada e Feitiçaria. O `CHECK` ampliado exigiu a migração **v8** (o SQLite não altera `CHECK` in-place), recriando `livro_subgenero` e copiando as linhas. |
-| **Seções futuras informativas** | Personagens (elenco), Capítulos, Worldbuilding, Gráficos e Exportar existem no menu e abrem uma tela de requisito posterior, sem antecipar domínio. |
+| **Seções futuras informativas** | Worldbuilding e Exportar existem no menu e abrem uma tela de requisito posterior, sem antecipar domínio. Personagens (RF014), Capítulos (RF015) e Gráficos (RF016) já têm seção real. |
 
 **Armadilhas encontradas ao implementar (RF011):**
 
@@ -831,6 +857,150 @@ o botão **+ Novo Livro** passou a abrir a página do livro.
 - **Humor no `CHECK` e na PK:** a chave composta `(livro_id, humor)` impede
   repetição mesmo se o domínio falhar; o teste de migração tenta o duplicado e o
   valor inválido.
+
+### Personagens do livro (RF014)
+
+O RF014 abre a seção **Personagens** do livro, que o RF011 deixava como tela
+informativa. O personagem continua **global** (RF004); o livro ganha o
+**vínculo** com os dados que variam por história.
+
+| Decisão | Motivo |
+|---|---|
+| **Migração v12 (ampliada na v13) aditiva com `livro_personagem`** | PK composta `(livro_id, personagem_id)`, FKs para `livro` e `personagem_global`, `CHECK` do **Papel** e quatro textos; a PK é o backstop da duplicidade. A v13 recria a tabela para aceitar treze papéis. |
+| **Papel em lista fechada de catorze opções** | **Protagonista**, **Antagonista**, **Coadjuvante**, **Aliado**, **Falso Antagonista**, **Falso Protagonista**, **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**, **Mentor**, **Herói**, **Vilão** e o vazio **Não definido**, gravado como string (não `NULL`). |
+| **Títulos/Outros Nomes do vínculo independentes** | A **Alcunha** global continua somente leitura na modal; **Títulos/Outros Nomes** (coluna `alcunha`) é local ao livro e pode ser diferente. |
+| **Dados globais somente leitura** | Retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia vêm do cadastro global; relações familiares ficam fora da modal. |
+| **Duplicidade vira relatório** | `associar` insere só os novos e devolve `associados`/`jaAssociados`; a UI informa os ignorados. Um único duplicado nunca cria o segundo vínculo. |
+| **Sem remoção** | O RF014 não desvincula personagem do livro nem cria botão, ícone ou comando equivalente. |
+| **Livro salvo obrigatório** | Em modo de criação o botão fica desabilitado e o back-end recusa com `LivroNaoSalvo`; não existe vínculo antes do primeiro **Salvar** do livro. |
+| **Métricas ligadas aos vínculos** | **Personagens** conta `COUNT(DISTINCT personagem_id)`; **Personagens · N em 2+ livros** usa `GROUP BY ... HAVING COUNT(*) >= 2`; personagens soltos não entram. |
+
+**Decisões técnicas implementadas (design D1–D9):** módulo
+`src-tauri/src/livro_personagem.rs`; **sete comandos novos** (49 no total) —
+`listar_personagens_do_livro`, `listar_livros_do_personagem`,
+`listar_personagens_para_livro`, `associar_personagens_ao_livro`,
+`obter_personagem_do_livro`, `salvar_personagem_do_livro` e
+`listar_papeis_personagem_livro`; associar e salvar separados (associar cria com
+**Não definido**, salvar só faz `UPDATE`); modal de seleção e modal de detalhe;
+listagem em cards/lista reusando `.libcard` e o radio `.toggle-set--radio`. O
+`verificar-rf014.mjs` cobre a seção em **37/37** e o `verificar-rf011.mjs`
+passou a **32/32** (a lista de seções futuras ficou sem Personagens).
+
+**Ajuste de 28/10/2026 (change `rf014-ajustes-selecao-papeis`):** a modal de
+seleção ganhou **busca por nome** e **grade paginada de 12 em 12** (seleção
+mantida entre páginas), e o **Papel** passou de seis para **treze valores** —
+entram **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**,
+**Mentor**, **Herói** e **Vilão**. O `CHECK` ampliado exigiu a migração
+**v13**, que recria `livro_personagem`, copia os vínculos e recria o índice.
+`listar_personagens_para_livro` passou a receber `filtro_nome`, `pagina` e
+`por_pagina` e devolve `itens`/`total`/`pagina`/`porPagina`. O
+`verificar-rf014.mjs` subiu para **30/30** (busca, paginação, seleção entre
+páginas e papel novo) e a suíte Rust para **120 testes**.
+
+**Ajuste de 28/10/2026 (change `rf014-ajuste-rotulo-titulos`):** o campo local
+do vínculo passou a se chamar **Títulos/Outros Nomes**; a **Alcunha** global
+continua com esse nome e somente leitura. O estado, a coluna `alcunha` e o
+payload da API não mudaram — só o rótulo. O `verificar-rf014.mjs` passou a
+**33/33** ao conferir o rótulo além do comportamento.
+
+**Ajuste de 28/10/2026 (change `rf014-vinculos-ficha-global`):** a ficha global
+passou a ler os vínculos. O painel **Vínculos com Livros** lista **Livro**,
+**Papel** e **Total de Capítulos em que aparece** (contagem real; 0 quando não
+houver), e a **Curva de**
+arco em cada livro** mostra o nome de cada livro com **sem dados por enquanto**.
+O comando de leitura é `listar_livros_do_personagem` (49 no total); não há
+migração e a ficha não edita o vínculo. O `verificar-rf014.mjs` passou a
+**35/35** e a suíte Rust a **122 testes**.
+
+**Ajuste de 28/10/2026 (change `rf014-contagem-e-link-livros`):** o rodapé do
+card da lista global passou a mostrar a quantidade real de livros vinculados
+(`totalLivros`, calculado por subconsulta em `livro_personagem`) e o nome do
+livro no painel **Vínculos com Livros** virou link para a página do livro.
+Nenhum comando ou migração nova; o `verificar-rf014.mjs` passou a **37/37** e a
+suíte Rust a **123 testes**.
+
+**Armadilhas encontradas ao implementar (RF014):**
+
+- **`innerText` aplica `text-transform`:** o título de área vira
+  `DADOS DO PERSONAGEM` e a comparação com caixa mista falha mesmo com o texto
+  certo.
+- **`flatten` colide com a alcunha:** o detalhe aninha o personagem global
+  (`personagem`) porque ficha e vínculo têm `alcunha`; achatar o struct faria
+  uma das chaves sumir no JSON.
+- **Livro não salvo é `Option<i64>`:** os comandos aceitam `null` para devolver
+  `LivroNaoSalvo`; com `i64` a falha viria da desserialização, sem mensagem útil.
+- **Associar não é salvar:** o primeiro cria com **Não definido** e devolve o
+  relatório; o segundo só faz `UPDATE` e confere linhas afetadas
+  (`VinculoNaoEncontrado`).
+- **A seleção não pode depender da página:** o array de marcados fica no React;
+  trocar de página ou buscar não o limpa. O rodapé mostra a contagem, e o total
+  devolvido pelo domínio é o da busca (não o da página).
+- **Busca em memória:** filtrar com `to_lowercase` do Rust evita o `NOCASE` só
+  ASCII do SQLite; a biblioteca global pequena permite fatiar a página depois
+  do filtro.
+- **Ampliar `CHECK` recria a tabela:** a v13 segue o padrão da v8 — tabela nova,
+  cópia, drop, rename e índice reconstruído; nenhum passo publicado é editado.
+
+### Capítulos do livro (RF015)
+
+O RF015 abre a seção **Capítulos** do livro, que o RF011 deixava como tela
+informativa. O escritor planeja a estrutura em um quadro de status e edita cada
+capítulo no painel abaixo, com os personagens do elenco e o evento de arco.
+
+| Decisão | Motivo |
+|---|---|
+| **Migração v14 com `capitulo` e `capitulo_personagem`** | Número único por livro, status/tipo com `CHECK`, textos de planejamento, cenário e datas; a associação N:N guarda Evento/Tipo de Evento com `CHECK` da combinação. A **v15** acrescenta o **Motivo do Evento** por personagem e a **v16** o **Motivo do Tipo** do capítulo. |
+| **Quadro agrupado e ordenado no front-end** | `listar_capitulos` traz todos os capítulos; cada coluna ordena por Número/Data de criação sem nova consulta. |
+| **Colunas fixas com rolagem** | O quadro tem quatro colunas de 520 px; cabeçalho (ordenação) e rodapé (**Adicionar Capítulo**) ficam parados e o corpo rola. |
+| **Criar pelos dois caminhos** | **Novo Capítulo** cria no Esboço; o rodapé da coluna cria no status da coluna. O número é `MAX(numero)+1` e o título provisório é **Capítulo N**. |
+| **Salvar só faz `UPDATE`** | A criação é explícita no quadro; salvar um id errado nunca vira capítulo novo. Os personagens do capítulo são regravados na mesma transação. |
+| **Personagens do elenco do livro** | O seletor usa o elenco do RF014; Evento e Tipo de Evento seguem o mapa Neutro→Neutro, Ponto de Ligação→Ascensão/Declínio, Ponto de Virada→Apogeu/Queda. |
+| **Cenário de worldbuilding sem mundo** | O campo fica desabilitado com “Nenhum mundo associado a este livro” até a associação livro–mundo existir; a coluna `cenario_localidade_id` já está pronta. |
+| **Métricas e ficha global** | `estatisticas.capitulos` conta `capitulo`; o Painel do Livro busca a lista; o total de capítulos da ficha global é `COUNT(DISTINCT capitulo_id)` por personagem/livro. |
+
+**Comandos (55 no total):** `listar_capitulos`, `obter_capitulo`,
+`criar_capitulo`, `salvar_capitulo`, `mover_capitulo` e `listas_capitulo`
+(seis novos). O `verificar-rf015.mjs` cobre o quadro em **18/18**; o
+`verificar-rf011.mjs` passou a **33/33** (Capítulos é seção real) e o
+`verificar-rf014.mjs` a **37/37** (total de capítulos real).
+
+**Ajuste de 28/10/2026 (change `rf015-ajustes-painel-capitulo`):** o **K.O**
+passou a ficar ao lado do **Punch**, com altura curta; a ajuda do **Tipo** foi
+quebrada em quatro parágrafos (Ação, Suspensão, Direto e Indireto); o **Cenário
+Descritivo** usa altura curta; e cada personagem do capítulo ganhou o **Motivo
+do Evento** abaixo de Evento/Tipo. A migração **v15** aditiva acrescenta
+`motivo` em `capitulo_personagem` com `DEFAULT ''`, sem recriar a tabela. Nenhum
+comando novo (continuam **55**); a suíte Rust passou a **134 testes** e o
+`verificar-rf015.mjs` a **18/18**.
+
+**Ajuste de 28/10/2026 (change `rf015-motivo-tipo`):** o **K.O** passou a ser um
+`input` com a mesma altura do **Punch** e o painel ganhou o **Motivo do Tipo**
+como texto médio abaixo do Tipo. A migração **v16** aditiva acrescenta
+`motivo_tipo` em `capitulo` com `DEFAULT ''`, sem recriar a tabela. Nenhum
+comando novo (continuam **56**); a suíte Rust passou a **141 testes** e o
+`verificar-rf015.mjs` a **19/19**.
+
+**Armadilhas encontradas ao implementar (RF015):**
+
+- **Número único por livro:** `UNIQUE(livro_id, numero)` + `traduzir_erro_numero`;
+  editar para um número usado devolve `NumeroCapituloDuplicado`. Criar calcula
+  `MAX(numero)+1`; não use `INSERT OR REPLACE` no Save.
+- **Evento e Tipo de Evento são um par:** o `CHECK` recusa Neutro+Apogeu,
+  Ponto de Ligação+Neutro e Ponto de Virada+Ascensão. A UI redefine o Tipo para
+  o primeiro válido ao trocar o Evento.
+- **A criação é imediata:** os botões criam o registro antes da edição; o
+  painel abre com o capítulo recém-criado e o Save só atualiza. O teste confere
+  que o cabeçalho cria no Esboço e o rodapé no status da coluna.
+- **Drag & drop sintético:** os E2E precisam compartilhar um `DataTransfer`
+  entre `dragstart`, `dragover` e `drop`; um evento sem ele não carrega o id.
+- **Colunas de altura fixa:** o `.column__body` é o único com `overflow-y:auto`;
+  o cabeçalho e o rodapé não rolam. Medir a altura no verificador evita voltar
+  a uma coluna que cresce.
+- **Cenário vazio de propósito:** não liste todas as localidades para
+  “preencher” o select; a associação livro–mundo ainda não existe.
+- **Ficha global:** a contagem de capítulos usa `capitulo_personagem` filtrado
+  por `livro_id` do vínculo; sem o filtro, o mesmo personagem contaria
+  capítulos de todos os livros na linha de cada livro.
 
 ### Período da história e ordem dos módulos (ajuste do RF011)
 
@@ -930,12 +1100,16 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   - **Splash:** `src/componentes/Splash.jsx` (overlay `.splash`), exibido
     enquanto `App.carregando` for verdadeiro. `carregarDados` é o **ponto único**
     de inicialização — consulta o comando Rust `estado_inicial` e, em seguida,
-    `verificar_banco` (RF003); o splash só sai quando o carregamento resolve.
+    `verificar_banco` (RF003). O ajuste de 28/10/2026 (change
+    `rf002-splash-legivel`) deixou o **ícone grande**, o nome **TaleCraft** ao
+    lado e a **versão** abaixo em fonte menor; a splash fica no mínimo **1,2 s**
+    e o fundo usa a cor-base antes do CSS, sem piscada branca (RF002-CA009,
+    RF002-CA010).
   - **Verificação:** `scripts/verificar-rf002.mjs` (Edge headless via CDP,
     WebSocket mínimo sobre `node:net` porque o Node 20.15 não tem `WebSocket`
-    global). **18/18 OK**. Detecta o splash com
+    global). **20/20 OK**. Detecta o splash com
     `Page.addScriptToEvaluateOnNewDocument` + `MutationObserver` (ele some rápido
-    demais para polling).
+    demais para polling) e mede geometria, fonte, fundo e duração mínima.
 - **RF003 implementado, validado e arquivado** (change
   `2026-10-20-rf003-infraestrutura-banco-dados`). Infraestrutura do banco:
   SQLite **embutido** (`rusqlite` feature `bundled`) + migrações versionadas
@@ -1244,10 +1418,92 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   - **Verificação:** `scripts/verificar-rf013.mjs` **15/15** no app real;
     `verificar-rf012.mjs` ajustado para as duas primeiras abas (**15/15**);
     RF002–RF011 sem regressão.
+- **RF014 - Livros: personagens do livro** (changes
+  `rf014-personagens-do-livro` e `rf014-ajustes-selecao-papeis`): a seção
+  **Personagens** deixa de ser tela informativa e passa a listar o elenco do
+  livro em cards ou lista, com **Adicionar Personagens**, associação múltipla,
+  modal de detalhe do vínculo e métricas reais.
+  - **Esquema:** migração **v12** aditiva com `livro_personagem` (PK composta
+    `livro_id` + `personagem_id`, FKs, `CHECK` do **Papel**, quatro textos e
+    índice por `personagem_id`); a **v13** recria a tabela para ampliar o
+    `CHECK` aos treze papéis, copiando os vínculos. Bancos v11/v12 migram
+    preservando livros, personagens, abas, humor, relações e vínculos.
+  - **Domínio:** `src-tauri/src/livro_personagem.rs` com listagem do elenco,
+    biblioteca para a seleção com **busca e paginação**, associação em lote
+    transacional (duplicidade vira relatório `associados`/`jaAssociados`),
+    detalhe e gravação só do vínculo (`UPDATE` + `VinculoNaoEncontrado`).
+  - **Comandos:** **sete novos** (49 no total) —
+    `listar_personagens_do_livro`, `listar_livros_do_personagem`,
+    `listar_personagens_para_livro`, `associar_personagens_ao_livro`,
+    `obter_personagem_do_livro`, `salvar_personagem_do_livro` e
+    `listar_papeis_personagem_livro`.
+  - **Papéis:** treze valores — **Protagonista**, **Antagonista**,
+    **Coadjuvante**, **Aliado**, **Falso Antagonista**, **Falso Protagonista**,
+    **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**, **Mentor**,
+    **Herói** e **Vilão** — além de **Não definido**.
+  - **Métricas:** `livro::estatisticas` conta
+    `COUNT(DISTINCT personagem_id)` e `GROUP BY ... HAVING COUNT(*) >= 2`;
+    personagens sem vínculo não entram. O card **Personagens** do Painel do
+    Livro mostra o tamanho do elenco.
+  - **Front-end:** `TelaPersonagensLivro.jsx`, `ModalSelecaoPersonagens.jsx`
+    (busca por nome, grade de 12 em 12 e seleção mantida entre páginas),
+    `ModalPersonagemLivro.jsx` e `livroPersonagensApi.js`; a modal de detalhe
+    tem os dados globais somente leitura e os cinco campos do vínculo. Não há
+    ação de desvincular.
+  - **Testes Rust:** 21 novos (domínio, busca/paginação, migrações v11 → v12 e
+    v12 → v13, métricas, livros do personagem e contagem de vínculos);
+    **123** no total.
+  - **Verificação:** `scripts/verificar-rf014.mjs` **37/37** no app real
+    (inclui busca, paginação, seleção entre páginas, papel novo, o rótulo
+    **Títulos/Outros Nomes**, os vínculos na ficha global e a contagem/link de
+    livros); `verificar-rf011.mjs` passou a **32/32** (Personagens abre a seção
+    real); RF002–RF013 sem regressão.
+- **RF015 - Livros: capítulos** (change `rf015-capitulos-do-livro`): a seção
+  **Capítulos** deixa de ser tela informativa e passa a ter o quadro de status
+  com Esboço, Rascunho, Revisão e Finalizado, criação pelos dois caminhos,
+  ordenação por Número/Data, painel de edição, personagens do arco e arrastar.
+  - **Esquema:** migração **v14** aditiva com `capitulo` (número único por
+    livro, status, tipo, textos, cenário e datas) e `capitulo_personagem`
+    (Evento/Tipo de Evento com `CHECK` da combinação); a **v15** acrescenta o
+    **Motivo do Evento** e a **v16** o **Motivo do Tipo**.
+  - **Domínio:** `src-tauri/src/capitulo.rs` com listagem, leitura, criação com
+    próximo número, gravação transacional dos personagens e movimento de status.
+  - **Comandos:** **seis novos** (55 no total) — `listar_capitulos`,
+    `obter_capitulo`, `criar_capitulo`, `salvar_capitulo`, `mover_capitulo` e
+    `listas_capitulo`.
+  - **Front-end:** `TelaCapitulosLivro.jsx` (quadro, colunas fixas com rolagem,
+    ordenação, criação e drag & drop), `PainelCapitulo.jsx` (campos, ajuda do
+    Tipo, personagens do elenco com Evento/Tipo e **Salvar** no cabeçalho),
+    `capitulosApi.js` e estilos em `livros.css`.
+  - **Métricas e ficha:** `estatisticas.capitulos` conta os capítulos reais; o
+    Painel do Livro mostra o total; a ficha global conta os capítulos por
+    personagem/livro.
+  - **Testes Rust:** 12 novos (capítulos, migrações v14/v15/v16 e contadores);
+    **141** no total.
+  - **Verificação:** `scripts/verificar-rf015.mjs` **19/19** no app real;
+    `verificar-rf011.mjs` passou a **33/33** (Capítulos real) e
+    `verificar-rf014.mjs` a **37/37** (total real); RF002–RF014 sem regressão.
+- **RF016 - Livros: gráficos** (change `rf016-graficos-do-livro`): a seção
+  **Gráficos** deixa de ser informativa e passa a ter o Tab Panel com a curva de
+  progressão e a evolução dos personagens.
+  - **Sem esquema:** nenhuma migração; leitura de `capitulo`,
+    `capitulo_personagem`, `livro_personagem` e `personagem_global`.
+  - **Domínio:** `src-tauri/src/grafico.rs` calcula as séries acumuladas
+    (Ação +1; Ascensão +1, Declínio -1, Apogeu +2, Queda -2) e ordena o
+    protagonista primeiro.
+  - **Comando:** `dados_graficos_livro` (56 no total), somente leitura.
+  - **Front-end:** `TelaGraficosLivro.jsx` (Tab Panel, estados vazios),
+    `GraficoProgressao.jsx`, `GraficoArco.jsx` (segmentos interrompidos e
+    marcadores pequenos/grandes), `graficosApi.js` e estilos em `livros.css`.
+  - **Testes Rust:** 6 novos (progressão, arcos, ordem, ausência e livro vazio);
+    **141** no total.
+  - **Verificação:** `scripts/verificar-rf016.mjs` **14/14** no app real;
+    `verificar-rf011.mjs` passou a **34/34** (Gráficos real); RF002–RF015 sem
+    regressão.
 - **Período da história e ordem dos módulos (ajuste do RF011)** (change
   `rf011-ajustes-periodo-ordem-modulos`): Dados Gerais ganhou **De** e **Até**
   (texto livre, migração v11) e o Painel lista **Dados do Livro** primeiro.
-  `verificar-rf011.mjs` passou a **31/31**.
+  `verificar-rf011.mjs` passou a **31/31** (e a **32/32** depois do RF014).
 - **Janela maximizada com barra de título (ajuste do RF001)** (change
   `rf001-janela-maximizada`): `maximized: true` em `tauri.conf.json` faz a janela
   abrir ocupando a área útil, com a barra de título nativa e a barra de tarefas
@@ -1259,23 +1515,23 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `character-library` (RF004); `family-tree` (RF005); `character-sheet-export`
   (RF006); `world-library` e `world-sheet-export` (RF007); `world-entries`
   (RF008); `factions` (RF009); `book-library` (RF010/RF011); `book-workspace`
-  (RF011–RF013). São **18** capabilities.
+  (RF011–RF016). São **18** capabilities.
   `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 102 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 141 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
-- **Comandos Rust (42 no total):** `mensagem_inicial` (RF001),
+- **Comandos Rust (56 no total):** `mensagem_inicial` (RF001),
   `estado_inicial`/`verificar_banco` (RF002/RF003), os comandos de personagens
   e relações + `arvore_familiar` (RF004/RF005), os de ficha/PDF (RF006), os de
   mundos (RF007), os de entradas (RF008), os de facções (RF009), os de livros
-  (RF011) e `montar_documento_mundo` (Documento do Mundo completo). Todos no
-  `invoke_handler`.
-- **Pendências conhecidas do app:** RF001–RF013 concluídos, validados e
-  **ARQUIVADOS**. Nenhum change ativo. O documento hoje define RF001–RF013; os
-  próximos requisitos (RF014+) ainda precisam ser escritos em
-  `documents/talecraft.md` antes de virarem change.
+  (RF011), os sete de personagens do livro (RF014), os seis de capítulos
+  (RF015), `dados_graficos_livro` (RF016) e `montar_documento_mundo` (Documento
+  do Mundo completo). Todos no `invoke_handler`.
+- **Pendências conhecidas do app:** RF001–RF016 concluídos, validados e
+  **ARQUIVADOS**. O documento hoje define RF001–RF016; os próximos requisitos
+  (RF017+) ainda precisam ser escritos antes de virarem change.
 
 ### Protótipo (referência visual — HTML + CSS)
 
@@ -1318,24 +1574,39 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
 ### Próximo passo combinado
 
 O protótipo é a **referência visual**; o aplicativo Tauri/React é onde o código
-vive. **RF001–RF013 estão implementados, validados e arquivados** — nenhum
-change ativo. O RF006 (painel retrátil, exportação da ficha e contraste dos
-botões) fechou com `verificar-rf006.mjs` **29/29** no app real. O RF007
-(mundos), o RF008 (entradas do mundo), o RF009 (facções), o RF010 (Meus Livros),
-o RF011 (página do livro e Dados Gerais), o RF012 (aba Resumo) e o RF013 (abas
-narrativas) fecharam com `verificar-rf007.mjs` **33/33**,
+vive. **RF001–RF016 estão implementados, validados e arquivados**. O RF006
+(painel retrátil, exportação da ficha e contraste dos botões) fechou com
+`verificar-rf006.mjs` **29/29** no app real. O RF007 (mundos), o RF008 (entradas
+do mundo), o RF009 (facções), o RF010 (Meus Livros), o RF011 (página do livro e
+Dados Gerais), o RF012 (aba Resumo), o RF013 (abas narrativas), o RF014
+(personagens do livro), o RF015 (capítulos do livro) e o RF016 (gráficos do
+livro) fecharam com
+`verificar-rf007.mjs` **33/33**,
 `verificar-rf008.mjs` **21/21**, `verificar-rf009.mjs` **16/16**,
-`verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **31/31**,
-`verificar-rf012.mjs` **15/15** e `verificar-rf013.mjs` **15/15**,
-respectivamente, sobre **102 testes Rust** e sem regressão dos verificadores
-RF002–RF013. A correção da exportação completa do Mundo (change
-`rf007-exportacao-mundo-dados-associados`), o ajuste de período/ordem do RF011
-(change `rf011-ajustes-periodo-ordem-modulos`) e o ajuste de janela maximizada
-com barra de título (change `rf001-janela-maximizada`) também estão arquivados.
+`verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **34/34**,
+`verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15**,
+`verificar-rf014.mjs` **37/37**, `verificar-rf015.mjs` **19/19**,
+`verificar-rf016.mjs` **14/14** e
+`verificar-rf002.mjs` **20/20** (splash ajustada), respectivamente, sobre **141
+testes Rust** e sem regressão dos verificadores RF002–RF016. A correção da
+exportação completa do Mundo (change `rf007-exportacao-mundo-dados-associados`),
+o ajuste de período/ordem do RF011 (change
+`rf011-ajustes-periodo-ordem-modulos`), o ajuste de janela maximizada com barra
+de título (change `rf001-janela-maximizada`), o ajuste de seleção/papéis do
+RF014 (change `rf014-ajustes-selecao-papeis`), o ajuste do rótulo
+Títulos/Outros Nomes (change `rf014-ajuste-rotulo-titulos`), os vínculos na
+ficha global (change `rf014-vinculos-ficha-global`), a contagem/link de livros
+(change `rf014-contagem-e-link-livros`), o ajuste da splash do RF002 (change
+`rf002-splash-legivel`), os capítulos do livro (change
+`rf015-capitulos-do-livro`), os ajustes do painel do capítulo (change
+`rf015-ajustes-painel-capitulo`), os gráficos do livro (change
+`rf016-graficos-do-livro`), o motivo do tipo (change `rf015-motivo-tipo`) e o
+tooltip da progressão (change `rf016-tooltip-progressao`) também estão
+arquivados.
 
 Seguem os demais requisitos de `documents/talecraft.md` (cada um virando um
 change OpenSpec), portando a interface do protótipo à medida que chegarem. O
-documento hoje define **RF001–RF013**; os próximos requisitos (RF014+) ainda
+documento hoje define **RF001–RF016**; os próximos requisitos (RF017+) ainda
 precisam ser escritos antes de virarem change.
 
 O padrão para um domínio novo (o RF004 é o primeiro) já está definido e provado:

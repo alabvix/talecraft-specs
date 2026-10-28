@@ -42,29 +42,27 @@ O sistema SHALL exigir o preenchimento do **Nome** e SHALL impedir a gravação 
   (RF004-RN005)
 
 ### Requirement: Lista de personagens com busca e visualização
-A tela principal de Personagens SHALL listar os personagens cadastrados,
-permitindo **alternar entre a exibição em cards e em lista**, **buscar pelo
-nome** pela barra de busca e **iniciar a inclusão de um novo personagem**
-(RF004-TL001, RF004-CA004, RF004-CA005, RF004-CA006).
+A tela principal de Personagens SHALL listar os personagens cadastrados, permitindo **alternar entre a exibição em cards e em lista**, **buscar pelo nome** pela barra de busca, **iniciar a inclusão de um novo personagem** e SHALL exibir no rodapé de cada card a **quantidade de livros** aos quais o personagem está vinculado — **0 livros** quando não houver — em vez de um valor fixo (RF004-TL001, RF004-CA004, RF004-CA005, RF004-CA006, RF014-TL007, RF014-RN015, RF014-CA018).
 
 #### Scenario: Alternar entre cards e lista
-- **GIVEN** a tela principal de Personagens está aberta com personagens
-  cadastrados
+- **GIVEN** a tela principal de Personagens está aberta com personagens cadastrados
 - **WHEN** o escritor alterna o modo de exibição
-- **THEN** os personagens são apresentados em cards ou em lista, conforme a
-  escolha (RF004-CA004)
+- **THEN** os personagens são apresentados em cards ou em lista, conforme a escolha (RF004-CA004)
 
 #### Scenario: Buscar personagem pelo nome
 - **GIVEN** existem personagens cadastrados com nomes distintos
 - **WHEN** o escritor digita parte de um nome na barra de busca
-- **THEN** a lista exibe somente os personagens cujo nome corresponde ao texto,
-  ignorando diferenças entre maiúsculas e minúsculas (RF004-CA006)
+- **THEN** a lista exibe somente os personagens cujo nome corresponde ao texto, ignorando diferenças entre maiúsculas e minúsculas (RF004-CA006)
 
 #### Scenario: Iniciar a inclusão de um personagem
 - **GIVEN** a tela principal de Personagens está aberta
 - **WHEN** o escritor aciona a opção de novo personagem
-- **THEN** a tela de detalhe é aberta vazia, pronta para o cadastro
-  (RF004-CA005)
+- **THEN** a tela de detalhe é aberta vazia, pronta para o cadastro (RF004-CA005)
+
+#### Scenario: Quantidade de livros no card
+- **GIVEN** um personagem está vinculado a dois livros e outro não tem vínculo
+- **WHEN** o escritor abre a tela principal de Personagens em cards
+- **THEN** o rodapé do card do primeiro mostra **2 livros** e o do segundo mostra **0 livros**, refletindo os vínculos reais (RF014-TL007, RF014-RN015, RF014-CA018)
 
 ### Requirement: Tela de detalhe do personagem
 A tela de detalhe SHALL exibir e permitir **editar os dados do personagem**,
@@ -104,47 +102,6 @@ três temas, inclusive no Tundra (RF006-RN004, RF006-CA016).
 - **WHEN** ele percorre os três temas (Blade Byte, Old Tower e Tundra)
 - **THEN** os rótulos dos botões Salvar e Novo personagem permanecem brancos e
   legíveis sobre o fundo de acento em todos eles (RF006-RN004, RF006-CA016)
-
-### Requirement: Vínculos e arco por livro fora do escopo
-A tela de detalhe SHALL exibir o card de **Vínculos com Livros** e a seção de
-**Curva de Arco em cada livro** **sem dados**, e a tela principal SHALL exibir o
-campo **Filtrar por livro** **sem nenhuma opção de livro**, pois a associação
-entre personagem e livro pertence a requisito posterior (RF004-CA009,
-RF004-CA010, RF004-CA022). O card de Vínculos com Livros SHALL ser **retrátil**,
-por um ícone no seu cabeçalho: sem nenhum vínculo ele SHALL abrir **retraído**,
-mostrando apenas o cabeçalho, e com ao menos um vínculo ele SHALL abrir
-**expandido** (RF006-TL001, RF006-FL001, RF006-RN001, RF006-RN002, RF006-RN003).
-
-#### Scenario: Vínculos e curva aparecem vazios
-- **GIVEN** a tela de detalhe de um personagem está aberta
-- **WHEN** o escritor observa o card de Vínculos com Livros e a seção de Curva
-  de Arco
-- **THEN** ambos são exibidos sem dados, conforme o protótipo, sem erro
-  (RF004-CA009)
-
-#### Scenario: Filtro por livro sem opções
-- **GIVEN** a tela principal de Personagens está aberta
-- **WHEN** o escritor abre o campo Filtrar por livro
-- **THEN** não há nenhum livro disponível para seleção (RF004-CA010)
-
-#### Scenario: Sem vínculos, o painel abre retraído
-- **GIVEN** um personagem não tem nenhum vínculo com livro
-- **WHEN** a tela de detalhe é aberta
-- **THEN** o painel Vínculos com livros aparece retraído, mostrando apenas o
-  cabeçalho (RF006-RN002, RF006-CA002)
-
-#### Scenario: Com vínculos, o painel abre expandido
-- **GIVEN** um personagem tem ao menos um vínculo com livro
-- **WHEN** a tela de detalhe é aberta
-- **THEN** o painel Vínculos com livros aparece expandido (RF006-RN003,
-  RF006-CA003)
-
-#### Scenario: Alternar o painel pelo ícone
-- **GIVEN** o painel Vínculos com livros está retraído
-- **WHEN** o escritor aciona o ícone do cabeçalho, por clique ou por teclado
-- **THEN** o painel expande, sem recarregar a tela nem perder dados do
-  formulário, e o ícone informa por rótulo acessível o estado atual
-  (RF006-RN001, RF006-CA001, RF006-CA004, RF006-CA005)
 
 ### Requirement: Retrato do personagem
 O sistema SHALL permitir associar **um retrato** ao personagem, guardando o
@@ -498,4 +455,42 @@ casal (RF005-RN008, RF005-CA012).
 - **GIVEN** o personagem e o cônjuge têm filhos cadastrados
 - **WHEN** a árvore é desenhada
 - **THEN** os filhos aparecem abaixo do casal (RF005-CA012)
+
+### Requirement: Vínculos e arco por livro na ficha global
+A tela de detalhe SHALL exibir, no painel retrátil **Vínculos com Livros**, os livros aos quais o personagem está associado, com as colunas **Livro**, **Papel** e **Total de Capítulos em que aparece** — a contagem real dos capítulos do livro em que o personagem atua, zero quando não houver — com o **nome do livro** como **link** para a página daquele livro, e SHALL listar no quadro **Curva de arco em cada livro** o nome de cada livro vinculado com a indicação **sem dados por enquanto**; sem vínculos, o painel SHALL abrir **retraído** e as duas áreas SHALL ficar vazias (RF004-CA009, RF006-RN001 a RF006-RN003, RF014-TL007, RF014-RN010, RF014-RN015, RF014-CA018, RF015-RN009, RF015-CA013). O campo **Filtrar por livro** da tela principal SHALL continuar sem opções, pois a lista de livros nesse filtro pertence a requisito posterior (RF004-CA010).
+
+#### Scenario: Painel com vínculos
+- **GIVEN** um personagem está associado a dois livros, com papéis diferentes
+- **WHEN** o escritor abre a tela de detalhe desse personagem
+- **THEN** o painel **Vínculos com Livros** aparece expandido, com uma linha por livro contendo **Livro**, **Papel** (ou **Papel não definido**) e **Total de Capítulos em que aparece** com a contagem real (RF014-TL007, RF014-RN015, RF015-RN009, RF014-CA018)
+
+#### Scenario: Nome do livro abre a página do livro
+- **GIVEN** a ficha do personagem está aberta com um livro vinculado
+- **WHEN** o escritor clica no nome do livro no painel **Vínculos com Livros**
+- **THEN** a página daquele livro é aberta, com os dados e as seções do livro, sem erro (RF014-TL007, RF014-CA018)
+
+#### Scenario: Curva de arco com vínculos
+- **GIVEN** o personagem está associado a um ou mais livros
+- **WHEN** o escritor observa o quadro **Curva de arco em cada livro**
+- **THEN** vê o nome de cada livro vinculado com **sem dados por enquanto**, sem gráfico e sem erro (RF014-TL007, RF014-RN015, RF014-CA018)
+
+#### Scenario: Sem vínculos, painel retraído e áreas vazias
+- **GIVEN** um personagem não tem nenhum vínculo com livro
+- **WHEN** a tela de detalhe é aberta
+- **THEN** o painel **Vínculos com Livros** aparece retraído, mostrando apenas o cabeçalho, e a **Curva de arco em cada livro** mostra o estado vazio (RF006-RN002, RF006-CA002, RF014-CA018)
+
+#### Scenario: Com vínculos, o painel abre expandido
+- **GIVEN** um personagem tem ao menos um vínculo com livro
+- **WHEN** a tela de detalhe é aberta
+- **THEN** o painel **Vínculos com Livros** aparece expandido (RF006-RN003, RF006-CA003)
+
+#### Scenario: Alternar o painel pelo ícone
+- **GIVEN** o painel **Vínculos com Livros** está retraído
+- **WHEN** o escritor aciona o ícone do cabeçalho, por clique ou por teclado
+- **THEN** o painel expande, sem recarregar a tela nem perder dados do formulário, e o ícone informa por rótulo acessível o estado atual (RF006-RN001, RF006-CA001, RF006-CA004, RF006-CA005)
+
+#### Scenario: Filtro por livro sem opções
+- **GIVEN** a tela principal de Personagens está aberta
+- **WHEN** o escritor abre o campo **Filtrar por livro**
+- **THEN** não há nenhum livro disponível para seleção (RF004-CA010)
 
