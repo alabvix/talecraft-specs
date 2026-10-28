@@ -231,3 +231,62 @@ O sistema SHALL aplicar a migração **v8** aditiva, recriando `livro_subgenero`
 - **WHEN** o escritor tenta gravar um subgênero que não pertence à lista de Fantasia
 - **THEN** a gravação é recusada com mensagem útil (RF011-RN004)
 
+### Requirement: Migração v9 do resumo e final do livro
+O sistema SHALL acrescentar, na migração **v9** aditiva, as colunas `resumo` e `final_livro` à tabela `livro`, com texto vazio como padrão, sem editar passos publicados da v1 à v8 e preservando os dados de bancos existentes (RF012-RN002, RF012-CA007).
+
+#### Scenario: Banco v8 migra para v9
+- **GIVEN** um banco criado e migrado até a v8 (RF011)
+- **WHEN** o aplicativo abre o banco com o RF012
+- **THEN** as colunas `resumo` e `final_livro` são criadas e os livros, subgêneros e dados anteriores permanecem intactos (RF012-RN002, RF012-CA007)
+
+#### Scenario: Livros existentes ganham texto vazio
+- **GIVEN** um livro foi criado antes da v9, sem resumo nem final
+- **WHEN** o banco migra para a v9
+- **THEN** o livro passa a ter `resumo` e `final_livro` vazios, sem erro e sem conteúdo fictício (RF012-RN002, RF012-RN007, RF012-CA007)
+
+#### Scenario: Textos pertencem ao livro
+- **GIVEN** a tabela `livro` está na v9
+- **WHEN** o escritor salva um livro com **Resumo** e **Final do Livro**
+- **THEN** os dois textos ficam gravados nas colunas do mesmo registro do livro (RF012-RN003, RF012-CA003)
+
+### Requirement: Migração v10 das abas narrativas
+O sistema SHALL acrescentar, na migração **v10** aditiva, as colunas de texto e de listas fechadas das abas **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo** à tabela `livro` e SHALL criar a tabela filha `livro_humor`, sem editar passos publicados da v1 à v9 e preservando os dados de bancos existentes (RF013-RN003, RF013-CA010).
+
+#### Scenario: Banco v9 migra para v10
+- **GIVEN** um banco criado e migrado até a v9 (RF012)
+- **WHEN** o aplicativo abre o banco com o RF013
+- **THEN** as colunas novas e a tabela `livro_humor` são criadas e os livros, subgêneros, resumo, final e dados anteriores permanecem intactos (RF013-RN003, RF013-CA010)
+
+#### Scenario: Livro existente ganha valores vazios
+- **GIVEN** um livro foi criado antes da v10
+- **WHEN** o banco migra para a v10
+- **THEN** os textos novos ficam vazios, as listas ficam sem valor e o livro não tem nenhum humor, sem erro e sem conteúdo fictício (RF013-RN003, RF013-RN008, RF013-CA010)
+
+#### Scenario: Humor múltiplo no esquema
+- **GIVEN** a tabela `livro_humor` existe
+- **WHEN** um livro é gravado com **Ironia** e **Sátira**
+- **THEN** cada valor é uma linha associada ao `livro_id`, sem repetição do mesmo par (RF013-RN002, RF013-RN006, RF013-CA006)
+
+#### Scenario: Valores fora das listas são recusados
+- **GIVEN** o esquema da v10 está aplicado
+- **WHEN** o desenvolvedor tenta gravar um humor ou um narrador fora das listas fechadas
+- **THEN** o `CHECK` do SQLite recusa a gravação (RF013-RN002, RF013-RN005)
+
+### Requirement: Migração v11 do período da história
+O sistema SHALL acrescentar, na migração **v11** aditiva, as colunas `periodo_de` e `periodo_ate` à tabela `livro`, com texto vazio como padrão, sem editar passos publicados da v1 à v10 e preservando os dados de bancos existentes (RF011-RN018, RF011-CA023).
+
+#### Scenario: Banco v10 migra para v11
+- **GIVEN** um banco criado e migrado até a v10 (RF013)
+- **WHEN** o aplicativo abre o banco com o ajuste do período
+- **THEN** as colunas `periodo_de` e `periodo_ate` são criadas e os livros e dados anteriores permanecem intactos (RF011-RN018, RF011-CA023)
+
+#### Scenario: Livro existente ganha período vazio
+- **GIVEN** um livro foi criado antes da v11
+- **WHEN** o banco migra para a v11
+- **THEN** o livro passa a ter `periodo_de` e `periodo_ate` vazios, sem erro e sem conteúdo fictício (RF011-RN018)
+
+#### Scenario: Período é texto livre
+- **GIVEN** a tabela `livro` está na v11
+- **WHEN** o escritor grava **De** = `Século XXII` e **Até** = `2189`
+- **THEN** os dois valores ficam gravados no mesmo registro do livro (RF011-RN018, RF011-CA023)
+

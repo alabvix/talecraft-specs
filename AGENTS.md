@@ -5,13 +5,20 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
-> **Ponto de parada (27/10/2026):** RF001–RF011 estão implementados e arquivados;
-> a spec consolidada `book-library` reflete a listagem real de Meus Livros, com
-> métricas ligadas aos vínculos, e a nova capability `book-workspace` cobre a
-> página do livro e Dados Gerais, incluindo os doze subgêneros de Fantasia e a
-> seleção preservada por gênero. São **18 capabilities** e
-> `openspec validate --all` passa com 18/18. Não há change ativo. **Amanhã:**
-> escrever o RF012 em `documents/talecraft.md` e só depois criar o change.
+> **Ponto de parada (27/10/2026, fim do dia):** RF001–RF013 estão implementados e
+> arquivados; o RF013 acrescenta as abas **Sinopse**, **Tema**, **Conflito** e
+> **Voz Narrativa/Tom/Tempo**, com **Humor** de seleção múltipla. Ajustes do
+> RF011: os módulos do Painel começam por **Dados do Livro** e Dados Gerais tem o
+> **Período da História** (**De**/**Até**, migração **v11**). A janela abre
+> **sempre maximizada**, com a barra de título nativa (ajuste do RF001 em
+> `tauri.conf.json`), validada por `verificar-janela-maximizada.mjs` **3/3**. A
+> capability `book-workspace` cobre as seis abas e a `database-foundation`
+> registra as migrações **v10** e **v11**. São **18 capabilities** e
+> `openspec validate --all` passa com 18/18; **102 testes Rust**;
+> `verificar-rf011.mjs` **31/31**, `verificar-rf012.mjs` **15/15** e
+> `verificar-rf013.mjs` **15/15**. Não há change ativo. **Retomada em
+> 28/10/2026:** definir o RF014 em `documents/talecraft.md` e só depois criar o
+> change.
 
 Memória de trabalho do projeto. Leia este arquivo **antes** de mexer no código.
 A documentação do *produto* (como o app funciona, tokens, telas do protótipo)
@@ -123,9 +130,12 @@ talecraft/
 │   ├── verificar-rf006.mjs    painel retrátil, ficha em PDF e cor dos botões (29/29)
 │   ├── verificar-rf007.mjs    mundos: lista, detalhe, imagem, entradas e PDF (33/33)
 │   ├── verificar-rf008.mjs    entradas do mundo: abas, tabela e regras (21/21)
-│   └── verificar-rf009.mjs    facções: aba, associação e reflexo (16/16)
+│   ├── verificar-rf009.mjs    facções: aba, associação e reflexo (16/16)
 │   ├── verificar-rf010.mjs    Meus Livros em estado vazio e listagem real (18/18)
-│   └── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (30/30)
+│   ├── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (31/31)
+│   ├── verificar-rf012.mjs    aba Resumo, textos longos e sem Descartar (15/15)
+│   ├── verificar-rf013.mjs    abas Sinopse/Tema/Conflito/Voz e Humor (15/15)
+│   └── verificar-janela-maximizada.mjs  janela maximizada com barra (3/3)
 ├── index.html                 HTML do Vite (monta o React)
 ├── vite.config.js             configuração do Vite (porta 1420)
 ├── package.json               scripts: dev, build, tauri, verificar:rust
@@ -772,6 +782,81 @@ o botão **+ Novo Livro** passou a abrir a página do livro.
   rótulo do menu, o breadcrumb e o card precisam refletir o novo título. O
   estado vive em `TelaLivro` e desce para a casca.
 
+### Aba Resumo do livro (RF012)
+
+| Decisão | Motivo |
+|---|---|
+| **v9 só com `ALTER TABLE ADD COLUMN`** | Não há `CHECK` novo; recriar `livro` como na v8 seria desnecessário. Os livros existentes ganham `resumo`/`final_livro` vazios. |
+| **Textos no mesmo `Livro`** | `salvar_livro`/`obter_livro` já transportam o registro; dois campos escalares não justificam tabela filha nem comando novo. |
+| **`listar` sem os textos longos** | A busca de Meus Livros chama a listagem a cada tecla; `obter` traz o registro completo para a edição. Enviar um objeto da listagem a `salvar_livro` apagaria os textos. |
+| **Uma aba ativa, um formulário** | `DadosLivro` mantém `form` e a aba ativa; trocar de aba só troca o conteúdo renderizado e preserva a edição pendente. |
+| **Somente Salvar** | O RF012 revoga o **Descartar** (RF011-FL005); `mesmosDados`/`ultimoSalvo` saem de livros. Sair sem salvar descarta o rascunho (RF011-RN008). |
+
+**Armadilhas encontradas ao implementar (RF012):**
+
+- **A aba Resumo não pode desmontar o formulário.** Se cada aba tivesse o
+  próprio estado, alternar apagaria o que não foi salvo; o estado fica em
+  `DadosLivro` e o `PainelAbas` só troca os filhos.
+- **Remover o Descartar quebra o verificador antigo.** O `verificar-rf011.mjs`
+  checava a restauração dos dados; a checagem saiu (30 → 29) e a ausência do
+  botão passou para o `verificar-rf012.mjs`.
+- **O aviso de sucesso sobrevive ao próximo Salvar.** O verificador do RF012 não
+  espera o `.notice`; ele consulta `obter_livro` até o banco refletir o valor,
+  evitando ler a gravação anterior.
+- **Tundra pintava o botão do livro de violeta.** `.app--book .btn--primary`
+  usava `--book-color` e sobrepunha o verde do tema. A correção é escopada em
+  `[data-theme="tundra"] .app--book .btn--primary` com `--accent` (e o `:hover`
+  com `--accent-hover`), mantendo a cor do livro na faixa, no menu e nos selos.
+  O verificador mede o fundo computado.
+
+### Abas narrativas: Sinopse, Tema, Conflito e Voz (RF013)
+
+| Decisão | Motivo |
+|---|---|
+| **v10 aditiva com colunas + `livro_humor`** | Textos e listas de valor único são colunas de `livro`; o Humor é múltiplo e vira tabela filha com PK composta e `CHECK`. |
+| **Humor múltiplo, resto único** | Decisão do usuário: **Ironia** + **Sátira** convivem; Narrador, Tom, Tempo, Estilo e Ritmo têm um valor cada. |
+| **Listas no back-end** | `listas_livro` devolve narradores, tons, tempos, humores, estilos e ritmos; o front-end não duplica valores. |
+| **`DadosLivro.jsx` extraído** | Com seis abas, o formulário saiu de `TelaLivro`; um único `form` e a aba ativa preservam a edição pendente. |
+| **Textos em três alturas** | Curto = `input`; médio = `textarea--medium` (140 px); longo = `textarea--long` (200 px). |
+
+**Armadilhas encontradas ao implementar (RF013):**
+
+- **Abrir outra aba desmonta os campos.** Só o `form` sobrevive; ler todos os
+  campos de uma vez no verificador exige clicar em cada aba antes de ler. O
+  primeiro rascunho lia tudo de uma vez e só achava os campos da aba ativa.
+- **O verificador do RF012 exigia exatamente duas abas.** Com o RF013, ele
+  passou a conferir apenas as duas primeiras; a contagem total é do RF013.
+- **"Objetico" e "Onisciennte"** foram corrigidos para **Objetivo** e
+  **Onisciente** no requisito, no banco e na interface.
+- **Humor no `CHECK` e na PK:** a chave composta `(livro_id, humor)` impede
+  repetição mesmo se o domínio falhar; o teste de migração tenta o duplicado e o
+  valor inválido.
+
+### Período da história e ordem dos módulos (ajuste do RF011)
+
+| Decisão | Motivo |
+|---|---|
+| **Período como texto livre em duas colunas** | `periodo_de`/`periodo_ate` são `TEXT DEFAULT ''`; mundos de fantasia usam séculos e eras, como as datas de Evento. |
+| **Ordem dos módulos em `MODULOS_PAINEL`** | A grade do Painel é data-driven; mover **Dados do Livro** para o início mantém os `id` e a navegação. |
+| **v11 aditiva** | Duas colunas com `ALTER TABLE ... ADD COLUMN`; não recria `livro` e preserva os dados. |
+
+**Armadilha:** o período não é carregado em `listar_livros`; o verificador do
+RF011 lê por `obter_livro` e cobre a ordem dos cards por `.block__name`. O teste
+fixa a sequência **Dados do Livro → Exportar**.
+
+### Janela maximizada com barra de título (ajuste do RF001)
+
+| Decisão | Motivo |
+|---|---|
+| **`maximized: true` e sem `fullscreen`** | Ocupa a área útil mantendo a barra de título nativa; `fullscreen` esconderia a barra de título e a barra de tarefas. |
+| **Área útil, não a tela inteira** | A barra de tarefas fica visível; é o comportamento padrão do Windows. |
+| **Verificação pelo viewport** | O CDP não acessa a janela nativa; `innerWidth` igual a `screen.width` e `screen.availHeight - innerHeight` entre 10 e 80 px provam a janela maximizada com barra. |
+
+**Armadilha:** o WebView2 informa `outerHeight == innerHeight`, então não dá para
+medir a barra por `outerHeight - innerHeight`; use a diferença contra
+`screen.availHeight`. Mudar `tauri.conf.json` exige recompilar o binário (o
+contexto do Tauri é embutido); o Vite sozinho não aplica a janela.
+
 ### Refatoração de qualidade Rust (out/2026)
 
 | Decisão | Motivo |
@@ -1117,19 +1202,68 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
     `PainelAbas.jsx`; `TelaLivros.jsx` passa a listar livros reais em grade ou
     lista, com busca, métricas e abertura do livro.
   - **Testes Rust:** 16 novos; **95** no total.
-  - **Verificação:** `scripts/verificar-rf011.mjs` **30/30** no app real;
+  - **Verificação:** `scripts/verificar-rf011.mjs` **31/31** no app real (eram
+    29 depois do RF012; o ajuste de período/ordem acrescentou 2);
     `verificar-rf010.mjs` atualizado para **18/18**; RF002–RF009 sem regressão.
+- **RF012 - Livros: aba Resumo** (change `rf012-livro-aba-resumo`): a página
+  **Dados do Livro** passa a ter as abas **Dados Gerais** e **Resumo**, nesta
+  ordem, e o botão **Descartar** é removido (RF012-TL003, RF012-RN005). A aba
+  **Resumo** tem os campos de texto longo **Resumo** e **Final do Livro**,
+  opcionais e com quebras de linha preservadas.
+  - **Esquema:** migração **v9** aditiva com `ALTER TABLE livro ADD COLUMN
+    resumo` e `final_livro`, ambos `TEXT NOT NULL DEFAULT ''`; bancos v8 migram
+    preservando livros e subgêneros, e os livros antigos ganham textos vazios.
+  - **Domínio:** `livro.rs` ganhou `resumo` e `final_livro`; `obter_livro`
+    devolve os textos e `listar_livros` **não** os carrega (design D3), porque a
+    busca de Meus Livros chama a listagem a cada tecla digitada.
+  - **Comandos:** nenhum novo; continuam **42** no `invoke_handler`.
+  - **Front-end:** `TelaLivro.jsx` (abas, campos e remoção do **Descartar**),
+    `livrosApi.js` (livro vazio com os dois textos; `mesmosDados` removido) e
+    `livros.css` (`.textarea--long`).
+  - **Testes Rust:** 2 novos (gravação/releitura com quebras de linha e migração
+    v8 → v9); **97** na época (**102** no total atual).
+  - **Verificação:** `scripts/verificar-rf012.mjs` **15/15** no app real;
+    `verificar-rf011.mjs` atualizado para **29/29** (sem a checagem do
+    **Descartar**); RF002–RF010 sem regressão.
+- **RF013 - Livros: abas Sinopse, Tema, Conflito e Voz Narrativa/Tom/Tempo**
+  (change `rf013-livro-abas-narrativas`): o Tab Panel de Dados do Livro passa a
+  ter seis abas e o **Humor** é a única seleção múltipla.
+  - **Esquema:** migração **v10** aditiva com treze colunas em `livro` e a
+    tabela `livro_humor` (PK composta, `CHECK` e FK); bancos v9 migram
+    preservando os dados.
+  - **Domínio:** `livro.rs` ganhou os oito textos, as cinco listas de valor único
+    e `humor: Vec<String>`; `obter_livro` devolve tudo e `listar_livros` devolve
+    vazio/sem valor (design D3).
+  - **Comandos:** nenhum novo; continuam **42**.
+  - **Front-end:** `DadosLivro.jsx` extraído de `TelaLivro.jsx`, com as abas
+    `AbaDadosGerais`, `AbaResumo`, `AbaSinopse`, `AbaTema`, `AbaConflito` e
+    `AbaVozNarrativa`; helpers `CampoTexto`, `CampoLista` e `SelecaoMultipla`;
+    chips de Humor em `livros.css`.
+  - **Testes Rust:** 3 novos (abas narrativas, listas inválidas e migração
+    v9 → v10); **100** na época (**102** no total atual).
+  - **Verificação:** `scripts/verificar-rf013.mjs` **15/15** no app real;
+    `verificar-rf012.mjs` ajustado para as duas primeiras abas (**15/15**);
+    RF002–RF011 sem regressão.
+- **Período da história e ordem dos módulos (ajuste do RF011)** (change
+  `rf011-ajustes-periodo-ordem-modulos`): Dados Gerais ganhou **De** e **Até**
+  (texto livre, migração v11) e o Painel lista **Dados do Livro** primeiro.
+  `verificar-rf011.mjs` passou a **31/31**.
+- **Janela maximizada com barra de título (ajuste do RF001)** (change
+  `rf001-janela-maximizada`): `maximized: true` em `tauri.conf.json` faz a janela
+  abrir ocupando a área útil, com a barra de título nativa e a barra de tarefas
+  visíveis. `scripts/verificar-janela-maximizada.mjs` **3/3** mede o viewport e
+  a moldura da janela.
 - **Specs principais** em `openspec/specs/`: `app-shell`, `dev-tooling`,
   `rust-bridge`, `setup-guide` (RF001); `app-layout`, `page-navigation`,
   `theme-system`, `splash-screen` (RF002); `database-foundation` (RF003);
   `character-library` (RF004); `family-tree` (RF005); `character-sheet-export`
   (RF006); `world-library` e `world-sheet-export` (RF007); `world-entries`
   (RF008); `factions` (RF009); `book-library` (RF010/RF011); `book-workspace`
-  (RF011). São **18** capabilities.
+  (RF011–RF013). São **18** capabilities.
   `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 95 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 102 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
 - **Comandos Rust (42 no total):** `mensagem_inicial` (RF001),
@@ -1138,9 +1272,9 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   mundos (RF007), os de entradas (RF008), os de facções (RF009), os de livros
   (RF011) e `montar_documento_mundo` (Documento do Mundo completo). Todos no
   `invoke_handler`.
-- **Pendências conhecidas do app:** RF001–RF011 concluídos, validados e
-  **ARQUIVADOS**. Nenhum change ativo. O documento hoje define RF001–RF011; os
-  próximos requisitos (RF012+) ainda precisam ser escritos em
+- **Pendências conhecidas do app:** RF001–RF013 concluídos, validados e
+  **ARQUIVADOS**. Nenhum change ativo. O documento hoje define RF001–RF013; os
+  próximos requisitos (RF014+) ainda precisam ser escritos em
   `documents/talecraft.md` antes de virarem change.
 
 ### Protótipo (referência visual — HTML + CSS)
@@ -1184,20 +1318,24 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
 ### Próximo passo combinado
 
 O protótipo é a **referência visual**; o aplicativo Tauri/React é onde o código
-vive. **RF001–RF011 estão implementados, validados e arquivados** — nenhum
+vive. **RF001–RF013 estão implementados, validados e arquivados** — nenhum
 change ativo. O RF006 (painel retrátil, exportação da ficha e contraste dos
 botões) fechou com `verificar-rf006.mjs` **29/29** no app real. O RF007
-(mundos), o RF008 (entradas do mundo), o RF009 (facções), o RF010 (Meus Livros) e
-o RF011 (página do livro e Dados Gerais) fecharam com `verificar-rf007.mjs`
-**33/33**, `verificar-rf008.mjs` **21/21**, `verificar-rf009.mjs` **16/16**,
-`verificar-rf010.mjs` **18/18** e `verificar-rf011.mjs` **30/30**,
-respectivamente, sobre **95 testes Rust** e sem regressão dos verificadores
-RF002–RF010. A correção da exportação completa do Mundo (change
-`rf007-exportacao-mundo-dados-associados`) também está arquivada.
+(mundos), o RF008 (entradas do mundo), o RF009 (facções), o RF010 (Meus Livros),
+o RF011 (página do livro e Dados Gerais), o RF012 (aba Resumo) e o RF013 (abas
+narrativas) fecharam com `verificar-rf007.mjs` **33/33**,
+`verificar-rf008.mjs` **21/21**, `verificar-rf009.mjs` **16/16**,
+`verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **31/31**,
+`verificar-rf012.mjs` **15/15** e `verificar-rf013.mjs` **15/15**,
+respectivamente, sobre **102 testes Rust** e sem regressão dos verificadores
+RF002–RF013. A correção da exportação completa do Mundo (change
+`rf007-exportacao-mundo-dados-associados`), o ajuste de período/ordem do RF011
+(change `rf011-ajustes-periodo-ordem-modulos`) e o ajuste de janela maximizada
+com barra de título (change `rf001-janela-maximizada`) também estão arquivados.
 
 Seguem os demais requisitos de `documents/talecraft.md` (cada um virando um
 change OpenSpec), portando a interface do protótipo à medida que chegarem. O
-documento hoje define **RF001–RF011**; os próximos requisitos (RF012+) ainda
+documento hoje define **RF001–RF013**; os próximos requisitos (RF014+) ainda
 precisam ser escritos antes de virarem change.
 
 O padrão para um domínio novo (o RF004 é o primeiro) já está definido e provado:

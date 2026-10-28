@@ -39,7 +39,7 @@ O requisito está concluído quando o desenvolvedor consegue preparar o ambiente
 #### Regras de Negócio
 
 - **RF001-RN001** — Estrutura do projeto: criar a estrutura inicial do projeto, incluindo as configurações do Tauri, Rust, React e Vite.
-- **RF001-RN002** — Interface inicial: Exibir uma janela desktop com o nome TaleCraft e uma mensagem de inicialização bem-sucedida.
+- **RF001-RN002** — Interface inicial: Exibir uma janela desktop com o nome TaleCraft e uma mensagem de inicialização bem-sucedida. O aplicativo deve abrir **sempre maximizado**, ocupando a área útil da tela e mantendo a barra de título nativa.
 - **RF001-RN003** — Comunicação entre camadas: implementar um comando Rust de demonstração, invocado pelo React por meio do Tauri, para validar a comunicação entre front-end e back-end.
 - **RF001-RN004** — Execução em desenvolvimento: configurar os comandos necessários para iniciar o aplicativo a partir da raiz do projeto, incluindo o servidor Vite e a janela desktop.
 - **RF001-RN005** — Compilação: configurar a compilação do aplicativo para Windows, permitindo executar a versão compilada sem depender do servidor de desenvolvimento.
@@ -52,6 +52,7 @@ O requisito está concluído quando o desenvolvedor consegue preparar o ambiente
 - **RF001-CA003** — React: A interface React é carregada corretamente.
 - **RF001-CA004** — Retorno do Rust: O comando Rust de demonstração retorna uma resposta exibida pelo front-end.
 - **RF001-CA005** — Compilação: A aplicação compila e a versão compilada inicia corretamente.
+- **RF001-CA006** — Janela maximizada: a aplicação abre sempre maximizada, ocupando a área útil da tela com a barra de título visível, inclusive nas execuções seguintes.
 
 ### RF002 — Interface visual, navegação e temas
 
@@ -792,17 +793,19 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   livro**. Enquanto os módulos do livro não existem, as quatro métricas
   (**Personagens**, **Entradas de worldbuilding**, **Capítulos planejados** e
   **Planejamento concluído**) exibem **0** e a grade de módulos apresenta
-  **Personagens**, **Worldbuilding**, **Capítulos**, **Dados do Livro**,
-  **Gráficos** e **Exportar**, cada um levando à sua seção do menu lateral.
+  **Dados do Livro**, **Personagens**, **Capítulos**, **Worldbuilding**,
+  **Gráficos** e **Exportar**, nesta ordem, cada um levando à sua seção do menu
+  lateral.
 - **RF011-TL004** - Dados do Livro: página com o componente **Tab Panel**. Nesta
   entrega o painel tem **uma única aba**, **Dados Gerais**, e a estrutura já
   aceita novas abas em requisitos posteriores. A aba contém: **Título do livro**
   (texto, único obrigatório); **Gênero Principal** (lista fechada: Ficção
   Científica, Terror, Fantasia); **Subgêneros** (seleção múltipla, filtrada pelo
   Gênero Principal); **Faixa de Público** (lista fechada: Infantil, Young Adult,
-  Adulto, Geral); e **Idioma** (lista fechada: Português, Inglês, Espanhol).
+  Adulto, Geral); **Idioma** (lista fechada: Português, Inglês, Espanhol); e
+  **Período da História** (**De** e **Até**, texto curto e opcional).
   A página tem os botões **Descartar** (volta aos últimos dados salvos) e
-  **Salvar**.
+  **Salvar**. O botão **Descartar** foi **revogado pelo RF012**.
 - **RF011-TL005** - Meus Livros com livros: a tela inicial passa a listar os
   livros cadastrados, em **grade** (padrão) ou **lista**, com busca por título.
   Os cards mostram o título, o gênero principal com os subgêneros, a faixa de
@@ -830,7 +833,8 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   em **Dados do Livro**, altera os campos da aba **Dados Gerais** e clica em
   **Salvar**. Os dados são atualizados e a faixa do livro reflete o novo título.
 - **RF011-FL005** - Descartar alterações: o escritor clica em **Descartar** e os
-  campos voltam aos últimos dados salvos, sem gravar nada.
+  campos voltam aos últimos dados salvos, sem gravar nada. **Revogado pelo
+  RF012:** o botão **Descartar** foi removido.
 - **RF011-FL006** - Navegar no livro: o escritor usa os itens do menu lateral do
   livro. **Painel do Livro** e **Dados do Livro** abrem suas páginas; os demais
   itens abrem a tela informativa da seção.
@@ -905,6 +909,10 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   Enquanto não existirem vínculo personagem–livro, capítulos ou associação
   livro–mundo, essas métricas exibem **0**, mesmo que existam personagens,
   capítulos ou entradas globais no banco.
+- **RF011-RN018** - Período da história: os campos **De** e **Até** são texto
+  livre, curto e opcional, e aceitam datas, séculos ou qualquer marcação de
+  época do mundo da história. As quebras de linha não se aplicam a campos
+  curtos; o texto é gravado como informado.
 
 #### Critérios de Aceite
 
@@ -939,7 +947,9 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   **Worldbuilding**, **Gráficos**, **Exportar** e **Início**, com o grupo
   **Análise** antes de **Gráficos** e **Exportar**.
 - **RF011-CA013** - Painel do Livro: exibe título, subtítulo com os dados do
-  livro, métricas zeradas, os seis módulos e o botão **Dados do livro**.
+  livro, métricas zeradas, os seis módulos na ordem **Dados do Livro**,
+  **Personagens**, **Capítulos**, **Worldbuilding**, **Gráficos** e **Exportar**,
+  e o botão **Dados do livro**.
 - **RF011-CA014** - Seções futuras: **Personagens**, **Capítulos**,
   **Worldbuilding**, **Gráficos** e **Exportar** abrem a tela informativa da
   seção, sem erro e sem tela em branco.
@@ -966,6 +976,225 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   página, criação com título obrigatório e único, todos os campos, filtragem de
   subgêneros, menu na ordem definida, Tab Panel, listagem, busca, grade/lista e
   reabertura do livro.
+- **RF011-CA023** - Período e módulos: a aba **Dados Gerais** exibe **De** e
+  **Até**; os valores são gravados e relidos; e o **Painel do Livro** apresenta
+  os módulos na ordem **Dados do Livro**, **Personagens**, **Capítulos**,
+  **Worldbuilding**, **Gráficos** e **Exportar**.
+
+### RF012 - Livros - Aba Resumo
+
+Este requisito acrescenta à página **Dados do Livro** uma segunda aba, **Resumo**,
+com dois campos de texto longo: **Resumo** e **Final do Livro**. Os textos
+pertencem ao registro do livro e são gravados junto com os dados gerais.
+
+O requisito também revoga o botão **Descartar** da página Dados do Livro
+(RF011-TL004, RF011-FL005): a única ação da página passa a ser **Salvar**.
+
+- **Data de criacao:** 27/10/2026
+
+#### Telas
+
+- **RF012-TL001** - Aba Resumo: o Tab Panel de **Dados do Livro** passa a ter
+  duas abas, **Dados Gerais** e **Resumo**, nesta ordem, com **Dados Gerais**
+  selecionada ao abrir a página. A estrutura reutilizável do Tab Panel permanece
+  a mesma (RF011-RN012). O RF013 amplia o painel com as abas **Sinopse**,
+  **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo**.
+- **RF012-TL002** - Campos da aba Resumo: a aba contém **Resumo** e **Final do
+  Livro**, ambos como campos de texto longo (várias linhas), com os rótulos
+  exatamente **Resumo** e **Final do Livro**. Os dois campos são opcionais.
+- **RF012-TL003** - Ação única de gravação: o botão **Salvar** permanece no
+  cabeçalho da página, visível nas duas abas, e grava os campos das duas abas de
+  uma vez. O botão **Descartar** deixa de existir.
+
+#### Fluxos
+
+- **RF012-FL001** - Preencher o resumo: o escritor abre **Dados do Livro**, clica
+  na aba **Resumo**, digita o **Resumo** e o **Final do Livro** e clica em
+  **Salvar**; os textos são gravados no livro.
+- **RF012-FL002** - Alternar abas sem perder a edição: o escritor alterna entre
+  **Dados Gerais** e **Resumo** antes de salvar; o que foi digitado em cada aba
+  permanece no formulário.
+- **RF012-FL003** - Reabrir o livro: ao abrir novamente o livro e a aba
+  **Resumo**, os textos salvos aparecem nos campos.
+- **RF012-FL004** - Salvar a partir da aba Resumo: o **Salvar** continua no
+  cabeçalho e grava também os dados da aba **Dados Gerais**, sem precisar voltar
+  para ela.
+- **RF012-FL005** - Descartar revogado: o escritor não encontra mais o botão
+  **Descartar**; para abandonar alterações não salvas, sai da página do livro
+  sem salvar.
+
+#### Regras de Negocio
+
+- **RF012-RN001** - Texto livre e opcional: **Resumo** e **Final do Livro**
+  aceitam qualquer texto, inclusive vazio, e preservam as quebras de linha. Não
+  há limite de caracteres definido no requisito.
+- **RF012-RN002** - Persistência no livro: os dois textos são colunas do registro
+  do livro, criadas pela migração **v9** aditiva; bancos v8 migram preservando os
+  livros existentes, que passam a ter textos vazios. Nenhum passo publicado é
+  editado.
+- **RF012-RN003** - Gravação conjunta: **Salvar** grava dados gerais,
+  subgêneros, **Resumo** e **Final do Livro** na mesma transação, com as
+  validações do RF011 (título obrigatório e único). Uma falha não deixa o livro
+  com parte dos dados.
+- **RF012-RN004** - Edição pendente preservada entre abas: trocar de aba não
+  descarta nem recarrega o formulário; apenas **Salvar** grava e atualiza o
+  ponto de partida.
+- **RF012-RN005** - Descartar revogado: o botão **Descartar** e o fluxo
+  **RF011-FL005** são removidos; não é criada ação equivalente. A spec
+  consolidada de `book-workspace` é atualizada.
+- **RF012-RN006** - Escopo da aba: a aba **Resumo** existe somente dentro de
+  **Dados do Livro** e não é exibida no card de Meus Livros, no Painel do Livro
+  nem na exportação. O RF013 acrescenta as abas **Sinopse**, **Tema**,
+  **Conflito** e **Voz Narrativa/Tom/Tempo**, sem alterar essa regra.
+- **RF012-RN007** - Sem dados fictícios: os campos começam vazios em livros sem
+  texto e não usam conteúdo do protótipo.
+- **RF012-RN008** - Sem regressão: página do livro, navegação, Dados Gerais,
+  subgêneros por gênero, listagem de Meus Livros, temas, splash, Personagens,
+  Worldbuilding e exportação do Mundo continuam funcionando.
+
+#### Critérios de Aceite
+
+- **RF012-CA001** - Abas: **Dados do Livro** exibe as abas **Dados Gerais** e
+  **Resumo**, nesta ordem, com **Dados Gerais** selecionada. O RF013 acrescenta
+  as abas **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo**
+  depois delas.
+- **RF012-CA002** - Campos: a aba **Resumo** exibe os campos **Resumo** e
+  **Final do Livro** como texto longo.
+- **RF012-CA003** - Gravar: preencher os dois campos e clicar em **Salvar**
+  persiste os textos; reabrir o livro mostra os mesmos textos.
+- **RF012-CA004** - Abas sem perda: alternar entre as abas antes de salvar
+  preserva o que foi digitado nas duas.
+- **RF012-CA005** - Salvar de qualquer aba: salvar a partir da aba **Resumo**
+  grava também os dados da aba **Dados Gerais**.
+- **RF012-CA006** - Descartar removido: o botão **Descartar** não aparece na
+  página Dados do Livro e não existe ação equivalente.
+- **RF012-CA007** - Migração v9: um banco v8 migra aditivamente para a v9, sem
+  perder livros, subgêneros ou dados de requisitos anteriores.
+- **RF012-CA008** - Sem regressão: os fluxos do RF011 e dos requisitos anteriores
+  continuam funcionando; o verificador do RF011 é atualizado para a ausência do
+  **Descartar**.
+- **RF012-CA009** - Testes automatizados: a verificação cobre as duas abas, os
+  dois campos, gravação, reabertura, preservação entre abas, salvamento a partir
+  da aba Resumo, ausência do **Descartar** e migração v9.
+
+### RF013 - Livros - Abas Sinopse, Tema, Conflito e Voz Narrativa/Tom/Tempo
+
+Este requisito acrescenta quatro abas à página **Dados do Livro**: **Sinopse**,
+**Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo**. Os campos são textos
+livres ou listas fechadas que pertencem ao registro do livro e são gravados
+junto com os dados gerais, o resumo, o final e os subgêneros.
+
+O **Humor** é o único campo de lista com **seleção múltipla**; Narrador, Tom,
+Tempo, Estilo e Ritmo aceitam um valor cada. Os valores "Objetivo" e
+"Onisciente" corrigem, respectivamente, "Objetico" e "Onisciennte".
+
+- **Data de criacao:** 27/10/2026
+
+#### Telas
+
+- **RF013-TL001** - Tab Panel com seis abas: **Dados do Livro** exibe, nesta
+  ordem, **Dados Gerais**, **Resumo**, **Sinopse**, **Tema**, **Conflito** e
+  **Voz Narrativa/Tom/Tempo**, com **Dados Gerais** selecionada ao abrir. A
+  estrutura reutilizável do Tab Panel permanece a mesma (RF011-RN012).
+- **RF013-TL002** - Aba Sinopse: contém **Sinopse Comercial** (texto longo) e
+  **Sinopse Editorial** (texto longo), ambos opcionais e em campos de várias
+  linhas.
+- **RF013-TL003** - Aba Tema: contém **Tema Central** (texto curto, uma linha),
+  **Subtemas** (texto médio) e **Nuvem de Palavras** (texto médio), opcionais.
+- **RF013-TL004** - Aba Conflito: contém **Ponto de Conflito Principal** (texto
+  curto, uma linha), **Polos de Conflito** (texto longo) e **Resolução do
+  Conflito Principal** (texto médio), opcionais.
+- **RF013-TL005** - Aba Voz Narrativa/Tom/Tempo: contém **Narrador**, **Tom**,
+  **Tempo**, **Humor**, **Estilo** e **Ritmo**, todos opcionais. Narrador, Tom,
+  Tempo, Estilo e Ritmo são listas fechadas de valor único; Humor é seleção
+  múltipla.
+- **RF013-TL006** - Ação única de gravação: o botão **Salvar** permanece no
+  cabeçalho da página, visível em todas as abas, e grava os campos de todas elas
+  de uma vez. Não existe botão **Descartar**.
+
+#### Fluxos
+
+- **RF013-FL001** - Preencher as abas: o escritor abre **Dados do Livro**, navega
+  por **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo**, preenche
+  os campos e clica em **Salvar**; os dados são gravados no livro.
+- **RF013-FL002** - Alternar abas sem perder a edição: o escritor alterna entre
+  as seis abas antes de salvar; o que foi digitado ou selecionado em cada aba
+  permanece no formulário.
+- **RF013-FL003** - Reabrir o livro: ao abrir novamente o livro, cada aba mostra
+  os valores salvos.
+- **RF013-FL004** - Salvar a partir de qualquer aba: o **Salvar** grava todas as
+  abas, sem precisar voltar para a aba de origem dos dados.
+- **RF013-FL005** - Marcar mais de um humor: o escritor marca **Ironia** e
+  **Sátira**, por exemplo, e os dois valores são gravados juntos.
+
+#### Regras de Negocio
+
+- **RF013-RN001** - Texto livre e opcional: os campos de texto aceitam qualquer
+  conteúdo, inclusive vazio, e preservam as quebras de linha. **Texto curto** é
+  um campo de uma linha; **texto médio** é um campo de várias linhas com altura
+  intermediária; **texto longo** é um campo de várias linhas com altura maior.
+- **RF013-RN002** - Listas fechadas: os valores são exatamente:
+  - **Narrador:** 1ª Pessoa, 3ª Pessoa Limitada, 3ª Pessoa Onisciente e 2ª
+    Pessoa;
+  - **Tom:** Contido, Lírico e Seco;
+  - **Tempo:** Presente, Passado e Futuro;
+  - **Humor:** Ironia, Situacional, Depreciativo, Sátira, Exagero, Melancólico e
+    Nonsense;
+  - **Estilo:** Objetivo, Contador e Poético;
+  - **Ritmo:** Rápido e Lento.
+  Todos os campos são opcionais. **Humor** aceita mais de um valor, sem
+  repetição; os demais aceitam um valor cada.
+- **RF013-RN003** - Persistência no livro: os campos são colunas do registro do
+  livro e a seleção de Humor é uma tabela filha (`livro_humor`), criadas pela
+  migração **v10** aditiva. Bancos v9 migram preservando os dados; livros
+  existentes passam a ter textos vazios, listas sem valor e nenhum humor.
+  Nenhum passo publicado é editado.
+- **RF013-RN004** - Gravação conjunta: **Salvar** grava dados gerais,
+  subgêneros, resumo, final, as quatro abas novas e o humor na mesma transação.
+  Uma falha não deixa o livro com parte dos dados.
+- **RF013-RN005** - Validação em duas camadas: o domínio recusa valor fora das
+  listas fechadas com mensagem útil, e o `CHECK` do SQLite é a garantia final.
+- **RF013-RN006** - Humor independente: a seleção de Humor não depende de outra
+  lista e pode ser gravada sozinha; valores repetidos são gravados uma vez.
+- **RF013-RN007** - Escopo das abas: os campos existem somente dentro de
+  **Dados do Livro** e não são exibidos no card de Meus Livros, no Painel do
+  Livro nem na exportação. Não são criadas outras abas neste requisito.
+- **RF013-RN008** - Sem dados fictícios: as abas começam vazias em livros sem
+  texto e não usam conteúdo do protótipo.
+- **RF013-RN009** - Sem regressão: página do livro, navegação, Dados Gerais,
+  Resumo, subgêneros por gênero, listagem de Meus Livros, temas, splash,
+  Personagens, Worldbuilding e exportação do Mundo continuam funcionando.
+
+#### Critérios de Aceite
+
+- **RF013-CA001** - Abas e ordem: **Dados do Livro** exibe **Dados Gerais**,
+  **Resumo**, **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo**,
+  nesta ordem, com **Dados Gerais** selecionada.
+- **RF013-CA002** - Sinopse: a aba tem **Sinopse Comercial** e **Sinopse
+  Editorial** como texto longo.
+- **RF013-CA003** - Tema: a aba tem **Tema Central** como texto curto,
+  **Subtemas** e **Nuvem de Palavras** como texto médio.
+- **RF013-CA004** - Conflito: a aba tem **Ponto de Conflito Principal** como
+  texto curto, **Polos de Conflito** como texto longo e **Resolução do Conflito
+  Principal** como texto médio.
+- **RF013-CA005** - Voz Narrativa/Tom/Tempo: a aba tem **Narrador**, **Tom**,
+  **Tempo**, **Humor**, **Estilo** e **Ritmo**, com exatamente as opções do
+  requisito.
+- **RF013-CA006** - Humor múltiplo: é possível marcar mais de um valor de
+  **Humor** e todos são gravados.
+- **RF013-CA007** - Gravar e reabrir: preencher as quatro abas e clicar em
+  **Salvar** persiste todos os campos; reabrir o livro mostra os mesmos valores.
+- **RF013-CA008** - Abas sem perda: alternar entre as abas antes de salvar
+  preserva o que foi digitado ou selecionado em todas.
+- **RF013-CA009** - Salvar de qualquer aba: salvar a partir de uma das abas novas
+  grava também os campos das demais.
+- **RF013-CA010** - Migração v10: um banco v9 migra aditivamente para a v10, sem
+  perder livros, subgêneros, resumo, final ou dados de requisitos anteriores.
+- **RF013-CA011** - Sem regressão: os fluxos do RF011, do RF012 e dos requisitos
+  anteriores continuam funcionando.
+- **RF013-CA012** - Testes automatizados: a verificação cobre as seis abas, os
+  tipos de campo, as listas fechadas, o humor múltiplo, a gravação, a
+  reabertura, a preservação entre abas e a migração v10.
 
 ## Arquitetura
 
