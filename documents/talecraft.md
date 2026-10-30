@@ -813,7 +813,8 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   Científica, Terror, Fantasia); **Subgêneros** (seleção múltipla, filtrada pelo
   Gênero Principal); **Faixa de Público** (lista fechada: Infantil, Young Adult,
   Adulto, Geral); **Idioma** (lista fechada: Português, Inglês, Espanhol); e
-  **Período da História** (**De** e **Até**, texto curto e opcional).
+  **Período da História** (**De** e **Até**, texto curto e opcional, lado a
+  lado, aceitando somente dígitos).
   A página tem os botões **Descartar** (volta aos últimos dados salvos) e
   **Salvar**. O botão **Descartar** foi **revogado pelo RF012**.
 - **RF011-TL005** - Meus Livros com livros: a tela inicial passa a listar os
@@ -919,10 +920,14 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   Enquanto não existirem vínculo personagem–livro, capítulos ou associação
   livro–mundo, essas métricas exibem **0**, mesmo que existam personagens,
   capítulos ou entradas globais no banco.
-- **RF011-RN018** - Período da história: os campos **De** e **Até** são texto
-  livre, curto e opcional, e aceitam datas, séculos ou qualquer marcação de
-  época do mundo da história. As quebras de linha não se aplicam a campos
-  curtos; o texto é gravado como informado.
+- **RF011-RN018** - Período da história: os campos **De** e **Até** ficam lado
+  a lado, são curtos e opcionais e aceitam **somente dígitos** — letras, espaços
+  e sinais digitados ou colados são descartados. O valor é gravado como texto,
+  embora seja numérico; não há validação de intervalo (**De** ≤ **Até**) nem
+  máscara de ano. Livros gravados antes deste ajuste com período em texto livre
+  mantêm o valor **intacto e sinalizado**; a conversão para dígitos é feita por
+  ação explícita (**Usar**/**Limpar**), e o **Salvar** preserva o legado com um
+  aviso, sem bloquear a gravação dos demais dados.
 
 #### Critérios de Aceite
 
@@ -987,7 +992,9 @@ ao menu do livro e o breadcrumb passa a indicar o livro e a seção atual.
   subgêneros, menu na ordem definida, Tab Panel, listagem, busca, grade/lista e
   reabertura do livro.
 - **RF011-CA023** - Período e módulos: a aba **Dados Gerais** exibe **De** e
-  **Até**; os valores são gravados e relidos; e o **Painel do Livro** apresenta
+  **Até** lado a lado, aceitando somente dígitos; um período legado em texto é
+  preservado e sinalizado, com conversão explícita; os valores são gravados e
+  relidos; e o **Painel do Livro** apresenta
   os módulos na ordem **Dados do Livro**, **Personagens**, **Capítulos**,
   **Worldbuilding**, **Gráficos** e **Exportar**.
 

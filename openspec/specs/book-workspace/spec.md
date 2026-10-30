@@ -55,7 +55,7 @@ O sistema SHALL exibir no **Painel do Livro** o título do livro, um subtítulo 
 - **THEN** a seção **Dados do Livro** é aberta (RF011-FL004, RF011-CA013)
 
 ### Requirement: Dados do Livro com Tab Panel
-O sistema SHALL exibir a página **Dados do Livro** com o componente reutilizável **Tab Panel**, com as abas **Dados Gerais**, **Resumo**, **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo** nesta ordem e **Dados Gerais** selecionada ao abrir; a aba **Dados Gerais** SHALL conter título, gênero principal, subgêneros, faixa de público, idioma e o período da história (**De** e **Até**); a página SHALL ter somente a ação **Salvar**, sem o botão **Descartar** nem ação equivalente; a lista de subgêneros de **Fantasia** SHALL conter **Alta Fantasia**, **Fantasia Sombria**, **Distopia**, **Fantasia Urbana**, **Romantasia**, **Gótico**, **Baixa Fantasia**, **Grindark**, **Mitológica**, **Histórica**, **Científica** e **Espada e Feitiçaria**; a seleção de subgêneros SHALL ser preservada por gênero enquanto o livro não for salvo, e ao voltar a um gênero os subgêneros já marcados — inclusive os salvos — SHALL reaparecer selecionados (RF011-TL004, RF011-RN004, RF011-RN012, RF011-RN018, RF012-TL001, RF012-TL003, RF012-RN005, RF013-TL001, RF011-FL004, RF011-FL009, RF011-CA008, RF011-CA009, RF011-CA015, RF011-CA023, RF012-CA001, RF012-CA006, RF013-CA001).
+O sistema SHALL exibir a página **Dados do Livro** com o componente reutilizável **Tab Panel**, com as abas **Dados Gerais**, **Resumo**, **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo** nesta ordem e **Dados Gerais** selecionada ao abrir; a aba **Dados Gerais** SHALL conter título, gênero principal, subgêneros, faixa de público, idioma e o período da história (**De** e **Até**), com **De** e **Até** lado a lado e aceitando somente dígitos, embora o período seja gravado como texto; valores legados em texto livre SHALL ser exibidos intactos, sinalizados e convertidos apenas por ação explícita do escritor, sem filtro destrutivo no primeiro caractere digitado; a página SHALL ter somente a ação **Salvar**, sem o botão **Descartar** nem ação equivalente; a lista de subgêneros de **Fantasia** SHALL conter **Alta Fantasia**, **Fantasia Sombria**, **Distopia**, **Fantasia Urbana**, **Romantasia**, **Gótico**, **Baixa Fantasia**, **Grindark**, **Mitológica**, **Histórica**, **Científica** e **Espada e Feitiçaria**; a seleção de subgêneros SHALL ser preservada por gênero enquanto o livro não for salvo, e ao voltar a um gênero os subgêneros já marcados — inclusive os salvos — SHALL reaparecer selecionados (RF011-TL004, RF011-RN004, RF011-RN012, RF011-RN018, RF012-TL001, RF012-TL003, RF012-RN005, RF013-TL001, RF011-FL004, RF011-FL009, RF011-CA008, RF011-CA009, RF011-CA015, RF011-CA023, RF012-CA001, RF012-CA006, RF013-CA001).
 
 #### Scenario: Seis abas na ordem
 - **GIVEN** a página Dados do Livro está aberta
@@ -75,7 +75,17 @@ O sistema SHALL exibir a página **Dados do Livro** com o componente reutilizáv
 #### Scenario: Período da história
 - **GIVEN** a aba **Dados Gerais** está aberta
 - **WHEN** o escritor observa o formulário
-- **THEN** vê os campos **De** e **Até** como texto curto, opcionais (RF011-RN018, RF011-CA023)
+- **THEN** vê os campos **De** e **Até** lado a lado, como texto curto e opcionais (RF011-RN018, RF011-CA023)
+
+#### Scenario: Período aceita somente dígitos
+- **GIVEN** a aba **Dados Gerais** está aberta
+- **WHEN** o escritor digita ou cola letras, espaços ou sinais em **De** ou **Até**
+- **THEN** o campo mantém somente os dígitos do valor informado e o texto permanece opcional (RF011-RN018, RF011-CA023)
+
+#### Scenario: Período legado preservado na edição
+- **GIVEN** um livro gravado antes do ajuste com **De** “Século XXII” e **Até** “1921–1923”
+- **WHEN** o escritor abre **Dados Gerais** e edita um dos campos
+- **THEN** os valores antigos continuam exibidos e sinalizados, o texto não é apagado pela digitação e o aviso oferece **Usar 1921**, **Usar 1923** e **Limpar** (RF011-RN018)
 
 #### Scenario: Subgêneros filtrados pelo gênero
 - **GIVEN** a aba **Dados Gerais** está aberta
@@ -108,7 +118,7 @@ O sistema SHALL exibir a página **Dados do Livro** com o componente reutilizáv
 - **THEN** encontra somente **Salvar**, sem **Descartar** e sem ação equivalente (RF012-TL003, RF012-RN005, RF012-CA006)
 
 ### Requirement: Salvar o livro e os dados gerais
-O sistema SHALL validar o título como obrigatório e único sem diferenciar maiúsculas, aceitar os demais campos como opcionais e gravar o livro, os subgêneros, o período da história, os textos das abas, as listas de voz narrativa e o humor em uma transação (RF011-FL002, RF011-RN002 a RF011-RN007, RF011-RN018, RF012-RN003, RF013-RN003, RF013-RN004, RF013-CA007, RF013-CA009).
+O sistema SHALL validar o título como obrigatório e único sem diferenciar maiúsculas, aceitar os demais campos como opcionais e gravar o livro, os subgêneros, o período da história, os textos das abas, as listas de voz narrativa e o humor em uma transação; período legado em texto livre SHALL ser preservado inalterado ao salvar, com aviso de que precisa ser ajustado, sem bloquear a gravação dos demais dados (RF011-FL002, RF011-RN002 a RF011-RN007, RF011-RN018, RF012-RN003, RF013-RN003, RF013-RN004, RF013-CA007, RF013-CA009).
 
 #### Scenario: Título obrigatório
 - **GIVEN** o livro está em modo de criação e o título está vazio
@@ -129,6 +139,11 @@ O sistema SHALL validar o título como obrigatório e único sem diferenciar mai
 - **GIVEN** o escritor preencheu **De** e **Até**
 - **WHEN** clica em **Salvar**
 - **THEN** os dois valores são gravados e relidos com o restante dos dados (RF011-RN018, RF011-CA023)
+
+#### Scenario: Período legado preservado ao salvar
+- **GIVEN** um livro com período em texto livre, anterior ao ajuste numérico
+- **WHEN** o escritor clica em **Salvar** sem corrigir o período
+- **THEN** o texto antigo é preservado inalterado e um aviso informa que o período precisa ser ajustado para apenas números (RF011-RN018, RF011-CA023)
 
 #### Scenario: Salvar todas as abas
 - **GIVEN** o escritor preencheu campos em **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo**

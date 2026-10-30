@@ -17,7 +17,8 @@
 > acrescenta as abas **Sinopse**, **Tema**, **Conflito** e
 > **Voz Narrativa/Tom/Tempo**, com **Humor** de seleção múltipla. Ajustes do
 > RF011: os módulos do Painel começam por **Dados do Livro** e Dados Gerais tem o
-> **Período da História** (**De**/**Até**, migração **v11**). A janela abre
+> **Período da História** (**De**/**Até**, migração **v11**, lado a lado,
+> somente dígitos e legado preservado). A janela abre
 > **sempre maximizada**, com a barra de título nativa (ajuste do RF001 em
 > `tauri.conf.json`), validada por `verificar-janela-maximizada.mjs` **3/3**. A
 > capability `book-workspace` cobre as abas e as seções do livro e a
@@ -26,14 +27,20 @@
 > passa com 18/18;
 > **141 testes Rust**; `verificar-rf016.mjs` **14/14**,
 > `verificar-rf015.mjs` **19/19**,
-> `verificar-rf014.mjs` **37/37**, `verificar-rf011.mjs` **34/34**,
+> `verificar-rf014.mjs` **37/37**, `verificar-rf011.mjs` **39/39**,
 > `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15** e
 > `verificar-rf002.mjs` **20/20**. Em 28/10/2026 o **RF016** (gráficos do
 > livro), o **RF015** (capítulos do
 > livro), o **RF014** (personagens do livro) e os ajustes de seleção/papéis, do
 > rótulo **Títulos/Outros Nomes**, dos vínculos na ficha global e da
 > contagem/link de livros foram implementados, validados e arquivados; a
-> **splash do RF002** também foi ajustada. Nenhum change ativo.
+> **splash do RF002** também foi ajustada. Nenhum change ativo. Último commit:
+> **`162b475`**. A build de teste **v0.1.0** foi publicada no repositório
+> <https://github.com/alabvix/talecraft-releases>.
+>
+> **Próximo passo (29/10/2026):** escrever o **RF017** em
+> `documents/talecraft.md` (o documento cobre RF001–RF016) e abrir o change
+> OpenSpec correspondente. Antes de uma nova release, subir a versão do app.
 
 Memória de trabalho do projeto. Leia este arquivo **antes** de mexer no código.
 A documentação do *produto* (como o app funciona, tokens, telas do protótipo)
@@ -1006,13 +1013,23 @@ comando novo (continuam **56**); a suíte Rust passou a **141 testes** e o
 
 | Decisão | Motivo |
 |---|---|
-| **Período como texto livre em duas colunas** | `periodo_de`/`periodo_ate` são `TEXT DEFAULT ''`; mundos de fantasia usam séculos e eras, como as datas de Evento. |
+| **Período como texto no banco, só dígitos na tela** | `periodo_de`/`periodo_ate` continuam `TEXT DEFAULT ''` (o payload é string), mas o `onChange` filtra com `somenteNumeros()`; o escritor pediu anos numéricos no ajuste de 29/10/2026. |
+| **Período legado preservado, não migrado** | Livros antigos com “Século XXII”/“1921–1923” são exibidos intactos, com aviso, **Usar <dígitos>** e **Limpar**; a edição não filtra enquanto o valor for texto e o **Salvar** só avisa. Migração automática perderia a intenção do escritor. |
+| **De/Até lado a lado em `.formlinha`** | Os dois campos formam o grupo **Período da História** com `gap: 8px` e `flex-basis: 160px`; antes caíam em colunas distantes do `.formgrid` na janela maximizada. |
 | **Ordem dos módulos em `MODULOS_PAINEL`** | A grade do Painel é data-driven; mover **Dados do Livro** para o início mantém os `id` e a navegação. |
 | **v11 aditiva** | Duas colunas com `ALTER TABLE ... ADD COLUMN`; não recria `livro` e preserva os dados. |
 
 **Armadilha:** o período não é carregado em `listar_livros`; o verificador do
 RF011 lê por `obter_livro` e cobre a ordem dos cards por `.block__name`. O teste
-fixa a sequência **Dados do Livro → Exportar**.
+fixa a sequência **Dados do Livro → Exportar**. No efeito de filtro, cuidado
+com `**/` dentro de comentário de bloco em `.jsx`: `**De**/**Até**` fecha o
+comentário e quebra o build. O `verificar-rf011.mjs` confere o filtro numérico,
+a mesma linha e a distância de até 12 px entre **De** e **Até**. O cenário de
+período legado semeia “Século XXII” e “1921–1923” via `salvar_livro`, confere
+que a digitação não apaga o texto, que o **Salvar** preserva e avisa e que os
+botões convertem; a auditoria de suporte usa `periodo_de GLOB '*[^0-9]*'` (ou o
+campo **Até**) em consulta somente leitura.
+
 
 ### Janela maximizada com barra de título (ajuste do RF001)
 
@@ -1502,8 +1519,19 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
     regressão.
 - **Período da história e ordem dos módulos (ajuste do RF011)** (change
   `rf011-ajustes-periodo-ordem-modulos`): Dados Gerais ganhou **De** e **Até**
-  (texto livre, migração v11) e o Painel lista **Dados do Livro** primeiro.
+  (migração v11) e o Painel lista **Dados do Livro** primeiro.
   `verificar-rf011.mjs` passou a **31/31** (e a **32/32** depois do RF014).
+- **Período somente numérico e lado a lado (ajuste do RF011)** (change
+  `rf011-ajuste-periodo-numerico`): **De** e **Até** passaram a aceitar somente
+  dígitos na tela — o período continua texto no banco — e ficaram lado a lado no
+  grupo **Período da História**. Nenhuma migração; `verificar-rf011.mjs` passou
+  a **35/35**.
+- **Tratamento de período legado (ajuste do RF011)** (change
+  `rf011-periodo-legado`): livros anteriores ao ajuste numérico mantêm o texto
+  intacto; a tela sinaliza o valor, oferece **Usar <dígitos>**/**Limpar** e não
+  filtra a edição enquanto o valor for legado. O **Salvar** preserva o texto com
+  aviso, sem bloquear. Nenhuma migração; `verificar-rf011.mjs` passou a
+  **39/39**.
 - **Janela maximizada com barra de título (ajuste do RF001)** (change
   `rf001-janela-maximizada`): `maximized: true` em `tauri.conf.json` faz a janela
   abrir ocupando a área útil, com a barra de título nativa e a barra de tarefas
@@ -1583,7 +1611,7 @@ Dados Gerais), o RF012 (aba Resumo), o RF013 (abas narrativas), o RF014
 livro) fecharam com
 `verificar-rf007.mjs` **33/33**,
 `verificar-rf008.mjs` **21/21**, `verificar-rf009.mjs` **16/16**,
-`verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **34/34**,
+`verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **39/39**,
 `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15**,
 `verificar-rf014.mjs` **37/37**, `verificar-rf015.mjs` **19/19**,
 `verificar-rf016.mjs` **14/14** e
@@ -1591,7 +1619,9 @@ livro) fecharam com
 testes Rust** e sem regressão dos verificadores RF002–RF016. A correção da
 exportação completa do Mundo (change `rf007-exportacao-mundo-dados-associados`),
 o ajuste de período/ordem do RF011 (change
-`rf011-ajustes-periodo-ordem-modulos`), o ajuste de janela maximizada com barra
+`rf011-ajustes-periodo-ordem-modulos`), o ajuste de período numérico e lado a
+lado (change `rf011-ajuste-periodo-numerico`), o tratamento de período legado
+(change `rf011-periodo-legado`), o ajuste de janela maximizada com barra
 de título (change `rf001-janela-maximizada`), o ajuste de seleção/papéis do
 RF014 (change `rf014-ajustes-selecao-papeis`), o ajuste do rótulo
 Títulos/Outros Nomes (change `rf014-ajuste-rotulo-titulos`), os vínculos na
