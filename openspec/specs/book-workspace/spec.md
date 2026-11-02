@@ -265,17 +265,32 @@ O sistema SHALL exibir, na página **Dados do Livro**, as abas **Sinopse**, **Te
 - **THEN** esses textos não são exibidos fora das abas de **Dados do Livro** (RF013-RN007)
 
 ### Requirement: Personagens do livro
-O sistema SHALL substituir a tela informativa da seção **Personagens** pela listagem dos personagens associados ao livro, em **cards** (padrão) ou **lista**, com o botão **Adicionar Personagens**, a modal de seleção múltipla com **busca por nome** e **grade paginada**, **Associar** e **Fechar**, a recusa de vínculo duplicado, o estado vazio e a exigência de livro salvo (RF014-TL001 a RF014-TL003, RF014-FL001, RF014-FL002, RF014-FL005, RF014-RN001, RF014-RN005, RF014-RN008, RF014-RN009, RF014-RN012, RF014-RN014, RF014-CA001 a RF014-CA006, RF014-CA011, RF014-CA012, RF014-CA015).
+O sistema SHALL substituir a tela informativa da seção **Personagens** pela listagem dos personagens associados ao livro, em **cards** (padrão) ou **lista**, com o botão **Adicionar Personagens**, a modal de seleção múltipla com **busca por nome** e **grade paginada**, **Associar** e **Fechar**, a recusa de vínculo duplicado, o estado vazio e a exigência de livro salvo; os **cards** SHALL exibir no máximo cinco por tela, com rolagem horizontal para os demais, e a **lista** SHALL exibir cinco personagens por página, com **Anterior**, **Próxima** e a indicação da página atual; cada card e cada linha SHALL mostrar **Qtd Capítulos** e **Capítulos** com os números em ordem, e o card/linha do personagem selecionado SHALL ficar destacado (RF014-TL001 a RF014-TL003, RF014-FL001, RF014-FL002, RF014-FL005, RF014-RN001, RF014-RN005, RF014-RN008, RF014-RN009, RF014-RN012, RF014-RN014, RF014-CA001 a RF014-CA006, RF014-CA011, RF014-CA012, RF014-CA015, RF014-CA020, RF014-CA022, RF014-CA023).
 
 #### Scenario: Seção Personagens com conteúdo
 - **GIVEN** um livro salvo com personagens associados
 - **WHEN** o escritor clica em **Personagens** no menu do livro
 - **THEN** a seção lista o elenco do livro em cards, não a tela informativa de requisito posterior (RF014-TL001, RF014-CA001)
 
-#### Scenario: Cards e lista
-- **GIVEN** a seção **Personagens** está aberta com personagens associados
-- **WHEN** o escritor alterna entre **Cards** e **Lista**
-- **THEN** a mesma lista é exibida nas duas visualizações, com retrato, nome e **Papel** do vínculo, ou **Papel não definido** quando vazio (RF014-TL001, RF014-CA006)
+#### Scenario: Cards em faixa horizontal
+- **GIVEN** o livro tem mais de cinco personagens associados
+- **WHEN** o escritor observa a visualização em **Cards**
+- **THEN** vê no máximo cinco cards por tela e uma barra de rolagem horizontal para os demais, com retrato, nome, **Papel** do vínculo, **Qtd Capítulos** e **Capítulos** (RF014-TL001, RF014-CA006, RF014-CA020, RF014-CA023)
+
+#### Scenario: Lista paginada
+- **GIVEN** o livro tem mais de cinco personagens associados
+- **WHEN** o escritor alterna para **Lista**
+- **THEN** vê cinco personagens na primeira página, a indicação **Página 1 de N** e os botões **Anterior** e **Próxima**, com as colunas **Personagem**, **Papel**, **Qtd Capítulos** e **Capítulos**; avançar mostra os próximos cinco e desabilita **Próxima** na última página (RF014-TL001, RF014-CA006, RF014-CA020, RF014-CA023)
+
+#### Scenario: Capítulos por personagem
+- **GIVEN** um personagem aparece nos capítulos 1 e 3 do livro
+- **WHEN** o escritor observa o card e a linha desse personagem
+- **THEN** vê **Qtd Capítulos: 2** e **Capítulos: 1,3**; sem capítulos, vê **0** e **—** (RF014-CA023)
+
+#### Scenario: Destaque do selecionado
+- **GIVEN** o escritor clica em um personagem
+- **WHEN** o detalhe abre abaixo da grade/lista
+- **THEN** o card ou a linha daquele personagem fica destacado e o destaque acompanha a troca de personagem ou o fechamento (RF014-CA022)
 
 #### Scenario: Estado vazio do elenco
 - **GIVEN** um livro salvo sem personagens associados
@@ -336,49 +351,6 @@ O sistema SHALL substituir a tela informativa da seção **Personagens** pela li
 - **GIVEN** a seção **Personagens** está aberta com o elenco do livro
 - **WHEN** o escritor procura as ações de cada personagem
 - **THEN** não encontra botão, ícone ou ação para desvincular o personagem do livro (RF014-RN009, RF014-CA015)
-
-### Requirement: Modal de detalhe do personagem no livro
-O sistema SHALL abrir, ao clicar em um personagem do elenco, uma modal com os dados globais herdados do cadastro em modo somente leitura — retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia — e com os campos do vínculo editáveis **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**, todos opcionais, com **Papel** em lista fechada de treze valores e **Salvar** e **Fechar** (RF014-TL004, RF014-TL005, RF014-TL006, RF014-FL003, RF014-FL004, RF014-RN002 a RF014-RN004, RF014-RN007, RF014-CA007 a RF014-CA010).
-
-#### Scenario: Abrir o detalhe do personagem
-- **GIVEN** o elenco do livro tem personagens associados
-- **WHEN** o escritor clica no card ou na linha de um personagem
-- **THEN** a modal de detalhe abre com as áreas **Dados do personagem** e **Vínculo com o livro** e os botões **Salvar** e **Fechar** (RF014-TL004, RF014-CA007)
-
-#### Scenario: Dados globais somente leitura
-- **GIVEN** a modal de detalhe está aberta
-- **WHEN** o escritor observa a área **Dados do personagem**
-- **THEN** vê retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia sem poder editá-los, com os campos vazios indicados como não informados (RF014-TL004, RF014-RN002, RF014-CA007)
-
-#### Scenario: Rótulo Títulos/Outros Nomes no vínculo
-- **GIVEN** a modal de detalhe está aberta
-- **WHEN** o escritor observa os campos do **Vínculo com o livro**
-- **THEN** o campo local antes chamado **Alcunha** aparece como **Títulos/Outros Nomes**, enquanto a **Alcunha** da ficha global continua com esse nome na área somente leitura (RF014-TL004, RF014-RN003, RF014-CA007)
-
-#### Scenario: Títulos/Outros Nomes do vínculo independentes
-- **GIVEN** o personagem global tem **Alcunha** = `Nove`
-- **WHEN** o escritor preenche **Títulos/Outros Nomes** do vínculo com `O Andarilho` e salva
-- **THEN** o vínculo guarda `O Andarilho` e a **Alcunha** global continua `Nove` e somente leitura (RF014-RN003, RF014-CA009)
-
-#### Scenario: Papel em lista fechada
-- **GIVEN** a modal de detalhe está aberta
-- **WHEN** o escritor abre o controle **Papel**
-- **THEN** vê **Protagonista**, **Antagonista**, **Coadjuvante**, **Aliado**, **Falso Antagonista**, **Falso Protagonista**, **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**, **Mentor**, **Herói**, **Vilão** e o valor vazio **Não definido** (RF014-TL005, RF014-RN004, RF014-CA008)
-
-#### Scenario: Salvar e reabrir o vínculo
-- **GIVEN** o escritor preencheu **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**
-- **WHEN** clica em **Salvar** e reabre o mesmo personagem
-- **THEN** os cinco valores aparecem como foram gravados, o **Papel** atualiza a listagem e a ficha global permanece inalterada (RF014-FL003, RF014-TL006, RF014-RN007, RF014-CA009)
-
-#### Scenario: Papel novo gravado
-- **GIVEN** a modal de detalhe está aberta
-- **WHEN** o escritor escolhe **Vilão** (ou outro papel acrescentado pelo ajuste) e clica em **Salvar**
-- **THEN** o vínculo guarda o papel novo, a listagem o exibe e reabrir a modal mostra o mesmo valor (RF014-TL005, RF014-RN004, RF014-CA008, RF014-CA009)
-
-#### Scenario: Fechar sem salvar
-- **GIVEN** a modal de detalhe está aberta com o vínculo preenchido
-- **WHEN** o escritor altera os campos e clica em **Fechar**
-- **THEN** as alterações pendentes são descartadas e o vínculo anterior continua gravado (RF014-TL006, RF014-FL004, RF014-CA010)
 
 ### Requirement: Capítulos do livro
 O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo quadro de planejamento do livro, com as quatro colunas de status **Esboço**, **Rascunho**, **Revisão** e **Finalizado**, cada uma com tamanho fixo, contador, rolagem interna, ordenação por **Número** ou **Data de Criação** (ascendente/descendente) e o botão **Adicionar Capítulo** no rodapé; **Novo Capítulo** no cabeçalho SHALL criar no **Esboço**, os rodapés SHALL criar no status da coluna, o clique em um capítulo SHALL abrir o painel de edição abaixo do quadro, organizado em duas abas — **Dados do Capítulo**, com **Número**, **Título**, **Status**, **Tipo**, **Motivo do Tipo**, **Meta**, **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch**, **K.O**, **Cenário Worldbuilding**, **Cenário Descritivo** e **Resumo**, e **Personagens do Capítulo**, com cada personagem precedido de uma miniatura quadrada do retrato (ou um quadrado vazio do mesmo tamanho) e exibido como **Nome - Papel** a partir do **Papel** do vínculo do RF014 (ou **Não definido**), com **Evento**, **Tipo de Evento** e **Motivo do Evento** por personagem —, com **Salvar** no cabeçalho comum às duas abas, o **Motivo do Tipo** e a **Meta** como textos de duas linhas, o **Cenário Descritivo** em duas linhas, o **K.O** ao lado do **Punch** e com a mesma altura dele, a ajuda do **Tipo** em linhas separadas para Ação, Suspensão, Direto e Indireto, as ajudas do **Evento** e do **Tipo de Evento** no padrão do **?** do Tipo e o arrastar SHALL mudar o status do capítulo (RF015-TL001 a RF015-TL007, RF015-FL001 a RF015-FL005, RF015-RN001 a RF015-RN017, RF015-CA001 a RF015-CA024).
@@ -555,4 +527,67 @@ O sistema SHALL substituir a tela informativa da seção **Gráficos** por um **
 - **GIVEN** o escritor abre e alterna as duas abas
 - **WHEN** a seção termina de carregar
 - **THEN** nenhum dado foi gravado e nenhuma migração foi criada; o esquema continua na v16 (RF016-RN001, RF016-RN008, RF016-CA011)
+
+### Requirement: Detalhe do personagem no livro
+O sistema SHALL abrir, ao clicar em um personagem do elenco, um detalhe **abaixo** da grade/lista, sem modal, organizado em três abas: **Dados Globais do Personagem**, com retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia em modo somente leitura; **Personagem no Livro**, com os campos editáveis **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**, todos opcionais e com **Papel** em lista fechada de treze valores; e **Gráfico de Evolução do Personagem no Livro**, com o gráfico do personagem naquele livro ou o aviso **Ainda não existem dados**; **Salvar** SHALL gravar somente o vínculo e manter o detalhe aberto com a confirmação, e o **ícone de fechar** do cabeçalho SHALL fechar o detalhe sem gravar as alterações pendentes, sem botão rotulado **Fechar** (RF014-TL004 a RF014-TL006, RF014-FL003, RF014-FL004, RF014-RN002 a RF014-RN004, RF014-RN007, RF014-CA007 a RF014-CA010, RF014-CA021, RF014-CA022).
+
+#### Scenario: Abrir o detalhe abaixo da grade
+- **GIVEN** o elenco do livro tem personagens associados
+- **WHEN** o escritor clica no card ou na linha de um personagem
+- **THEN** o detalhe abre abaixo da grade/lista, sem modal, com as abas **Dados Globais do Personagem**, **Personagem no Livro** e **Gráfico de Evolução do Personagem no Livro**, começando pela primeira, e o item selecionado fica destacado (RF014-TL004, RF014-CA007, RF014-CA021, RF014-CA022)
+
+#### Scenario: Sem botão Fechar
+- **GIVEN** o detalhe está aberto em qualquer aba
+- **WHEN** o escritor observa o rodapé
+- **THEN** não há botão rotulado **Fechar**; o fechamento fica no ícone X do cabeçalho (RF014-TL004, RF014-CA007)
+
+#### Scenario: Dados globais somente leitura
+- **GIVEN** o detalhe está aberto na aba **Dados Globais do Personagem**
+- **WHEN** o escritor observa os dados herdados
+- **THEN** vê retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia sem poder editá-los, com os campos vazios indicados como não informados (RF014-TL004, RF014-RN002, RF014-CA007)
+
+#### Scenario: Aba Personagem no Livro editável
+- **GIVEN** o detalhe está aberto
+- **WHEN** o escritor escolhe a aba **Personagem no Livro**
+- **THEN** vê **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história** editáveis e o botão **Salvar** (RF014-TL004, RF014-TL005, RF014-CA007)
+
+#### Scenario: Rótulo Títulos/Outros Nomes no vínculo
+- **GIVEN** o detalhe está aberto na aba **Personagem no Livro**
+- **WHEN** o escritor observa os campos do vínculo
+- **THEN** o campo local antes chamado **Alcunha** aparece como **Títulos/Outros Nomes**, enquanto a **Alcunha** da ficha global continua com esse nome na aba somente leitura (RF014-TL004, RF014-RN003, RF014-CA007)
+
+#### Scenario: Títulos/Outros Nomes do vínculo independentes
+- **GIVEN** o personagem global tem **Alcunha** = `Nove`
+- **WHEN** o escritor preenche **Títulos/Outros Nomes** do vínculo com `O Andarilho` e salva
+- **THEN** o vínculo guarda `O Andarilho` e a **Alcunha** global continua `Nove` e somente leitura (RF014-RN003, RF014-CA009)
+
+#### Scenario: Papel em lista fechada
+- **GIVEN** o detalhe está aberto na aba **Personagem no Livro**
+- **WHEN** o escritor abre o controle **Papel**
+- **THEN** vê **Protagonista**, **Antagonista**, **Coadjuvante**, **Aliado**, **Falso Antagonista**, **Falso Protagonista**, **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**, **Mentor**, **Herói**, **Vilão** e o valor vazio **Não definido** (RF014-TL005, RF014-RN004, RF014-CA008)
+
+#### Scenario: Salvar e reabrir o vínculo
+- **GIVEN** o escritor preencheu **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**
+- **WHEN** clica em **Salvar**
+- **THEN** os cinco valores são gravados, o detalhe permanece aberto com a confirmação, o **Papel** atualiza a listagem e a ficha global permanece inalterada (RF014-FL003, RF014-TL006, RF014-RN007, RF014-CA009)
+
+#### Scenario: Papel novo gravado
+- **GIVEN** o detalhe está aberto na aba **Personagem no Livro**
+- **WHEN** o escritor escolhe **Vilão** (ou outro papel acrescentado pelo ajuste) e clica em **Salvar**
+- **THEN** o vínculo guarda o papel novo, a listagem o exibe e reabrir o detalhe mostra o mesmo valor (RF014-TL005, RF014-RN004, RF014-CA008, RF014-CA009)
+
+#### Scenario: Fechar sem salvar
+- **GIVEN** o detalhe está aberto com o vínculo preenchido
+- **WHEN** o escritor altera os campos e clica no ícone X do cabeçalho
+- **THEN** o detalhe fecha, as alterações pendentes são descartadas e o vínculo anterior continua gravado (RF014-TL006, RF014-FL004, RF014-CA010)
+
+#### Scenario: Aba do gráfico de evolução
+- **GIVEN** o personagem aparece em capítulos do livro com eventos
+- **WHEN** o escritor escolhe a aba **Gráfico de Evolução do Personagem no Livro**
+- **THEN** vê o gráfico de evolução do personagem naquele livro, com os marcadores do RF016 (RF014-CA021, RF016-TL003, RF016-RN004, RF016-CA005)
+
+#### Scenario: Gráfico sem dados
+- **GIVEN** o personagem não aparece em nenhum capítulo do livro ou não tem eventos
+- **WHEN** o escritor escolhe a aba do gráfico
+- **THEN** vê **Ainda não existem dados** e a orientação para adicionar o personagem aos capítulos, sem gráfico quebrado (RF014-CA021)
 

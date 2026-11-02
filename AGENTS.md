@@ -29,9 +29,9 @@
 > `database-foundation` registra as migrações **v10**, **v11**, **v12**, **v13**,
 > **v14**, **v15** e **v16**. São **18 capabilities** e `openspec validate --all`
 > passa com 18/18;
-> **141 testes Rust**; `verificar-rf016.mjs` **14/14**,
-> `verificar-rf015.mjs` **29/29**,
-> `verificar-rf014.mjs` **38/38**, `verificar-rf011.mjs` **40/40**,
+> **142 testes Rust**; `verificar-rf016.mjs` **14/14**,
+> `verificar-rf015.mjs` **30/30**,
+> `verificar-rf014.mjs` **45/45**, `verificar-rf011.mjs` **40/40**,
 > `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15** e
 > `verificar-rf002.mjs` **20/20**. Em 28/10/2026 o **RF016** (gráficos do
 > livro), o **RF015** (capítulos do
@@ -130,7 +130,7 @@ talecraft/
 │                              ModalFaccaoPersonagem, TelaLivro, SidebarLivro,
 │                              Bookband, PainelAbas, DadosLivro,
 │                              TelaPersonagensLivro, ModalSelecaoPersonagens,
-│                              ModalPersonagemLivro, TelaCapitulosLivro,
+│                              DetalhePersonagemLivro, TelaCapitulosLivro,
 │                              PainelCapitulo, TelaGraficosLivro,
 │                              GraficoProgressao, GraficoArco
 ├── src-tauri/                 BACK-END Rust + configuração do Tauri
@@ -171,8 +171,8 @@ talecraft/
 │   ├── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (40/40)
 │   ├── verificar-rf012.mjs    aba Resumo, textos longos e sem Descartar (15/15)
 │   ├── verificar-rf013.mjs    abas Sinopse/Tema/Conflito/Voz e Humor (15/15)
-│   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (38/38)
-│   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (29/29)
+│   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (45/45)
+│   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (30/30)
 │   ├── verificar-rf016.mjs    gráficos: progressão, arcos e marcadores (14/14)
 │   └── verificar-janela-maximizada.mjs  janela maximizada com barra (3/3)
 ├── index.html                 HTML do Vite (monta o React)
@@ -881,8 +881,8 @@ informativa. O personagem continua **global** (RF004); o livro ganha o
 |---|---|
 | **Migração v12 (ampliada na v13) aditiva com `livro_personagem`** | PK composta `(livro_id, personagem_id)`, FKs para `livro` e `personagem_global`, `CHECK` do **Papel** e quatro textos; a PK é o backstop da duplicidade. A v13 recria a tabela para aceitar treze papéis. |
 | **Papel em lista fechada de catorze opções** | **Protagonista**, **Antagonista**, **Coadjuvante**, **Aliado**, **Falso Antagonista**, **Falso Protagonista**, **Oponente**, **Confidente**, **Figurante**, **Coprotagonista**, **Mentor**, **Herói**, **Vilão** e o vazio **Não definido**, gravado como string (não `NULL`). |
-| **Títulos/Outros Nomes do vínculo independentes** | A **Alcunha** global continua somente leitura na modal; **Títulos/Outros Nomes** (coluna `alcunha`) é local ao livro e pode ser diferente. |
-| **Dados globais somente leitura** | Retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia vêm do cadastro global; relações familiares ficam fora da modal. |
+| **Títulos/Outros Nomes do vínculo independentes** | A **Alcunha** global continua somente leitura no detalhe; **Títulos/Outros Nomes** (coluna `alcunha`) é local ao livro e pode ser diferente. |
+| **Dados globais somente leitura** | Retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia vêm do cadastro global; relações familiares ficam fora do detalhe. |
 | **Duplicidade vira relatório** | `associar` insere só os novos e devolve `associados`/`jaAssociados`; a UI informa os ignorados. Um único duplicado nunca cria o segundo vínculo. |
 | **Sem remoção** | O RF014 não desvincula personagem do livro nem cria botão, ícone ou comando equivalente. |
 | **Livro salvo obrigatório** | Em modo de criação o botão fica desabilitado e o back-end recusa com `LivroNaoSalvo`; não existe vínculo antes do primeiro **Salvar** do livro. |
@@ -894,10 +894,11 @@ informativa. O personagem continua **global** (RF004); o livro ganha o
 `listar_personagens_para_livro`, `associar_personagens_ao_livro`,
 `obter_personagem_do_livro`, `salvar_personagem_do_livro` e
 `listar_papeis_personagem_livro`; associar e salvar separados (associar cria com
-**Não definido**, salvar só faz `UPDATE`); modal de seleção e modal de detalhe;
-listagem em cards/lista reusando `.libcard` e o radio `.toggle-set--radio`. O
-`verificar-rf014.mjs` cobre a seção em **37/37** e o `verificar-rf011.mjs`
-passou a **32/32** (a lista de seções futuras ficou sem Personagens).
+**Não definido**, salvar só faz `UPDATE`); modal de seleção e detalhe inline em
+três abas; listagem em cards/lista reusando `.libcard` e o radio
+`.toggle-set--radio`. O `verificar-rf014.mjs` cobre a seção em **37/37** e o
+`verificar-rf011.mjs` passou a **32/32** (a lista de seções futuras ficou sem
+Personagens).
 
 **Ajuste de 28/10/2026 (change `rf014-ajustes-selecao-papeis`):** a modal de
 seleção ganhou **busca por nome** e **grade paginada de 12 em 12** (seleção
@@ -932,6 +933,25 @@ livro no painel **Vínculos com Livros** virou link para a página do livro.
 Nenhum comando ou migração nova; o `verificar-rf014.mjs` passou a **37/37** e a
 suíte Rust a **123 testes**.
 
+**Ajuste de 02/11/2026 (change `rf014-detalhe-embutido-paginacao`):** os cards
+passaram a rolar na horizontal com até cinco por tela e a lista passou a paginar
+de cinco em cinco, com **Anterior**/**Próxima** e a página atual. O detalhe
+deixou de ser modal e abriu **abaixo** da grade/lista em três abas — **Dados
+Globais do Personagem**, **Personagem no Livro** e **Gráfico de Evolução do
+Personagem no Livro**; **Salvar** mantém o detalhe aberto e **Fechar** descarta.
+O `ModalPersonagemLivro.jsx` foi substituído por `DetalhePersonagemLivro.jsx`.
+Sem migração nem comando novo; `verificar-rf014.mjs` passou a **43/43** e
+`verificar-rf015.mjs` a **30/30**.
+
+**Ajuste de 02/11/2026 (change `rf014-capitulos-destaque-detalhe`):** cada card
+e cada linha passaram a mostrar **Qtd Capítulos** e **Capítulos** (números em
+ordem, como `1,3`); o card/linha do personagem selecionado fica destacado; e o
+botão **Fechar** do rodapé foi removido — o detalhe fecha pelo ícone X do
+cabeçalho. `listar_personagens_do_livro` passou a devolver `totalCapitulos` e
+`capitulos`, calculados por consulta ordenada em
+`capitulo_personagem`/`capitulo`. Nenhuma migração nem comando novo; a suíte
+Rust passou a **142 testes** e o `verificar-rf014.mjs` a **45/45**.
+
 **Armadilhas encontradas ao implementar (RF014):**
 
 - **`innerText` aplica `text-transform`:** o título de área vira
@@ -953,6 +973,27 @@ suíte Rust a **123 testes**.
   do filtro.
 - **Ampliar `CHECK` recria a tabela:** a v13 segue o padrão da v8 — tabela nova,
   cópia, drop, rename e índice reconstruído; nenhum passo publicado é editado.
+- **A lista pagina no front-end:** `listar_personagens_do_livro` devolve o elenco
+  inteiro; a tela fatia cinco por página e limita a página quando o elenco muda.
+  Não crie comando paginado só para esta lista.
+- **Os cards usam rolagem, não paginação:** `.personagens-livro-cards` combina
+  `grid-auto-flow: column`, `grid-auto-columns: minmax(240px, calc((100% - 56px) / 5))`
+  e `overflow-x: auto`; em tela cheia cabem cinco, com mais itens a barra aparece.
+  Não troque por `.libgrid` puro, que quebra em várias linhas.
+- **O detalhe é inline:** `DetalhePersonagemLivro` fica abaixo da grade/lista e
+  usa `PainelAbas`; `ModalPersonagemLivro` foi removido. Salvar mantém o detalhe
+  aberto e só recarrega a lista; o ícone X do cabeçalho limpa `detalheId` (não há
+  botão rotulado **Fechar** no rodapé).
+- **Qtd Capítulos e Capítulos vêm do back-end:** `PersonagemDoLivro` ganhou
+  `totalCapitulos` e `capitulos`, preenchidos por uma única consulta ordenada em
+  `capitulo_personagem`+`capitulo` filtrada pelo livro. Não derive isso no
+  front-end nem use `GROUP_CONCAT` — a ordem numérica e o caso vazio (`0`/`—`)
+  ficam no domínio.
+- **O destaque usa `detalheId`:** o card e o `<tr>` recebem `is-selected` quando
+  o id bate com a seleção; o CSS usa `--accent-char`/`--accent-soft`.
+- **As abas renderizam só o conteúdo ativo:** `#personagemlivro-dados`,
+  `#vinculo-papel` e `#personagemlivro-grafico` não coexistem. O E2E precisa
+  clicar na `.detalhepersonagem .booktabs__tab` antes de ler cada grupo.
 
 ### Capítulos do livro (RF015)
 
@@ -1505,7 +1546,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `rf014-personagens-do-livro` e `rf014-ajustes-selecao-papeis`): a seção
   **Personagens** deixa de ser tela informativa e passa a listar o elenco do
   livro em cards ou lista, com **Adicionar Personagens**, associação múltipla,
-  modal de detalhe do vínculo e métricas reais.
+  detalhe inline em três abas e métricas reais.
   - **Esquema:** migração **v12** aditiva com `livro_personagem` (PK composta
     `livro_id` + `personagem_id`, FKs, `CHECK` do **Papel**, quatro textos e
     índice por `personagem_id`); a **v13** recria a tabela para ampliar o
@@ -1530,9 +1571,9 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
     Livro mostra o tamanho do elenco.
   - **Front-end:** `TelaPersonagensLivro.jsx`, `ModalSelecaoPersonagens.jsx`
     (busca por nome, grade de 12 em 12 e seleção mantida entre páginas),
-    `ModalPersonagemLivro.jsx` e `livroPersonagensApi.js`; a modal de detalhe
-    tem os dados globais somente leitura e os cinco campos do vínculo. Não há
-    ação de desvincular.
+    `DetalhePersonagemLivro.jsx` e `livroPersonagensApi.js`; o detalhe inline
+    tem os dados globais somente leitura, os cinco campos do vínculo e o gráfico
+    de evolução. Não há ação de desvincular.
   - **Testes Rust:** 21 novos (domínio, busca/paginação, migrações v11 → v12 e
     v12 → v13, métricas, livros do personagem e contagem de vínculos);
     **123** no total.
@@ -1562,7 +1603,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
     Painel do Livro mostra o total; a ficha global conta os capítulos por
     personagem/livro.
   - **Testes Rust:** 12 novos (capítulos, migrações v14/v15/v16 e contadores);
-    **141** no total.
+    **142** no total.
   - **Verificação:** `scripts/verificar-rf015.mjs` **19/19** no app real;
     `verificar-rf011.mjs` passou a **33/33** (Capítulos real) e
     `verificar-rf014.mjs` a **37/37** (total real); RF002–RF014 sem regressão.
@@ -1603,7 +1644,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
     `GraficoProgressao.jsx`, `GraficoArco.jsx` (segmentos interrompidos e
     marcadores pequenos/grandes), `graficosApi.js` e estilos em `livros.css`.
   - **Testes Rust:** 6 novos (progressão, arcos, ordem, ausência e livro vazio);
-    **141** no total.
+    **142** no total.
   - **Verificação:** `scripts/verificar-rf016.mjs` **14/14** no app real;
     `verificar-rf011.mjs` passou a **34/34** (Gráficos real); RF002–RF015 sem
     regressão.
@@ -1645,7 +1686,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 141 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 142 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
 - **Comandos Rust (56 no total):** `mensagem_inicial` (RF001),
@@ -1711,9 +1752,9 @@ livro) fecharam com
 `verificar-rf008.mjs` **21/21**, `verificar-rf009.mjs` **16/16**,
 `verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **40/40**,
 `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15**,
-`verificar-rf014.mjs` **38/38**, `verificar-rf015.mjs` **29/29**,
+`verificar-rf014.mjs` **43/43**, `verificar-rf015.mjs` **30/30**,
 `verificar-rf016.mjs` **14/14** e
-`verificar-rf002.mjs` **20/20** (splash ajustada), respectivamente, sobre **141
+`verificar-rf002.mjs` **20/20** (splash ajustada), respectivamente, sobre **142
 testes Rust** e sem regressão dos verificadores RF002–RF016. A correção da
 exportação completa do Mundo (change `rf007-exportacao-mundo-dados-associados`),
 o ajuste de período/ordem do RF011 (change
@@ -1732,7 +1773,9 @@ ficha global (change `rf014-vinculos-ficha-global`), a contagem/link de livros
 `rf015-campos-duas-linhas`), o papel ao lado do nome (change
 `rf015-papel-personagem-capitulo`), a miniatura do retrato (change
 `rf015-retrato-personagem-capitulo`), os gráficos no Painel e na ficha (change
-`rf016-graficos-painel-ficha`), os gráficos do livro (change
+`rf016-graficos-painel-ficha`), o detalhe inline e a paginação (change
+`rf014-detalhe-embutido-paginacao`), os capítulos por personagem e o destaque
+(change `rf014-capitulos-destaque-detalhe`), os gráficos do livro (change
 `rf016-graficos-do-livro`), o motivo do tipo (change `rf015-motivo-tipo`) e o
 tooltip da progressão (change `rf016-tooltip-progressao`) também estão
 arquivados.

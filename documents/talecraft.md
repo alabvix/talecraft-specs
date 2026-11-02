@@ -1227,8 +1227,8 @@ A ficha do personagem continua **global** e é a fonte dos dados herdados; o
 vínculo guarda somente os dados que variam de livro para livro e não altera o
 cadastro global (RF004). A ficha global passa a ler os vínculos: o painel
 **Vínculos com Livros** mostra os livros, o papel e o total de capítulos em que
-o personagem aparece, e a **Curva de arco em cada livro** lista os livros
-vinculados, ainda sem dados (RF014-TL007). O RF014 revoga, para
+o personagem aparece, e a **Curva de arco em cada livro** permite escolher o
+livro e desenhar o gráfico do personagem nele (RF014-TL007). O RF014 revoga, para
 **Personagens**, a tela informativa prevista em RF011-TL006 e RF011-CA014. Não
 há remoção de personagem do livro neste requisito.
 
@@ -1242,6 +1242,12 @@ há remoção de personagem do livro neste requisito.
   arco em cada livro** (RF014-TL007, RF014-RN015, RF014-CA018); o nome do livro
   é um link para a página do livro e o card da lista global mostra a quantidade
   real de livros vinculados.
+- **Ajuste de 02/11/2026:** a seção passou a exibir os cards em uma faixa
+  horizontal com até cinco por tela e rolagem para os demais, e a lista em uma
+  tabela paginada de cinco em cinco. O detalhe do personagem deixou de ser modal
+  e passou a abrir **abaixo** da grade/lista em três abas — dados globais,
+  personagem no livro e gráfico de evolução (RF014-TL001, RF014-TL004,
+  RF014-TL006, RF014-CA006, RF014-CA007, RF014-CA020, RF014-CA021).
 
 #### Telas
 
@@ -1250,8 +1256,15 @@ há remoção de personagem do livro neste requisito.
   personagens associados ao livro em **cards** (padrão) ou em **lista**, com
   alternância entre as duas visualizações, no mesmo padrão da biblioteca global
   (RF004). Cada item mostra o retrato e o nome do personagem e o **Papel** do
-  vínculo; sem papel, mostra **Papel não definido**. Sem vínculos, a seção mostra
-  um estado vazio com orientação para usar **Adicionar Personagens**.
+  vínculo; sem papel, mostra **Papel não definido**. Em **cards**, a faixa exibe
+  no máximo cinco cards por tela e uma barra de rolagem horizontal para os
+  demais. Em **lista**, a tabela exibe cinco personagens por página, com os
+  botões **Anterior** e **Próxima** e a indicação da página atual. Cada card e
+  cada linha mostram **Qtd Capítulos** (total de capítulos em que o personagem
+  aparece) e **Capítulos** (os números em ordem, como `1,3,4`). O card ou a
+  linha do personagem selecionado fica destacado. Sem vínculos,
+  a seção mostra um estado vazio com orientação para usar **Adicionar
+  Personagens**.
 - **RF014-TL002** - Botão Adicionar Personagens: fica no cabeçalho da seção,
   visível em cards e em lista, e abre a modal de seleção. Enquanto o livro não
   estiver salvo (modo de criação), o botão fica desabilitado e uma mensagem
@@ -1265,22 +1278,25 @@ há remoção de personagem do livro neste requisito.
   **Associar** e **Fechar**. Sem personagens globais, mostra um estado vazio com
   orientação para cadastrá-los na biblioteca global; sem resultado para a busca,
   informa que nenhum personagem corresponde.
-- **RF014-TL004** - Modal de detalhe do personagem no livro: abre ao clicar no
-  card ou na linha do personagem. Tem duas áreas: **Dados do personagem**,
-  herdados do cadastro global e somente leitura, e **Vínculo com o livro**,
-  editável. A área herdada mostra retrato, Nome, Idade, Raça, Personalidade,
-  Força, Fraqueza, Interesses, Alcunha e Biografia. A área do vínculo tem
-  **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e
-  **Resumo da atuação na história**. A modal tem os botões **Salvar** e
+- **RF014-TL004** - Detalhe do personagem no livro: abre **abaixo** da
+  grade/lista ao clicar no card ou na linha, sem modal, e tem três abas:
+  **Dados Globais do Personagem**, com retrato, Nome, Idade, Raça,
+  Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia, todos
+  somente leitura; **Personagem no Livro**, com **Papel**, **Resumo do Papel**,
+  **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na
+  história**, editáveis; e **Gráfico de Evolução do Personagem no Livro**, com o
+  gráfico de evolução do personagem naquele livro. O detalhe tem **Salvar** na
+  aba do vínculo e um **ícone de fechar** no cabeçalho; não há botão rotulado
   **Fechar**.
 - **RF014-TL005** - Tipos dos campos do vínculo: **Papel** é uma lista fechada;
   **Resumo do Papel**, **Papel no mundo** e **Títulos/Outros Nomes** são texto
   curto, de uma linha; **Resumo da atuação na história** é texto longo, de
   várias linhas. Todos os campos são opcionais.
-- **RF014-TL006** - Ações da modal de detalhe: **Salvar** grava os campos do
-  vínculo e fecha a modal; **Fechar** fecha sem gravar as alterações pendentes.
-  Se a gravação falhar, a modal permanece aberta com mensagem útil e os valores
-  anteriores não são alterados.
+- **RF014-TL006** - Ações do detalhe: **Salvar** grava os campos do vínculo e
+  mantém o detalhe aberto com a confirmação; o **ícone de fechar** do cabeçalho
+  fecha o detalhe sem gravar as alterações pendentes. Se a gravação falhar, o
+  detalhe permanece aberto com mensagem útil e os valores anteriores não são
+  alterados.
 - **RF014-TL007** - Vínculos na ficha global e na lista: na tela **Detalhe do
   Personagem** (RF004-TL002), o painel **Vínculos com Livros** lista os livros
   aos quais o personagem está associado, com as colunas **Livro**, **Papel** e
@@ -1308,11 +1324,12 @@ há remoção de personagem do livro neste requisito.
   exibe uma mensagem informando quais já estavam no livro.
 - **RF014-FL003** - Editar o vínculo: o escritor clica no personagem na seção
   **Personagens**, preenche ou altera os campos do **Vínculo com o livro** e
-  clica em **Salvar**; a modal fecha, o card ou a linha mostra o novo **Papel** e
-  a reabertura do personagem exibe os valores gravados.
+  clica em **Salvar**; o detalhe permanece aberto com a confirmação, o card ou a
+  linha mostra o novo **Papel** e a reabertura do personagem exibe os valores
+  gravados.
 - **RF014-FL004** - Fechar sem salvar: o escritor altera os campos do vínculo e
-  clica em **Fechar**; as alterações pendentes são descartadas e o vínculo
-  anterior permanece.
+  clica em **Fechar**; as alterações pendentes são descartadas, o detalhe fecha
+  e o vínculo anterior permanece.
 - **RF014-FL005** - Livro ainda não salvo: na página do livro em modo de criação,
   o botão **Adicionar Personagens** fica desabilitado; depois de salvar o livro
   em **Dados do Livro**, o botão é habilitado e o fluxo de associação funciona.
@@ -1322,10 +1339,11 @@ há remoção de personagem do livro neste requisito.
 - **RF014-RN001** - Vínculo N:N: um livro tem vários personagens e um personagem
   pode estar em vários livros; cada par livro–personagem tem no máximo um
   vínculo. O vínculo não altera a ficha global nem cria uma cópia do personagem.
-- **RF014-RN002** - Dados herdados somente leitura: os dados globais exibidos na
-  modal vêm do cadastro do personagem (RF004) e não podem ser editados nela. As
-  relações globais continuam somente na ficha global e não fazem parte da modal.
-  Para alterar um dado global, o escritor usa a biblioteca de personagens.
+- **RF014-RN002** - Dados herdados somente leitura: os dados globais exibidos no
+  detalhe vêm do cadastro do personagem (RF004) e não podem ser editados nele. As
+  relações globais continuam somente na ficha global e não fazem parte do
+  detalhe. Para alterar um dado global, o escritor usa a biblioteca de
+  personagens.
 - **RF014-RN003** - Campos do vínculo: **Papel**, **Resumo do Papel**, **Papel
   no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**,
   todos opcionais. O campo **Títulos/Outros Nomes** (a alcunha local, gravada na
@@ -1407,18 +1425,23 @@ há remoção de personagem do livro neste requisito.
   **Associar** cria todos os vínculos, fecha a modal e atualiza a lista.
 - **RF014-CA005** - Duplicidade: tentar associar um personagem já associado não
   cria um segundo vínculo e exibe mensagem.
-- **RF014-CA006** - Listagem: os personagens do livro aparecem em cards, com
-  alternância para lista, mostrando retrato, nome e papel; sem vínculos, a seção
-  mostra o estado vazio.
-- **RF014-CA007** - Detalhe: clicar no personagem abre a modal com os dados
-  globais somente leitura e os cinco campos do vínculo editáveis.
+- **RF014-CA006** - Listagem: os personagens do livro aparecem em **cards** com
+  até cinco por tela e rolagem horizontal para os demais, ou em **lista**
+  paginada de cinco em cinco; os dois modos mostram retrato, nome e papel; sem
+  vínculos, a seção mostra o estado vazio.
+- **RF014-CA007** - Detalhe: clicar no personagem abre o detalhe **abaixo** da
+  grade/lista, sem modal, com as abas **Dados Globais do Personagem**
+  (somente leitura), **Personagem no Livro** (campos editáveis) e **Gráfico de
+  Evolução do Personagem no Livro**; o card ou a linha selecionado fica
+  destacado e não há botão rotulado **Fechar**.
 - **RF014-CA008** - Papel: a lista de **Papel** tem exatamente os treze valores
   definidos, além do valor vazio.
 - **RF014-CA009** - Salvar vínculo: preencher os cinco campos e clicar em
-  **Salvar** grava os dados, fecha a modal, atualiza o papel na listagem e mantém
-  a ficha global inalterada; reabrir mostra os valores gravados.
-- **RF014-CA010** - Fechar: alterar campos e clicar em **Fechar** descarta as
-  alterações e mantém o vínculo anterior.
+  **Salvar** grava os dados, mantém o detalhe aberto com a confirmação, atualiza
+  o papel na listagem e mantém a ficha global inalterada; reabrir mostra os
+  valores gravados.
+- **RF014-CA010** - Fechar: alterar campos e clicar no **ícone de fechar** do
+  cabeçalho descarta as alterações, fecha o detalhe e mantém o vínculo anterior.
 - **RF014-CA011** - Sem personagens globais: a modal de seleção mostra estado
   vazio, orienta o cadastro global e **Fechar** funciona.
 - **RF014-CA012** - Sem seleção: clicar em **Associar** sem personagens marcados
@@ -1434,9 +1457,11 @@ há remoção de personagem do livro neste requisito.
 - **RF014-CA016** - Sem regressão: os fluxos do RF004, do RF011, do RF012, do
   RF013 e dos demais requisitos anteriores continuam funcionando.
 - **RF014-CA017** - Testes automatizados: a verificação cobre a seção, o botão, a
-  modal de seleção, a associação múltipla, a duplicidade, os cards/lista, o
-  detalhe, o papel, a gravação, o fechamento sem salvar, o estado vazio, a
-  migração v12, as métricas e os vínculos e a curva de arco na ficha global.
+  modal de seleção, a associação múltipla, a duplicidade, os cards/lista, a
+  paginação e a rolagem dos cards, os capítulos por personagem, o destaque do
+  selecionado, o detalhe em abas, o papel, a gravação, o fechamento sem salvar, o
+  estado vazio, a migração v12, as métricas e os vínculos e a curva de arco na
+  ficha global.
 - **RF014-CA018** - Vínculos na ficha global: ao abrir a tela de detalhe de um
   personagem vinculado, o painel **Vínculos com Livros** aparece expandido e
   lista **Livro**, **Papel** e **Total de Capítulos em que aparece** (contagem
@@ -1450,6 +1475,21 @@ há remoção de personagem do livro neste requisito.
   começa no primeiro livro e desenha o gráfico de Evolução do Personagem do livro
   escolhido; trocar o livro atualiza o gráfico (ou o aviso **Ainda não existem
   dados**), sem alterar os vínculos.
+- **RF014-CA020** - Cards e lista paginados: os cards exibem no máximo cinco por
+  tela e rolam na horizontal para os demais; a lista exibe cinco personagens por
+  página, com **Anterior** e **Próxima** desabilitados nos limites e a indicação
+  da página; clicar em um item de qualquer modo abre o detalhe abaixo.
+- **RF014-CA021** - Detalhe em três abas e gráfico: o detalhe abaixo da
+  grade/lista separa **Dados Globais do Personagem**, **Personagem no Livro** e
+  **Gráfico de Evolução do Personagem no Livro**; a terceira aba desenha o
+  gráfico do personagem naquele livro ou informa **Ainda não existem dados**.
+- **RF014-CA022** - Destaque do selecionado: ao abrir o detalhe de um personagem,
+  o card ou a linha correspondente fica visualmente destacado; ao fechar ou
+  selecionar outro, o destaque acompanha a seleção.
+- **RF014-CA023** - Capítulos no card e na tabela: cada card e cada linha mostram
+  **Qtd Capítulos** com o total de capítulos do livro em que o personagem
+  aparece e **Capítulos** com os números em ordem crescente (por exemplo,
+  `Capítulos: 1,3,4`); sem capítulos, mostram `0` e `—`, sem inventar dados.
 
 ### RF015 - Livros - Capítulos
 
