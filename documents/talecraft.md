@@ -1245,9 +1245,11 @@ há remoção de personagem do livro neste requisito.
 - **Ajuste de 02/11/2026:** a seção passou a exibir os cards em uma faixa
   horizontal com até cinco por tela e rolagem para os demais, e a lista em uma
   tabela paginada de cinco em cinco. O detalhe do personagem deixou de ser modal
-  e passou a abrir **abaixo** da grade/lista em três abas — dados globais,
-  personagem no livro e gráfico de evolução (RF014-TL001, RF014-TL004,
-  RF014-TL006, RF014-CA006, RF014-CA007, RF014-CA020, RF014-CA021).
+  e passou a abrir **abaixo** da grade/lista em quatro abas — dados globais,
+  personagem no livro, gráfico de evolução e eventos —, sem botão **Fechar** nem
+  ícone X (RF014-TL001, RF014-TL004, RF014-TL006, RF014-RN017, RF014-RN018,
+  RF014-CA006, RF014-CA007, RF014-CA020, RF014-CA021, RF014-CA024,
+  RF014-CA025).
 
 #### Telas
 
@@ -1284,19 +1286,19 @@ há remoção de personagem do livro neste requisito.
   Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia, todos
   somente leitura; **Personagem no Livro**, com **Papel**, **Resumo do Papel**,
   **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na
-  história**, editáveis; e **Gráfico de Evolução do Personagem no Livro**, com o
-  gráfico de evolução do personagem naquele livro. O detalhe tem **Salvar** na
-  aba do vínculo e um **ícone de fechar** no cabeçalho; não há botão rotulado
-  **Fechar**.
+  história**, editáveis; **Gráfico de Evolução**, com o
+  gráfico de evolução do personagem naquele livro; e **Eventos**, com a tabela
+  de eventos do personagem no livro. O detalhe tem **Salvar** na aba do vínculo;
+  não há botão **Fechar** nem ícone X — ele permanece aberto até a troca de
+  personagem ou a saída da seção.
 - **RF014-TL005** - Tipos dos campos do vínculo: **Papel** é uma lista fechada;
   **Resumo do Papel**, **Papel no mundo** e **Títulos/Outros Nomes** são texto
   curto, de uma linha; **Resumo da atuação na história** é texto longo, de
   várias linhas. Todos os campos são opcionais.
 - **RF014-TL006** - Ações do detalhe: **Salvar** grava os campos do vínculo e
-  mantém o detalhe aberto com a confirmação; o **ícone de fechar** do cabeçalho
-  fecha o detalhe sem gravar as alterações pendentes. Se a gravação falhar, o
-  detalhe permanece aberto com mensagem útil e os valores anteriores não são
-  alterados.
+  mantém o detalhe aberto com a confirmação; não há botão **Fechar** nem ícone X.
+  Se a gravação falhar, o detalhe permanece aberto com mensagem útil e os valores
+  anteriores não são alterados.
 - **RF014-TL007** - Vínculos na ficha global e na lista: na tela **Detalhe do
   Personagem** (RF004-TL002), o painel **Vínculos com Livros** lista os livros
   aos quais o personagem está associado, com as colunas **Livro**, **Papel** e
@@ -1410,6 +1412,16 @@ há remoção de personagem do livro neste requisito.
   daquele livro, filtrando o arco pelo personagem da ficha. A linha e os
   marcadores seguem o RF016; sem aparições ou eventos, o painel mostra **Ainda
   não existem dados**. Trocar o livro não altera os vínculos nem grava dados.
+- **RF014-RN017** - Aba Eventos: lista em tabela os eventos do personagem no
+  livro, com as colunas **Capítulo**, **Tipo Evento** e **Motivo do evento**.
+  Entram somente **Ascensão**, **Declínio**, **Apogeu** e **Queda**; eventos
+  **Neutro** não aparecem. A tabela pagina de cinco em cinco, com **Anterior**,
+  **Próxima** e a página atual, na ordem dos capítulos; motivo vazio mostra
+  **—**.
+- **RF014-RN018** - Sem ação de fechar: o detalhe não tem botão **Fechar** nem
+  ícone X. Ele permanece aberto até o escritor selecionar outro personagem ou
+  sair da seção; trocar de personagem substitui o conteúdo e descarta as
+  alterações pendentes.
 
 #### Critérios de Aceite
 
@@ -1431,17 +1443,18 @@ há remoção de personagem do livro neste requisito.
   vínculos, a seção mostra o estado vazio.
 - **RF014-CA007** - Detalhe: clicar no personagem abre o detalhe **abaixo** da
   grade/lista, sem modal, com as abas **Dados Globais do Personagem**
-  (somente leitura), **Personagem no Livro** (campos editáveis) e **Gráfico de
-  Evolução do Personagem no Livro**; o card ou a linha selecionado fica
-  destacado e não há botão rotulado **Fechar**.
+  (somente leitura), **Personagem no Livro** (campos editáveis), **Gráfico de
+  Evolução** e **Eventos**; o card ou a linha selecionado fica destacado e não
+  há botão **Fechar** nem ícone X.
 - **RF014-CA008** - Papel: a lista de **Papel** tem exatamente os treze valores
   definidos, além do valor vazio.
 - **RF014-CA009** - Salvar vínculo: preencher os cinco campos e clicar em
   **Salvar** grava os dados, mantém o detalhe aberto com a confirmação, atualiza
   o papel na listagem e mantém a ficha global inalterada; reabrir mostra os
   valores gravados.
-- **RF014-CA010** - Fechar: alterar campos e clicar no **ícone de fechar** do
-  cabeçalho descarta as alterações, fecha o detalhe e mantém o vínculo anterior.
+- **RF014-CA010** - Troca de personagem: alterar campos e selecionar outro
+  personagem descarta as alterações pendentes, mantém o vínculo anterior e o
+  detalhe continua aberto para o novo personagem.
 - **RF014-CA011** - Sem personagens globais: a modal de seleção mostra estado
   vazio, orienta o cadastro global e **Fechar** funciona.
 - **RF014-CA012** - Sem seleção: clicar em **Associar** sem personagens marcados
@@ -1459,9 +1472,9 @@ há remoção de personagem do livro neste requisito.
 - **RF014-CA017** - Testes automatizados: a verificação cobre a seção, o botão, a
   modal de seleção, a associação múltipla, a duplicidade, os cards/lista, a
   paginação e a rolagem dos cards, os capítulos por personagem, o destaque do
-  selecionado, o detalhe em abas, o papel, a gravação, o fechamento sem salvar, o
-  estado vazio, a migração v12, as métricas e os vínculos e a curva de arco na
-  ficha global.
+  selecionado, o detalhe em abas, a aba Eventos, o papel, a gravação, a troca de
+  personagem sem salvar, o estado vazio, a migração v12, as métricas e os
+  vínculos e a curva de arco na ficha global.
 - **RF014-CA018** - Vínculos na ficha global: ao abrir a tela de detalhe de um
   personagem vinculado, o painel **Vínculos com Livros** aparece expandido e
   lista **Livro**, **Papel** e **Total de Capítulos em que aparece** (contagem
@@ -1479,17 +1492,26 @@ há remoção de personagem do livro neste requisito.
   tela e rolam na horizontal para os demais; a lista exibe cinco personagens por
   página, com **Anterior** e **Próxima** desabilitados nos limites e a indicação
   da página; clicar em um item de qualquer modo abre o detalhe abaixo.
-- **RF014-CA021** - Detalhe em três abas e gráfico: o detalhe abaixo da
-  grade/lista separa **Dados Globais do Personagem**, **Personagem no Livro** e
-  **Gráfico de Evolução do Personagem no Livro**; a terceira aba desenha o
-  gráfico do personagem naquele livro ou informa **Ainda não existem dados**.
+- **RF014-CA021** - Detalhe em quatro abas: o detalhe abaixo da grade/lista
+  separa **Dados Globais do Personagem**, **Personagem no Livro**, **Gráfico de
+  Evolução** e **Eventos**; a aba do gráfico desenha o personagem naquele livro
+  ou informa **Ainda não existem dados**, e a aba **Eventos** lista os eventos
+  em tabela.
 - **RF014-CA022** - Destaque do selecionado: ao abrir o detalhe de um personagem,
-  o card ou a linha correspondente fica visualmente destacado; ao fechar ou
-  selecionar outro, o destaque acompanha a seleção.
+  o card ou a linha correspondente fica visualmente destacado; ao selecionar
+  outro, o destaque acompanha a seleção.
 - **RF014-CA023** - Capítulos no card e na tabela: cada card e cada linha mostram
   **Qtd Capítulos** com o total de capítulos do livro em que o personagem
   aparece e **Capítulos** com os números em ordem crescente (por exemplo,
   `Capítulos: 1,3,4`); sem capítulos, mostram `0` e `—`, sem inventar dados.
+- **RF014-CA024** - Aba Eventos: a aba lista os eventos do personagem no livro em
+  uma tabela com **Capítulo**, **Tipo Evento** e **Motivo do evento**, somente
+  **Ascensão**, **Declínio**, **Apogeu** e **Queda**, com cinco linhas por
+  página, **Anterior**/**Próxima** e a página atual; eventos **Neutro** não
+  aparecem e motivo vazio mostra **—**.
+- **RF014-CA025** - Sem ação de fechar: o detalhe não exibe botão **Fechar** nem
+  ícone X; selecionar outro personagem troca o conteúdo e descarta as alterações
+  pendentes, e o detalhe continua aberto.
 
 ### RF015 - Livros - Capítulos
 

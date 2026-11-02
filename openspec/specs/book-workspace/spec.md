@@ -529,17 +529,17 @@ O sistema SHALL substituir a tela informativa da seção **Gráficos** por um **
 - **THEN** nenhum dado foi gravado e nenhuma migração foi criada; o esquema continua na v16 (RF016-RN001, RF016-RN008, RF016-CA011)
 
 ### Requirement: Detalhe do personagem no livro
-O sistema SHALL abrir, ao clicar em um personagem do elenco, um detalhe **abaixo** da grade/lista, sem modal, organizado em três abas: **Dados Globais do Personagem**, com retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia em modo somente leitura; **Personagem no Livro**, com os campos editáveis **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**, todos opcionais e com **Papel** em lista fechada de treze valores; e **Gráfico de Evolução do Personagem no Livro**, com o gráfico do personagem naquele livro ou o aviso **Ainda não existem dados**; **Salvar** SHALL gravar somente o vínculo e manter o detalhe aberto com a confirmação, e o **ícone de fechar** do cabeçalho SHALL fechar o detalhe sem gravar as alterações pendentes, sem botão rotulado **Fechar** (RF014-TL004 a RF014-TL006, RF014-FL003, RF014-FL004, RF014-RN002 a RF014-RN004, RF014-RN007, RF014-CA007 a RF014-CA010, RF014-CA021, RF014-CA022).
+O sistema SHALL abrir, ao clicar em um personagem do elenco, um detalhe **abaixo** da grade/lista, sem modal, organizado em quatro abas: **Dados Globais do Personagem**, com retrato, Nome, Idade, Raça, Personalidade, Força, Fraqueza, Interesses, Alcunha e Biografia em modo somente leitura; **Personagem no Livro**, com os campos editáveis **Papel**, **Resumo do Papel**, **Papel no mundo**, **Títulos/Outros Nomes** e **Resumo da atuação na história**, todos opcionais e com **Papel** em lista fechada de treze valores; **Gráfico de Evolução**, com o gráfico do personagem naquele livro ou o aviso **Ainda não existem dados**; e **Eventos**, com a tabela dos eventos do personagem no livro nas colunas **Capítulo**, **Tipo Evento** e **Motivo do evento**, somente **Ascensão**, **Declínio**, **Apogeu** e **Queda**, cinco linhas por página; **Salvar** SHALL gravar somente o vínculo e manter o detalhe aberto com a confirmação, o detalhe SHALL permanecer aberto até a seleção de outro personagem ou a saída da seção, e SHALL NOT exibir botão rotulado **Fechar** nem ícone X (RF014-TL004 a RF014-TL006, RF014-FL003, RF014-FL004, RF014-RN002 a RF014-RN004, RF014-RN007, RF014-RN017, RF014-RN018, RF014-CA007 a RF014-CA010, RF014-CA021, RF014-CA022, RF014-CA024, RF014-CA025).
 
 #### Scenario: Abrir o detalhe abaixo da grade
 - **GIVEN** o elenco do livro tem personagens associados
 - **WHEN** o escritor clica no card ou na linha de um personagem
-- **THEN** o detalhe abre abaixo da grade/lista, sem modal, com as abas **Dados Globais do Personagem**, **Personagem no Livro** e **Gráfico de Evolução do Personagem no Livro**, começando pela primeira, e o item selecionado fica destacado (RF014-TL004, RF014-CA007, RF014-CA021, RF014-CA022)
+- **THEN** o detalhe abre abaixo da grade/lista, sem modal, com as abas **Dados Globais do Personagem**, **Personagem no Livro**, **Gráfico de Evolução** e **Eventos**, começando pela primeira, e o item selecionado fica destacado (RF014-TL004, RF014-CA007, RF014-CA021, RF014-CA022)
 
-#### Scenario: Sem botão Fechar
+#### Scenario: Sem botão nem ícone de fechar
 - **GIVEN** o detalhe está aberto em qualquer aba
-- **WHEN** o escritor observa o rodapé
-- **THEN** não há botão rotulado **Fechar**; o fechamento fica no ícone X do cabeçalho (RF014-TL004, RF014-CA007)
+- **WHEN** o escritor observa o cabeçalho e o rodapé
+- **THEN** não há botão **Fechar** nem ícone X; o detalhe permanece aberto (RF014-TL004, RF014-RN018, RF014-CA007, RF014-CA025)
 
 #### Scenario: Dados globais somente leitura
 - **GIVEN** o detalhe está aberto na aba **Dados Globais do Personagem**
@@ -576,18 +576,28 @@ O sistema SHALL abrir, ao clicar em um personagem do elenco, um detalhe **abaixo
 - **WHEN** o escritor escolhe **Vilão** (ou outro papel acrescentado pelo ajuste) e clica em **Salvar**
 - **THEN** o vínculo guarda o papel novo, a listagem o exibe e reabrir o detalhe mostra o mesmo valor (RF014-TL005, RF014-RN004, RF014-CA008, RF014-CA009)
 
-#### Scenario: Fechar sem salvar
-- **GIVEN** o detalhe está aberto com o vínculo preenchido
-- **WHEN** o escritor altera os campos e clica no ícone X do cabeçalho
-- **THEN** o detalhe fecha, as alterações pendentes são descartadas e o vínculo anterior continua gravado (RF014-TL006, RF014-FL004, RF014-CA010)
+#### Scenario: Trocar de personagem sem salvar
+- **GIVEN** o detalhe está aberto com o vínculo preenchido e alterações pendentes
+- **WHEN** o escritor seleciona outro personagem
+- **THEN** o detalhe continua aberto para o novo personagem, as alterações pendentes do anterior são descartadas e o vínculo anterior continua gravado (RF014-TL006, RF014-FL004, RF014-RN018, RF014-CA010)
 
 #### Scenario: Aba do gráfico de evolução
 - **GIVEN** o personagem aparece em capítulos do livro com eventos
-- **WHEN** o escritor escolhe a aba **Gráfico de Evolução do Personagem no Livro**
+- **WHEN** o escritor escolhe a aba **Gráfico de Evolução**
 - **THEN** vê o gráfico de evolução do personagem naquele livro, com os marcadores do RF016 (RF014-CA021, RF016-TL003, RF016-RN004, RF016-CA005)
 
 #### Scenario: Gráfico sem dados
 - **GIVEN** o personagem não aparece em nenhum capítulo do livro ou não tem eventos
 - **WHEN** o escritor escolhe a aba do gráfico
 - **THEN** vê **Ainda não existem dados** e a orientação para adicionar o personagem aos capítulos, sem gráfico quebrado (RF014-CA021)
+
+#### Scenario: Aba Eventos com tabela paginada
+- **GIVEN** o personagem tem seis eventos de Ascensão, Declínio, Apogeu ou Queda em capítulos do livro
+- **WHEN** o escritor escolhe a aba **Eventos**
+- **THEN** vê a tabela com **Capítulo**, **Tipo Evento** e **Motivo do evento**, cinco linhas na primeira página, **Página 1 de 2**, **Anterior** desabilitado e **Próxima** habilitado; avançar mostra a sexta linha e desabilita **Próxima** (RF014-RN017, RF014-CA024)
+
+#### Scenario: Eventos Neutro fora da tabela
+- **GIVEN** o personagem tem um evento **Neutro** em um capítulo
+- **WHEN** o escritor abre a aba **Eventos**
+- **THEN** a linha desse capítulo não aparece; a tabela lista somente Ascensão, Declínio, Apogeu e Queda, com motivo vazio exibido como **—** (RF014-RN017, RF014-CA024)
 

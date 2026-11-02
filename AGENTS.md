@@ -31,7 +31,7 @@
 > passa com 18/18;
 > **142 testes Rust**; `verificar-rf016.mjs` **14/14**,
 > `verificar-rf015.mjs` **30/30**,
-> `verificar-rf014.mjs` **45/45**, `verificar-rf011.mjs` **40/40**,
+> `verificar-rf014.mjs` **47/47**, `verificar-rf011.mjs` **40/40**,
 > `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15** e
 > `verificar-rf002.mjs` **20/20**. Em 28/10/2026 o **RF016** (gráficos do
 > livro), o **RF015** (capítulos do
@@ -171,7 +171,7 @@ talecraft/
 │   ├── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (40/40)
 │   ├── verificar-rf012.mjs    aba Resumo, textos longos e sem Descartar (15/15)
 │   ├── verificar-rf013.mjs    abas Sinopse/Tema/Conflito/Voz e Humor (15/15)
-│   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (45/45)
+│   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (47/47)
 │   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (30/30)
 │   ├── verificar-rf016.mjs    gráficos: progressão, arcos e marcadores (14/14)
 │   └── verificar-janela-maximizada.mjs  janela maximizada com barra (3/3)
@@ -895,7 +895,7 @@ informativa. O personagem continua **global** (RF004); o livro ganha o
 `obter_personagem_do_livro`, `salvar_personagem_do_livro` e
 `listar_papeis_personagem_livro`; associar e salvar separados (associar cria com
 **Não definido**, salvar só faz `UPDATE`); modal de seleção e detalhe inline em
-três abas; listagem em cards/lista reusando `.libcard` e o radio
+quatro abas; listagem em cards/lista reusando `.libcard` e o radio
 `.toggle-set--radio`. O `verificar-rf014.mjs` cobre a seção em **37/37** e o
 `verificar-rf011.mjs` passou a **32/32** (a lista de seções futuras ficou sem
 Personagens).
@@ -952,6 +952,19 @@ cabeçalho. `listar_personagens_do_livro` passou a devolver `totalCapitulos` e
 `capitulo_personagem`/`capitulo`. Nenhuma migração nem comando novo; a suíte
 Rust passou a **142 testes** e o `verificar-rf014.mjs` a **45/45**.
 
+**Ajuste de 02/11/2026 (change `rf014-remover-fechar-detalhe`):** o ícone X do
+cabeçalho foi removido. O detalhe não tem botão **Fechar** nem X e permanece
+aberto até a seleção de outro personagem ou a saída da seção; a troca de
+personagem descarta as alterações pendentes. Nenhuma migração nem comando novo;
+o `verificar-rf014.mjs` segue em **47/47**.
+
+**Ajuste de 02/11/2026 (change `rf014-aba-eventos`):** a aba **Gráfico de
+Evolução do Personagem no Livro** virou apenas **Gráfico de Evolução** e o
+detalhe ganhou a aba **Eventos**, com a tabela **Capítulo**, **Tipo Evento** e
+**Motivo do evento**, somente Ascensão/Declínio/Apogeu/Queda, cinco linhas por
+página. O `PontoArco` de `dados_graficos_livro` passou a trazer `motivo`.
+Nenhuma migração nem comando novo; o `verificar-rf014.mjs` passou a **47/47**.
+
 **Armadilhas encontradas ao implementar (RF014):**
 
 - **`innerText` aplica `text-transform`:** o título de área vira
@@ -982,8 +995,13 @@ Rust passou a **142 testes** e o `verificar-rf014.mjs` a **45/45**.
   Não troque por `.libgrid` puro, que quebra em várias linhas.
 - **O detalhe é inline:** `DetalhePersonagemLivro` fica abaixo da grade/lista e
   usa `PainelAbas`; `ModalPersonagemLivro` foi removido. Salvar mantém o detalhe
-  aberto e só recarrega a lista; o ícone X do cabeçalho limpa `detalheId` (não há
-  botão rotulado **Fechar** no rodapé).
+  aberto e só recarrega a lista; não há botão **Fechar** nem ícone X. O detalhe
+  permanece até a troca de personagem ou a saída da seção, e a troca descarta as
+  pendências.
+- **A aba Eventos filtra Neutro e pagina no front-end:** usa `arco.pontos` de
+  `dados_graficos_livro`, remove `tipoEvento === "Neutro"` e fatia cinco por
+  página. O `PontoArco` precisa trazer `motivo`; sem ele a coluna do motivo fica
+  vazia em todos os eventos.
 - **Qtd Capítulos e Capítulos vêm do back-end:** `PersonagemDoLivro` ganhou
   `totalCapitulos` e `capitulos`, preenchidos por uma única consulta ordenada em
   `capitulo_personagem`+`capitulo` filtrada pelo livro. Não derive isso no
@@ -1546,7 +1564,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `rf014-personagens-do-livro` e `rf014-ajustes-selecao-papeis`): a seção
   **Personagens** deixa de ser tela informativa e passa a listar o elenco do
   livro em cards ou lista, com **Adicionar Personagens**, associação múltipla,
-  detalhe inline em três abas e métricas reais.
+  detalhe inline em quatro abas e métricas reais.
   - **Esquema:** migração **v12** aditiva com `livro_personagem` (PK composta
     `livro_id` + `personagem_id`, FKs, `CHECK` do **Papel**, quatro textos e
     índice por `personagem_id`); a **v13** recria a tabela para ampliar o
@@ -1775,7 +1793,9 @@ ficha global (change `rf014-vinculos-ficha-global`), a contagem/link de livros
 `rf015-retrato-personagem-capitulo`), os gráficos no Painel e na ficha (change
 `rf016-graficos-painel-ficha`), o detalhe inline e a paginação (change
 `rf014-detalhe-embutido-paginacao`), os capítulos por personagem e o destaque
-(change `rf014-capitulos-destaque-detalhe`), os gráficos do livro (change
+(change `rf014-capitulos-destaque-detalhe`), a aba Eventos e o rótulo do gráfico
+(change `rf014-aba-eventos`), a remoção do fechar do detalhe (change
+`rf014-remover-fechar-detalhe`), os gráficos do livro (change
 `rf016-graficos-do-livro`), o motivo do tipo (change `rf015-motivo-tipo`) e o
 tooltip da progressão (change `rf016-tooltip-progressao`) também estão
 arquivados.
