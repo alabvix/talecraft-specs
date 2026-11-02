@@ -5,14 +5,18 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
-> **Ponto de parada (28/10/2026):** RF001-RF016 estão implementados e
+> **Ponto de parada (02/11/2026):** RF001-RF016 estão implementados e
 > arquivados; o RF016 abre a seção **Gráficos** do livro (curva de progressão e
 > evolução dos personagens, somente leitura, sem migração). O RF015 abre
 > **Capítulos** (migrações **v14**
 > `capitulo`/`capitulo_personagem`, **v15** com o **Motivo do Evento** e **v16**
 > com o **Motivo do Tipo**, quadro
 > de status, edição, arrastar e
-> métricas reais); o RF014 abre **Personagens** (migração **v13**
+> métricas reais); o painel do capítulo foi dividido em **Dados do Capítulo** e
+> **Personagens do Capítulo**, com **Motivo do Tipo**, **Meta** e **Cenário
+> Descritivo** de duas linhas, cada personagem com **miniatura do retrato** (ou
+> quadrado vazio), **Nome - Papel** e
+> ajudas de **Evento**/**Tipo de Evento**. O RF014 abre **Personagens** (migração **v13**
 > `livro_personagem`, seleção em grade paginada com busca, 13 papéis) e o RF013
 > acrescenta as abas **Sinopse**, **Tema**, **Conflito** e
 > **Voz Narrativa/Tom/Tempo**, com **Humor** de seleção múltipla. Ajustes do
@@ -26,19 +30,21 @@
 > **v14**, **v15** e **v16**. São **18 capabilities** e `openspec validate --all`
 > passa com 18/18;
 > **141 testes Rust**; `verificar-rf016.mjs` **14/14**,
-> `verificar-rf015.mjs` **19/19**,
-> `verificar-rf014.mjs` **37/37**, `verificar-rf011.mjs` **39/39**,
+> `verificar-rf015.mjs` **29/29**,
+> `verificar-rf014.mjs` **38/38**, `verificar-rf011.mjs` **40/40**,
 > `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15** e
 > `verificar-rf002.mjs` **20/20**. Em 28/10/2026 o **RF016** (gráficos do
 > livro), o **RF015** (capítulos do
 > livro), o **RF014** (personagens do livro) e os ajustes de seleção/papéis, do
 > rótulo **Títulos/Outros Nomes**, dos vínculos na ficha global e da
 > contagem/link de livros foram implementados, validados e arquivados; a
-> **splash do RF002** também foi ajustada. Nenhum change ativo. Último commit:
+> **splash do RF002** também foi ajustada. Em 02/11/2026 o ajuste do painel do
+> capítulo (change `2026-11-02-rf015-painel-abas-legendas`) foi implementado,
+> validado e arquivado. Nenhum change ativo. Último commit:
 > **`162b475`**. A build de teste **v0.1.0** foi publicada no repositório
 > <https://github.com/alabvix/talecraft-releases>.
 >
-> **Próximo passo (29/10/2026):** escrever o **RF017** em
+> **Próximo passo (02/11/2026):** escrever o **RF017** em
 > `documents/talecraft.md` (o documento cobre RF001–RF016) e abrir o change
 > OpenSpec correspondente. Antes de uma nova release, subir a versão do app.
 
@@ -162,11 +168,11 @@ talecraft/
 │   ├── verificar-rf008.mjs    entradas do mundo: abas, tabela e regras (21/21)
 │   ├── verificar-rf009.mjs    facções: aba, associação e reflexo (16/16)
 │   ├── verificar-rf010.mjs    Meus Livros em estado vazio e listagem real (18/18)
-│   ├── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (34/34)
+│   ├── verificar-rf011.mjs    página do livro, Dados Gerais e listagem (40/40)
 │   ├── verificar-rf012.mjs    aba Resumo, textos longos e sem Descartar (15/15)
 │   ├── verificar-rf013.mjs    abas Sinopse/Tema/Conflito/Voz e Humor (15/15)
-│   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (37/37)
-│   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (19/19)
+│   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (38/38)
+│   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (29/29)
 │   ├── verificar-rf016.mjs    gráficos: progressão, arcos e marcadores (14/14)
 │   └── verificar-janela-maximizada.mjs  janela maximizada com barra (3/3)
 ├── index.html                 HTML do Vite (monta o React)
@@ -962,6 +968,11 @@ capítulo no painel abaixo, com os personagens do elenco e o evento de arco.
 | **Criar pelos dois caminhos** | **Novo Capítulo** cria no Esboço; o rodapé da coluna cria no status da coluna. O número é `MAX(numero)+1` e o título provisório é **Capítulo N**. |
 | **Salvar só faz `UPDATE`** | A criação é explícita no quadro; salvar um id errado nunca vira capítulo novo. Os personagens do capítulo são regravados na mesma transação. |
 | **Personagens do elenco do livro** | O seletor usa o elenco do RF014; Evento e Tipo de Evento seguem o mapa Neutro→Neutro, Ponto de Ligação→Ascensão/Declínio, Ponto de Virada→Apogeu/Queda. |
+| **Papel ao lado do nome** | Cada personagem da aba **Personagens do Capítulo** aparece como **Nome - Papel**, lendo `papel` do elenco do RF014; sem papel, **Não definido**. O capítulo não grava uma cópia — o vínculo continua sendo a fonte da verdade. |
+| **Miniatura antes do nome** | O avatar reusa `.portrait--xs .portrait--square` (34 px) com `<img>` quando há `retrato`; sem retrato, a `div` fica vazia (sem `.portrait__fallback`), formando o quadrado vazio. O `diretorioDados` desce de `TelaLivro` até o painel para `urlRetrato`. |
+| **Duas abas no painel** | `PainelAbas` (`booktabs`) divide **Dados do Capítulo** (Número → Resumo) e **Personagens do Capítulo** (arco). O estado do formulário fica no `PainelCapitulo`, então trocar de aba não perde edição pendente. |
+| **Duas linhas em Motivo do Tipo, Meta e Cenário Descritivo** | Os três campos usam `.textarea--tiny` (62 px, ~2 linhas) com `rows={2}`. `.textarea--short` (84 px, ~3 linhas) continua no **Motivo do Evento**. |
+| **Ajudas de Evento e Tipo de Evento** | O `?` segue o padrão do **Tipo** (botão + `help__popup`, hover/foco) e explica Ponto de Ligação, Ponto de Virada, Ascensão, Declínio, Apogeu, Queda e Neutro. |
 | **Cenário de worldbuilding sem mundo** | O campo fica desabilitado com “Nenhum mundo associado a este livro” até a associação livro–mundo existir; a coluna `cenario_localidade_id` já está pronta. |
 | **Métricas e ficha global** | `estatisticas.capitulos` conta `capitulo`; o Painel do Livro busca a lista; o total de capítulos da ficha global é `COUNT(DISTINCT capitulo_id)` por personagem/livro. |
 
@@ -987,6 +998,34 @@ como texto médio abaixo do Tipo. A migração **v16** aditiva acrescenta
 comando novo (continuam **56**); a suíte Rust passou a **141 testes** e o
 `verificar-rf015.mjs` a **19/19**.
 
+**Ajuste de 02/11/2026 (change `rf015-painel-abas-legendas`):** o painel do
+capítulo passou a ter as abas **Dados do Capítulo** e **Personagens do
+Capítulo**; **Motivo do Tipo** e **Meta** viraram textos de três linhas
+(`textarea--short` + `rows={3}`); e os campos **Evento** e **Tipo de Evento**
+ganharam ajudas no padrão do **Tipo**. Nenhuma migração, comando ou campo novo:
+o banco continua na **v16**, os **56 comandos** e os **141 testes Rust** não
+mudaram. O `verificar-rf015.mjs` passou a **25/25** (duas abas, troca sem perder
+edição, três linhas, ajudas e os três temas).
+
+**Ajuste de 02/11/2026 (change `rf015-campos-duas-linhas`):** **Motivo do Tipo**,
+**Meta** e **Cenário Descritivo** passaram de três para **duas linhas**
+(`.textarea--tiny` + `rows={2}`, 62 px); o **Motivo do Evento** continua em
+`.textarea--short` (84 px). Nenhuma migração nem comando novo; o
+`verificar-rf015.mjs` segue em **25/25**, agora medindo os três campos de duas
+linhas.
+
+**Ajuste de 02/11/2026 (change `rf015-papel-personagem-capitulo`):** a aba
+**Personagens do Capítulo** passou a mostrar cada personagem como
+**Nome - Papel**, lendo o `papel` do vínculo no elenco do RF014; sem papel,
+mostra **Não definido**. O capítulo não grava uma cópia do papel. Nenhuma
+migração nem comando novo; o `verificar-rf015.mjs` passou a **26/26**.
+
+**Ajuste de 02/11/2026 (change `rf015-retrato-personagem-capitulo`):** a aba
+**Personagens do Capítulo** ganhou a **miniatura do retrato** antes do nome,
+usando `.portrait--xs .portrait--square` e `urlRetrato`; sem retrato, um quadrado
+vazio de 34 × 34 px ocupa o espaço, sem iniciais. Nenhuma migração nem comando
+novo; o `verificar-rf015.mjs` passou a **27/27**.
+
 **Armadilhas encontradas ao implementar (RF015):**
 
 - **Número único por livro:** `UNIQUE(livro_id, numero)` + `traduzir_erro_numero`;
@@ -1008,6 +1047,33 @@ comando novo (continuam **56**); a suíte Rust passou a **141 testes** e o
 - **Ficha global:** a contagem de capítulos usa `capitulo_personagem` filtrado
   por `livro_id` do vínculo; sem o filtro, o mesmo personagem contaria
   capítulos de todos os livros na linha de cada livro.
+- **O formulário é um só, mesmo com abas:** `PainelCapitulo` guarda `form` e
+  `abaAtiva`; as abas só trocam o que é renderizado. Se cada aba tiver estado
+  próprio, trocar de aba apaga a edição pendente (RF015-RN014).
+- **O E2E precisa abrir a aba certa:** `#evento-*`, `#tipo-evento-*` e
+  `#motivo-*` só existem na aba **Personagens do Capítulo**; o `#capitulo-status`
+  e os demais campos só na aba **Dados do Capítulo**. Clique na `.booktabs__tab`
+  antes de manipular cada grupo.
+- **Duas linhas são `.textarea--tiny`, três são `--short`:** 62 px com
+  `rows={2}` mostram duas linhas de 13 px; 84 px com `rows={3}` mostram três.
+  **Motivo do Tipo**, **Meta** e **Cenário Descritivo** usam `--tiny`; o
+  **Motivo do Evento** continua em `--short`. Não use `.textarea--medium`
+  (140 px) nesses campos; a altura média fica nas abas narrativas.
+- **O papel do capítulo não é gravado:** a aba **Personagens do Capítulo** lê o
+  `papel` de `personagensLivro` (`listar_personagens_do_livro`) por
+  `personagemId`, com fallback **Não definido**. Não copie o papel para
+  `form.personagens` nem para `capitulo_personagem` — o vínculo do RF014 é a
+  fonte da verdade e o capítulo não deve duplicá-lo.
+- **A miniatura não é o fallback de iniciais:** use
+  `.portrait--xs .portrait--square` com `<img>` quando `urlRetrato` devolver URL
+  e **não** renderize `.portrait__fallback`; sem retrato, a `div.portrait` vazia
+  já forma o quadrado. Passe `diretorioDados` por `TelaLivro` →
+  `TelaCapitulosLivro` → `PainelCapitulo`, senão `urlRetrato` devolve `null` e
+  todo mundo fica com quadrado vazio.
+- **A ajuda exige o botão imediatamente antes do popup:** o CSS usa
+  `.help:hover + .help__popup` / `.help:focus + .help__popup`; o componente local
+  `Ajuda` mantém o botão e a `div.help__popup` como irmãos. Em coluna estreita,
+  o verificador confirma que o popup fica dentro da janela nos três temas.
 
 ### Período da história e ordem dos módulos (ajuste do RF011)
 
@@ -1500,6 +1566,30 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   - **Verificação:** `scripts/verificar-rf015.mjs` **19/19** no app real;
     `verificar-rf011.mjs` passou a **33/33** (Capítulos real) e
     `verificar-rf014.mjs` a **37/37** (total real); RF002–RF014 sem regressão.
+  - **Ajuste de 02/11/2026 (change `rf015-painel-abas-legendas`):** o painel
+    passou a ter as abas **Dados do Capítulo** (Número → Resumo) e **Personagens
+    do Capítulo** (arco), com o **Salvar** comum no cabeçalho; **Motivo do Tipo**
+    e **Meta** usam `.textarea--short` + `rows={3}`; **Evento** e **Tipo de
+    Evento** ganharam o **?** com as legendas de Ponto de Ligação, Ponto de
+    Virada, Ascensão, Declínio, Apogeu, Queda e Neutro. Nenhuma migração nem
+    comando novo (banco **v16**, **56 comandos**, **141 testes Rust**). O
+    `verificar-rf015.mjs` passou a **25/25** no app real.
+  - **Ajuste de 02/11/2026 (change `rf015-campos-duas-linhas`):** **Motivo do
+    Tipo**, **Meta** e **Cenário Descritivo** passaram a usar `.textarea--tiny`
+    com `rows={2}` (62 px); o **Motivo do Evento** continua em
+    `.textarea--short` (84 px). Sem migração nem comando novo; o
+    `verificar-rf015.mjs` segue em **25/25**, agora medindo os três campos.
+  - **Ajuste de 02/11/2026 (change `rf015-papel-personagem-capitulo`):** a aba
+    **Personagens do Capítulo** passou a mostrar **Nome - Papel** para cada
+    personagem, lendo o `papel` do vínculo no elenco do RF014; sem papel,
+    **Não definido**. Sem migração nem comando novo; o `verificar-rf015.mjs`
+    passou a **26/26**.
+  - **Ajuste de 02/11/2026 (change `rf015-retrato-personagem-capitulo`):** cada
+    personagem ganhou a **miniatura do retrato** antes do nome, com
+    `.portrait--xs .portrait--square` e `urlRetrato`; sem retrato, um quadrado
+    vazio de 34 × 34 px ocupa o espaço, sem iniciais. O `diretorioDados` desce
+    de `TelaLivro` até `PainelCapitulo`. Sem migração nem comando novo; o
+    `verificar-rf015.mjs` passou a **27/27**.
 - **RF016 - Livros: gráficos** (change `rf016-graficos-do-livro`): a seção
   **Gráficos** deixa de ser informativa e passa a ter o Tab Panel com a curva de
   progressão e a evolução dos personagens.
@@ -1517,6 +1607,14 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   - **Verificação:** `scripts/verificar-rf016.mjs` **14/14** no app real;
     `verificar-rf011.mjs` passou a **34/34** (Gráficos real); RF002–RF015 sem
     regressão.
+  - **Ajuste de 02/11/2026 (change `rf016-graficos-painel-ficha`):** o **Painel
+    do Livro** ganhou o painel **Curva de Progressão por Capítulo** abaixo dos
+    módulos, sempre visível e com **Ainda não existem dados** sem capítulos; a
+    **Curva de arco em cada livro** da ficha global ganhou a caixa de seleção de
+    livros e o gráfico **Evolução de Personagem** do livro escolhido, com o mesmo
+    estado vazio. Sem migração nem comando novo (banco **v16**, **56 comandos**).
+    O `verificar-rf011.mjs` passou a **40/40**, o `verificar-rf014.mjs` a
+    **38/38** e o `verificar-rf015.mjs` a **29/29**.
 - **Período da história e ordem dos módulos (ajuste do RF011)** (change
   `rf011-ajustes-periodo-ordem-modulos`): Dados Gerais ganhou **De** e **Até**
   (migração v11) e o Painel lista **Dados do Livro** primeiro.
@@ -1611,9 +1709,9 @@ Dados Gerais), o RF012 (aba Resumo), o RF013 (abas narrativas), o RF014
 livro) fecharam com
 `verificar-rf007.mjs` **33/33**,
 `verificar-rf008.mjs` **21/21**, `verificar-rf009.mjs` **16/16**,
-`verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **39/39**,
+`verificar-rf010.mjs` **18/18**, `verificar-rf011.mjs` **40/40**,
 `verificar-rf012.mjs` **15/15**, `verificar-rf013.mjs` **15/15**,
-`verificar-rf014.mjs` **37/37**, `verificar-rf015.mjs` **19/19**,
+`verificar-rf014.mjs` **38/38**, `verificar-rf015.mjs` **29/29**,
 `verificar-rf016.mjs` **14/14** e
 `verificar-rf002.mjs` **20/20** (splash ajustada), respectivamente, sobre **141
 testes Rust** e sem regressão dos verificadores RF002–RF016. A correção da
@@ -1629,7 +1727,12 @@ ficha global (change `rf014-vinculos-ficha-global`), a contagem/link de livros
 (change `rf014-contagem-e-link-livros`), o ajuste da splash do RF002 (change
 `rf002-splash-legivel`), os capítulos do livro (change
 `rf015-capitulos-do-livro`), os ajustes do painel do capítulo (change
-`rf015-ajustes-painel-capitulo`), os gráficos do livro (change
+`rf015-ajustes-painel-capitulo`), as abas e legendas do painel (change
+`rf015-painel-abas-legendas`), os campos de duas linhas (change
+`rf015-campos-duas-linhas`), o papel ao lado do nome (change
+`rf015-papel-personagem-capitulo`), a miniatura do retrato (change
+`rf015-retrato-personagem-capitulo`), os gráficos no Painel e na ficha (change
+`rf016-graficos-painel-ficha`), os gráficos do livro (change
 `rf016-graficos-do-livro`), o motivo do tipo (change `rf015-motivo-tipo`) e o
 tooltip da progressão (change `rf016-tooltip-progressao`) também estão
 arquivados.

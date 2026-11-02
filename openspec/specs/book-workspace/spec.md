@@ -37,7 +37,7 @@ O sistema SHALL exibir o menu lateral do livro com o nome do livro como rótulo 
 - **THEN** o rótulo do menu, a faixa do livro e o breadcrumb exibem **A Órbita Silenciosa** (RF011-RN013)
 
 ### Requirement: Painel do Livro
-O sistema SHALL exibir no **Painel do Livro** o título do livro, um subtítulo com os dados preenchidos, quatro métricas zeradas, a grade de módulos na ordem **Dados do Livro**, **Personagens**, **Capítulos**, **Worldbuilding**, **Gráficos** e **Exportar**, e o botão **Dados do livro**, sem dados fictícios do protótipo (RF011-TL003, RF011-CA013, RF011-CA019, RF011-CA023).
+O sistema SHALL exibir no **Painel do Livro** o título do livro, um subtítulo com os dados preenchidos, quatro métricas zeradas, a grade de módulos na ordem **Dados do Livro**, **Personagens**, **Capítulos**, **Worldbuilding**, **Gráficos** e **Exportar**, e o botão **Dados do livro**, sem dados fictícios do protótipo, e SHALL exibir, logo abaixo de **Módulos deste livro**, o painel **Curva de Progressão por Capítulo** com o mesmo gráfico da seção **Gráficos** e, sem capítulos, o aviso **Ainda não existem dados** (RF011-TL003, RF011-CA013, RF011-CA019, RF011-CA023, RF016-TL006, RF016-RN011, RF016-CA016).
 
 #### Scenario: Painel de um livro recém-criado
 - **GIVEN** um livro foi criado apenas com o título
@@ -53,6 +53,16 @@ O sistema SHALL exibir no **Painel do Livro** o título do livro, um subtítulo 
 - **GIVEN** o **Painel do Livro** está aberto
 - **WHEN** o escritor clica em **Dados do livro**
 - **THEN** a seção **Dados do Livro** é aberta (RF011-FL004, RF011-CA013)
+
+#### Scenario: Curva de Progressão no Painel com capítulos
+- **GIVEN** o livro tem capítulos com tipos variados
+- **WHEN** o escritor abre o **Painel do Livro**
+- **THEN** vê, abaixo dos módulos, o painel **Curva de Progressão por Capítulo** com a mesma curva da seção Gráficos, os badges de ações e progresso, sem duplicar dados (RF016-TL006, RF016-RN011, RF016-CA016)
+
+#### Scenario: Curva de Progressão no Painel sem capítulos
+- **GIVEN** o livro não tem capítulos
+- **WHEN** o escritor abre o **Painel do Livro**
+- **THEN** o painel **Curva de Progressão por Capítulo** permanece visível e informa **Ainda não existem dados**, sem gráfico quebrado (RF016-TL006, RF016-RN011, RF016-CA016)
 
 ### Requirement: Dados do Livro com Tab Panel
 O sistema SHALL exibir a página **Dados do Livro** com o componente reutilizável **Tab Panel**, com as abas **Dados Gerais**, **Resumo**, **Sinopse**, **Tema**, **Conflito** e **Voz Narrativa/Tom/Tempo** nesta ordem e **Dados Gerais** selecionada ao abrir; a aba **Dados Gerais** SHALL conter título, gênero principal, subgêneros, faixa de público, idioma e o período da história (**De** e **Até**), com **De** e **Até** lado a lado e aceitando somente dígitos, embora o período seja gravado como texto; valores legados em texto livre SHALL ser exibidos intactos, sinalizados e convertidos apenas por ação explícita do escritor, sem filtro destrutivo no primeiro caractere digitado; a página SHALL ter somente a ação **Salvar**, sem o botão **Descartar** nem ação equivalente; a lista de subgêneros de **Fantasia** SHALL conter **Alta Fantasia**, **Fantasia Sombria**, **Distopia**, **Fantasia Urbana**, **Romantasia**, **Gótico**, **Baixa Fantasia**, **Grindark**, **Mitológica**, **Histórica**, **Científica** e **Espada e Feitiçaria**; a seleção de subgêneros SHALL ser preservada por gênero enquanto o livro não for salvo, e ao voltar a um gênero os subgêneros já marcados — inclusive os salvos — SHALL reaparecer selecionados (RF011-TL004, RF011-RN004, RF011-RN012, RF011-RN018, RF012-TL001, RF012-TL003, RF012-RN005, RF013-TL001, RF011-FL004, RF011-FL009, RF011-CA008, RF011-CA009, RF011-CA015, RF011-CA023, RF012-CA001, RF012-CA006, RF013-CA001).
@@ -371,7 +381,7 @@ O sistema SHALL abrir, ao clicar em um personagem do elenco, uma modal com os da
 - **THEN** as alterações pendentes são descartadas e o vínculo anterior continua gravado (RF014-TL006, RF014-FL004, RF014-CA010)
 
 ### Requirement: Capítulos do livro
-O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo quadro de planejamento do livro, com as quatro colunas de status **Esboço**, **Rascunho**, **Revisão** e **Finalizado**, cada uma com tamanho fixo, contador, rolagem interna, ordenação por **Número** ou **Data de Criação** (ascendente/descendente) e o botão **Adicionar Capítulo** no rodapé; **Novo Capítulo** no cabeçalho SHALL criar no **Esboço**, os rodapés SHALL criar no status da coluna, o clique em um capítulo SHALL abrir o painel de edição abaixo do quadro com **Salvar** no cabeçalho e os campos **Número**, **Título**, **Status**, **Tipo**, **Motivo do Tipo**, **Meta**, **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch**, **K.O**, **Personagens** (cada um com **Evento**, **Tipo de Evento** e **Motivo do Evento**), **Cenário Worldbuilding**, **Cenário Descritivo** e **Resumo**, com o **K.O** ao lado do **Punch** e com a **mesma altura** dele, o **Motivo do Tipo** como texto médio abaixo do Tipo, a ajuda do **Tipo** em linhas separadas para Ação, Suspensão, Direto e Indireto e o **Cenário Descritivo** em altura curta, e o arrastar SHALL mudar o status do capítulo (RF015-TL001 a RF015-TL006, RF015-FL001 a RF015-FL005, RF015-RN001 a RF015-RN013, RF015-CA001 a RF015-CA019).
+O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo quadro de planejamento do livro, com as quatro colunas de status **Esboço**, **Rascunho**, **Revisão** e **Finalizado**, cada uma com tamanho fixo, contador, rolagem interna, ordenação por **Número** ou **Data de Criação** (ascendente/descendente) e o botão **Adicionar Capítulo** no rodapé; **Novo Capítulo** no cabeçalho SHALL criar no **Esboço**, os rodapés SHALL criar no status da coluna, o clique em um capítulo SHALL abrir o painel de edição abaixo do quadro, organizado em duas abas — **Dados do Capítulo**, com **Número**, **Título**, **Status**, **Tipo**, **Motivo do Tipo**, **Meta**, **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch**, **K.O**, **Cenário Worldbuilding**, **Cenário Descritivo** e **Resumo**, e **Personagens do Capítulo**, com cada personagem precedido de uma miniatura quadrada do retrato (ou um quadrado vazio do mesmo tamanho) e exibido como **Nome - Papel** a partir do **Papel** do vínculo do RF014 (ou **Não definido**), com **Evento**, **Tipo de Evento** e **Motivo do Evento** por personagem —, com **Salvar** no cabeçalho comum às duas abas, o **Motivo do Tipo** e a **Meta** como textos de duas linhas, o **Cenário Descritivo** em duas linhas, o **K.O** ao lado do **Punch** e com a mesma altura dele, a ajuda do **Tipo** em linhas separadas para Ação, Suspensão, Direto e Indireto, as ajudas do **Evento** e do **Tipo de Evento** no padrão do **?** do Tipo e o arrastar SHALL mudar o status do capítulo (RF015-TL001 a RF015-TL007, RF015-FL001 a RF015-FL005, RF015-RN001 a RF015-RN017, RF015-CA001 a RF015-CA024).
 
 #### Scenario: Quadro com os quatro status
 - **GIVEN** um livro salvo sem capítulos
@@ -403,30 +413,60 @@ O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo qua
 - **WHEN** o escritor clica em um card
 - **THEN** o painel abaixo mostra os dados do capítulo em edição, com **Salvar** no canto superior direito do cabeçalho e todos os campos do requisito (RF015-TL005, RF015-CA006)
 
+#### Scenario: Painel em duas abas
+- **GIVEN** o painel de edição está aberto
+- **WHEN** o escritor observa o painel
+- **THEN** vê as abas **Dados do Capítulo** e **Personagens do Capítulo**; a primeira mostra os campos do **Número** até o **Resumo** e a segunda mostra os personagens do arco, com o **Salvar** no cabeçalho nas duas abas (RF015-TL005, RF015-RN014, RF015-CA020)
+
+#### Scenario: Troca de aba preserva a edição pendente
+- **GIVEN** o escritor digitou um valor em um campo da aba **Dados do Capítulo** ou alterou um personagem na aba **Personagens do Capítulo** sem salvar
+- **WHEN** troca de aba e volta
+- **THEN** o valor digitado continua no formulário e nada foi gravado antes do **Salvar** (RF015-RN014, RF015-CA020)
+
+#### Scenario: Motivo do Tipo, Meta e Cenário Descritivo com duas linhas
+- **GIVEN** o painel de edição está aberto na aba **Dados do Capítulo**
+- **WHEN** o escritor observa os campos **Motivo do Tipo**, **Meta** e **Cenário Descritivo**
+- **THEN** o **Motivo do Tipo** aparece logo abaixo do **Tipo** e os três campos usam textos de duas linhas, menores que a altura curta anterior, e **Salvar** e reabrir preserva o conteúdo digitado (RF015-TL005, RF015-RN013, RF015-CA018, RF015-CA019, RF015-CA021)
+
 #### Scenario: K.O ao lado do Punch com a mesma altura
 - **GIVEN** o painel de edição está aberto
 - **WHEN** o escritor observa o formulário
-- **THEN** o **K.O** aparece ao lado do **Punch**, com a mesma altura dele, e o **Cenário Descritivo** usa altura curta (RF015-TL005, RF015-CA018)
-
-#### Scenario: Motivo do Tipo abaixo do Tipo
-- **GIVEN** o painel de edição está aberto
-- **WHEN** o escritor observa o campo **Tipo**
-- **THEN** logo abaixo dele vê **Motivo do Tipo** como texto médio, gravado e relido com o capítulo (RF015-TL005, RF015-RN013, RF015-CA019)
+- **THEN** o **K.O** aparece ao lado do **Punch**, com a mesma altura dele (RF015-TL005, RF015-CA018)
 
 #### Scenario: Tipo com ajuda em linhas
 - **GIVEN** o painel de edição está aberto
 - **WHEN** o escritor abre o campo **Tipo**
 - **THEN** vê **Não definido**, **Ação Direta**, **Ação Indireta**, **Suspensão Direta** e **Suspensão Indireta**, e o **?** explica Ação, Suspensão, Direto e Indireto em linhas separadas (RF015-TL006, RF015-RN004, RF015-CA007, RF015-CA018)
 
+#### Scenario: Ajuda do Evento
+- **GIVEN** o painel de edição está aberto na aba **Personagens do Capítulo** com um personagem adicionado
+- **WHEN** o escritor passa o mouse ou foca o **?** do campo **Evento**
+- **THEN** a ajuda explica **Ponto de Ligação** (acontecimento positivo de Ascensão ou negativo de Declínio que leva ao Ponto de Virada) e **Ponto de Virada** (**Apogeu** transforma positivamente, com exemplos, e **Queda** arrasa o personagem, com exemplos) (RF015-TL007, RF015-RN015, RF015-CA022)
+
+#### Scenario: Ajuda do Tipo de Evento
+- **GIVEN** o painel de edição está aberto na aba **Personagens do Capítulo** com um personagem adicionado
+- **WHEN** o escritor passa o mouse ou foca o **?** do campo **Tipo de Evento**
+- **THEN** a ajuda explica **Ascensão** e **Declínio** como os acontecimentos do Ponto de Ligação, **Apogeu** e **Queda** com os exemplos do Ponto de Virada e **Neutro** como sem alteração do arco, sem mudar o valor selecionado (RF015-TL007, RF015-RN015, RF015-CA022)
+
 #### Scenario: Personagens do capítulo com evento e motivo
 - **GIVEN** o livro tem personagens no elenco
-- **WHEN** o escritor adiciona um personagem no capítulo
+- **WHEN** o escritor adiciona um personagem no capítulo na aba **Personagens do Capítulo**
 - **THEN** escolhe **Evento** (Neutro, Ponto de Ligação ou Ponto de Virada), o **Tipo de Evento** compatível e preenche o **Motivo do Evento** abaixo do par, podendo remover o personagem do capítulo (RF015-RN005, RF015-CA008)
+
+#### Scenario: Papel ao lado do nome
+- **GIVEN** o livro tem um personagem com **Falso Antagonista** no vínculo e outro com **Não definido**
+- **WHEN** o escritor adiciona os dois ao capítulo
+- **THEN** a aba **Personagens do Capítulo** mostra **Nome - Falso Antagonista** e **Nome - Não definido**, com o papel somente leitura e sem alterar o vínculo do RF014 (RF015-TL005, RF015-RN016, RF015-CA023)
+
+#### Scenario: Miniatura do retrato antes do nome
+- **GIVEN** um personagem do capítulo tem retrato no cadastro global e outro não tem
+- **WHEN** o escritor abre a aba **Personagens do Capítulo**
+- **THEN** vê a miniatura quadrada do retrato antes do nome de quem tem imagem e, para quem não tem, um quadrado vazio do mesmo tamanho, sem iniciais e sem deslocar os nomes (RF015-TL005, RF015-RN017, RF015-CA024)
 
 #### Scenario: Salvar e reabrir o capítulo
 - **GIVEN** o escritor preencheu os campos e salvou
 - **WHEN** reabre o mesmo capítulo
-- **THEN** os valores continuam gravados, inclusive o **Motivo do Tipo** e o **Motivo do Evento** de cada personagem, o capítulo permanece no status escolhido e o card reflete título, tipo e personagens (RF015-FL003, RF015-RN005, RF015-RN007, RF015-CA009, RF015-CA018, RF015-CA019)
+- **THEN** os valores continuam gravados, inclusive a **Meta**, o **Motivo do Tipo** e o **Motivo do Evento** de cada personagem, o capítulo permanece no status escolhido e o card reflete título, tipo e personagens (RF015-FL003, RF015-RN005, RF015-RN007, RF015-CA009, RF015-CA018, RF015-CA019, RF015-CA021)
 
 #### Scenario: Arrastar muda o status
 - **GIVEN** um capítulo está em uma coluna
