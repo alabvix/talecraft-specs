@@ -1906,6 +1906,219 @@ no restante do desenho.
   refletem os dados reais; sem capítulos, o painel permanece e informa que ainda
   não existem dados.
 
+### RF017 - Livros - Mundos associados e Worldbuilding do livro
+
+Este requisito abre a seção **Worldbuilding** do livro, que o RF011 deixava como
+tela informativa. O livro passa a ter **um ou mais mundos globais associados**;
+cada mundo vira uma **aba** na seção, com o resumo do mundo e as suas categorias
+de entradas. As entradas continuam pertencendo ao mundo (RF008) e podem ser
+criadas pela aba do livro, sem duplicar o cadastro global.
+
+A associação é **N:N**: um livro pode se passar em vários mundos e um mundo pode
+servir a vários livros. **Este requisito revoga a regra "um livro tem 1 e somente
+1 mundo associado"** registrada no protótipo e no RF007; o vínculo deixa de ser
+1:1 do lado do livro e passa a ser uma lista ordenada.
+
+A seção **Dados do Livro** e as suas seis abas não mudam: a associação e a
+navegação pelos mundos vivem na seção **Worldbuilding** do livro.
+
+- **Data de criacao:** 17/11/2026
+
+#### Telas
+
+- **RF017-TL001** - Seção Worldbuilding do livro: o item **Worldbuilding** do
+  menu do livro abre um **Tab Panel** com uma aba por mundo associado, na ordem
+  de associação, com a **primeira aba ativa** ao entrar. O cabeçalho da seção
+  tem o título **Worldbuilding**, a contagem de mundos e o botão **Associar
+  mundos**. Em livro não salvo, a seção orienta a salvar o livro e o botão fica
+  desabilitado. Sem nenhum mundo associado, o Tab Panel dá lugar a um estado
+  vazio com o botão **Associar mundos**.
+- **RF017-TL002** - Aba do mundo: o rótulo da aba é o **Nome** do mundo. O corpo
+  mostra o resumo do mundo em modo **somente leitura** — imagem (ou espaço
+  reservado), **Nome**, **Tipo de Mundo**, **Nível Tecnológico** (com o rótulo
+  por extenso), **Gêneros** e **Descrição** — e, abaixo, as seis categorias de
+  entradas do mundo em tabela paginada: **Localidades**, **Raças e Povos**,
+  **Artefatos**, **Armas**, **Eventos** e **Sistemas**. Cada categoria mostra o
+  contador real e o botão **Nova entrada**. A aba tem ainda as ações **Abrir
+  mundo** (abre o mundo no nível raiz) e **Remover mundo**.
+- **RF017-TL003** - Associar mundos: a modal de seleção lista os mundos globais
+  em **grade paginada** (12 por página), com **busca por nome** e seleção
+  múltipla mantida entre páginas e buscas. Os mundos já associados aparecem com
+  o selo **Já associado** e não podem ser marcados. O rodapé mostra a quantidade
+  marcada e os botões **Cancelar** e **Associar**. Sem mundos cadastrados, a
+  modal informa que não há mundos e orienta a criar um no nível raiz.
+- **RF017-TL004** - Remover mundo: a ação **Remover mundo** atua sobre o mundo da
+  aba ativa e pede confirmação informando o Nome do mundo e quantos capítulos
+  usam localidades dele. Confirmar remove só a associação e limpa esses
+  cenários; cancelar não altera nada.
+- **RF017-TL005** - Nova entrada pelo livro: o botão **Nova entrada** da
+  categoria abre a mesma modal de entrada do mundo (RF008), gravando no mundo da
+  aba ativa. Ao salvar, a tabela da categoria recarrega. Editar e excluir
+  entradas continuam exclusivos do nível raiz.
+- **RF017-TL006** - Menu lateral e Painel do Livro: o item **Worldbuilding** do
+  menu lateral mostra o subtítulo **Entradas de \<mundo\>** quando há um mundo e
+  **N mundos** quando há vários. O módulo **Worldbuilding** do Painel do Livro
+  mostra a quantidade de mundos associados e o total de entradas, e a métrica
+  **Entradas de worldbuilding** deixa de ser fixa em 0.
+- **RF017-TL007** - Meus Livros: o card e a linha do livro mostram os mundos
+  associados — o Nome quando há um, a lista de nomes quando há vários e **Sem
+  mundo** quando não há.
+- **RF017-TL008** - Mundo no nível raiz: o painel **Vínculos com livros** da tela
+  de detalhe do mundo deixa de ser vazio e passa a mostrar a contagem real de
+  livros, com um atalho para a nova aba **Livros**; sem vínculos, o painel
+  continua retraído com o estado vazio. A lista completa fica na aba **Livros**
+  (RF017-TL010).
+- **RF017-TL009** - Cenário Worldbuilding do capítulo: o campo **Cenário
+  Worldbuilding** do painel do capítulo lista as **Localidades** de todos os
+  mundos associados ao livro, agrupadas por mundo, e grava a localidade
+  escolhida. Sem mundo associado, o campo permanece desabilitado com o aviso
+  **Nenhum mundo associado a este livro**.
+- **RF017-TL010** - Aba Livros do mundo: a tela de detalhe do mundo ganha a aba
+  **Livros**, depois das entradas e de **Facções**, com o contador de livros e a
+  lista dos livros que usam aquele mundo; o **Título** é clicável e abre a
+  página do livro. Sem vínculos, a aba mostra o estado vazio; em mundo não
+  salvo, orienta a salvar.
+- **RF017-TL011** - Listagem de Mundos: os cards e as linhas da tela principal de
+  Mundos mostram os livros associados — a quantidade e os títulos — ou
+  **Nenhum livro** quando o mundo não é usado por nenhum livro. O RF007-TL001
+  fixava **0 livros** porque a associação não existia; este requisito passa a
+  exibir o valor real.
+
+#### Fluxos
+
+- **RF017-FL001** - Associar mundos: com o livro salvo, o escritor clica em
+  **Associar mundos**, busca e marca um ou mais mundos na modal e confirma. As
+  abas aparecem na ordem em que os mundos foram associados e a primeira fica
+  ativa.
+- **RF017-FL002** - Associar pelo estado vazio: na seção sem mundos, o escritor
+  clica em **Associar mundos**, marca um mundo e confirma; a seção passa a
+  exibir a aba daquele mundo com o resumo e as categorias.
+- **RF017-FL003** - Remover mundo: na aba do mundo, o escritor clica em **Remover
+  mundo**, confirma a remoção e vê a aba desaparecer; se era a última, a seção
+  volta ao estado vazio. Os capítulos que usavam localidades daquele mundo
+  passam a ficar sem cenário e a tela informa quantos foram afetados.
+- **RF017-FL004** - Abrir mundo: na aba do mundo, o escritor clica em **Abrir
+  mundo** e o aplicativo abre a tela de detalhe daquele mundo no nível raiz,
+  saindo do livro.
+- **RF017-FL005** - Criar entrada pela aba: na categoria escolhida, o escritor
+  clica em **Nova entrada**, preenche a modal, salva e vê a entrada na tabela
+  daquele mundo; a mesma entrada aparece no nível raiz.
+- **RF017-FL006** - Alternar abas: o escritor troca de aba entre os mundos
+  associados sem perder a categoria selecionada nem a página da tabela; a troca
+  não grava nada.
+- **RF017-FL007** - Editar capítulo com cenário: no painel do capítulo, o
+  escritor escolhe uma localidade de qualquer mundo associado, salva e reabre o
+  capítulo com o cenário gravado.
+
+#### Regras de Negócio
+
+- **RF017-RN001** - Associação N:N: um livro tem **um ou mais** mundos
+  associados e um mundo pode servir a vários livros. Este requisito revoga a
+  regra de mundo único do RF007 e do protótipo.
+- **RF017-RN002** - Ordem de associação: a ordem das abas é a ordem em que os
+  mundos foram associados; novos mundos entram no fim. A aba ativa inicial é
+  sempre a primeira.
+- **RF017-RN003** - Livro salvo: só é possível associar ou remover mundos em um
+  livro já gravado. Em livro não salvo, o botão fica desabilitado e o back-end
+  recusa a operação com o código de livro não salvo.
+- **RF017-RN004** - Duplicidade recusada: uma associação já existente não é
+  criada de novo; a chave composta do banco e o domínio impedem o par repetido,
+  e a modal mostra **Já associado** para esses mundos.
+- **RF017-RN005** - Mundo intacto: associar, remover ou abrir um mundo não
+  altera o mundo, as suas entradas, a sua imagem nem os demais livros que o
+  usam.
+- **RF017-RN006** - Remoção limpa cenários: ao remover a associação, na mesma
+  transação, os capítulos daquele livro cujas localidades pertencem ao mundo
+  removido ficam com o cenário vazio. A remoção é recusada com mundo ou livro
+  inexistente, e o retorno informa quantos capítulos foram limpos.
+- **RF017-RN007** - Cenário validado: o cenário do capítulo só aceita localidade
+  de um mundo associado ao livro; localidade de outro mundo é recusada pelo
+  domínio, não só pela interface.
+- **RF017-RN008** - Entradas pertencem ao mundo: criar uma entrada pela aba do
+  livro grava no mundo, como no RF008. O livro não tem cópia das entradas, e
+  editar ou excluir continua sendo operação do nível raiz.
+- **RF017-RN009** - Resumo somente leitura: a aba do mundo exibe os dados do
+  mundo para consulta; os campos não são editáveis dentro do livro e a alteração
+  continua na tela de detalhe do mundo.
+- **RF017-RN010** - Métricas: **Entradas de worldbuilding** conta as entradas de
+  todas as categorias dos mundos associados aos livros; um livro com dois mundos
+  soma as entradas dos dois. O módulo **Worldbuilding** do Painel e o card de
+  Meus Livros refletem a quantidade real de mundos. Personagens e capítulos
+  continuam com as contagens do RF014/RF015, e livro sem mundo conta 0.
+- **RF017-RN011** - Persistência: a migração **v17** aditiva cria a tabela
+  `livro_mundo`, com chave composta, ordem, chaves estrangeiras para `livro` e
+  `mundo_global` e índice por mundo. Nenhuma migração publicada é editada e as
+  tabelas existentes não são recriadas.
+- **RF017-RN012** - Sem dados fictícios: livro sem mundos mostra o estado vazio,
+  categoria sem entradas mostra a tabela vazia e nenhuma tela inventa mundos,
+  entradas ou contagens.
+- **RF017-RN013** - Sem regressão: Meus Livros, página do livro, menu, Painel,
+  Dados do Livro e as seis abas, Personagens, Capítulos, Gráficos, temas,
+  splash, biblioteca de personagens, mundos, entradas, facções e exportações
+  continuam funcionando.
+- **RF017-RN014** - Escopo da exportação: a exportação do livro continua em
+  requisito posterior; este requisito não cria nem altera os PDFs da ficha do
+  personagem e do mundo.
+
+#### Critérios de Aceite
+
+- **RF017-CA001** - Seção real: **Worldbuilding** abre a seção com o Tab Panel
+  dos mundos associados, não a tela informativa.
+- **RF017-CA002** - Abas na ordem de associação: os mundos aparecem na ordem em
+  que foram associados, com a primeira aba ativa, e o rótulo é o Nome do mundo.
+- **RF017-CA003** - Associar vários: a modal permite marcar mais de um mundo e,
+  ao confirmar, todas as associações são criadas e as abas correspondentes
+  aparecem.
+- **RF017-CA004** - Já associado: os mundos já associados aparecem com o selo
+  **Já associado**, não podem ser marcados e não geram associação duplicada.
+- **RF017-CA005** - Busca e paginação: a modal filtra pelo nome, pagina de 12 em
+  12 e mantém a seleção ao trocar de página ou de busca.
+- **RF017-CA006** - Estado vazio: livro sem mundos mostra o estado vazio com
+  **Associar mundos**; livro não salvo mantém o botão desabilitado e a
+  orientação de salvar.
+- **RF017-CA007** - Aba do mundo: a aba exibe imagem, Nome, Tipo, Nível
+  Tecnológico, Gêneros e Descrição em modo somente leitura, sem campos de
+  edição.
+- **RF017-CA008** - Categorias e contadores: as seis categorias aparecem na aba
+  com a contagem real de entradas de cada uma e a tabela paginada.
+- **RF017-CA009** - Nova entrada: criar uma entrada pela aba grava no mundo, a
+  tabela recarrega e a entrada aparece também no nível raiz.
+- **RF017-CA010** - Remover mundo: confirmar a remoção tira a aba, mantém as
+  demais e, se era a última, volta ao estado vazio; cancelar não altera nada.
+- **RF017-CA011** - Cenários limpos: ao remover um mundo, os capítulos do livro
+  que usavam localidades dele ficam sem cenário na mesma operação, e a tela
+  informa a quantidade de capítulos afetados.
+- **RF017-CA012** - Cenário agrupado: o campo **Cenário Worldbuilding** lista as
+  localidades dos mundos associados agrupadas por mundo e grava a localidade
+  escolhida; sem mundo, permanece desabilitado com o aviso.
+- **RF017-CA013** - Cenário recusado: salvar um capítulo com localidade de mundo
+  não associado ao livro é recusado pelo domínio.
+- **RF017-CA014** - Vínculos do mundo: o painel **Vínculos com livros** mostra a
+  contagem real e leva à aba **Livros**, que lista os livros que usam o mundo com
+  o Título clicável; clicar no título abre a página do livro e o painel não
+  duplica a lista.
+- **RF017-CA015** - Métricas: **Entradas de worldbuilding** e o módulo do Painel
+  refletem os mundos e as entradas reais; os cards de Meus Livros mostram os
+  mundos associados ou **Sem mundo**.
+- **RF017-CA016** - Menu lateral: com um mundo, o item mostra **Entradas de
+  \<mundo\>**; com vários, **N mundos**.
+- **RF017-CA017** - Abrir mundo: **Abrir mundo** abre a tela de detalhe daquele
+  mundo no nível raiz, com os dados e as entradas intactos.
+- **RF017-CA018** - Persistência: as associações, a ordem das abas e as entradas
+  criadas permanecem após fechar e reabrir a aplicação.
+- **RF017-CA019** - Testes automatizados: a verificação cobre a seção real, as
+  abas, a associação múltipla, o selo **Já associado**, a busca e a paginação, o
+  estado vazio, a aba somente leitura, a criação de entrada, a remoção com
+  limpeza de cenários, o cenário agrupado, os vínculos do mundo, a aba **Livros**
+  e as métricas.
+- **RF017-CA020** - Migração v17: um banco v16 migra para a v17 sem perder
+  livros, personagens, capítulos, mundos, entradas, facções ou vínculos.
+- **RF017-CA021** - Sem regressão: os fluxos dos requisitos anteriores continuam
+  funcionando.
+- **RF017-CA022** - Listagem de Mundos: os cards mostram os livros associados com
+  a quantidade e os títulos, e as linhas da lista têm a coluna **Livros**; mundo
+  sem livro mostra **Nenhum livro**.
+
 ## Arquitetura
 
 O TaleCraft será construído para Desktop, usando a linguagem Rust com o Framework Tauri 2.0. Para o front-end, será utilizado o React, com JavaScript e Vite. Para o banco de dados, será utilizado o banco SQLite. 

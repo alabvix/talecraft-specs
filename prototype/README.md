@@ -85,9 +85,11 @@ raiz altera o que todos os livros associados enxergam. É o inverso dos
 personagens, onde o que varia por livro é o *arco*: aqui, o que varia por livro é
 apenas **quais** entradas entram em cena.
 
-> **Cada livro tem 1 e somente 1 Mundo associado.** O vínculo é 1:1 do lado do
-> livro; o Mundo, do outro lado, pode servir a vários livros. Trocar o mundo de um
-> livro substitui a associação sem alterar o mundo anterior.
+> **Cada livro pode ter um ou mais Mundos associados.** O protótipo representa
+> **um** mundo (o caso mais comum), mas o RF017 revogou essa restrição: o vínculo
+> é N:N, o livro associa os mundos que quiser e o Mundo, do outro lado, pode
+> servir a vários livros. Remover a associação não altera o mundo nem os demais
+> livros.
 
 Os três mundos de exemplo são **Kepler** (Futurista · Sci-Fi, Sobrenatural),
 **Ravória** (Medieval · Alta Fantasia, Romantasia) e **Arda** (Moderno · Terror,

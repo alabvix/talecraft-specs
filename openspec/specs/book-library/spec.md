@@ -47,7 +47,7 @@ A tela SHALL manter os elementos visuais e a disposição do protótipo que faze
 - **THEN** essas telas, os temas e o splash continuam funcionando (RF010-CA013)
 
 ### Requirement: Listagem real de livros
-O sistema SHALL listar os livros cadastrados na seção **Todos os livros**, em **Grade** (padrão) ou **Lista**, com busca por título e badge de resultados atualizado; cada item SHALL exibir título, gênero principal com subgêneros, faixa de público, idioma e as métricas zeradas do livro, sem dados fictícios (RF011-TL005, RF011-RN014, RF011-RN015, RF011-FL008, RF011-CA016, RF011-CA017, RF011-CA019).
+O sistema SHALL listar os livros cadastrados na seção **Todos os livros**, em **Grade** (padrão) ou **Lista**, com busca por título e badge de resultados atualizado; cada item SHALL exibir título, gênero principal com subgêneros, faixa de público, idioma, os **mundos associados** — o Nome quando houver um, os nomes quando houver vários e **Sem mundo** quando não houver — e as métricas do livro, sem dados fictícios (RF011-TL005, RF011-RN014, RF011-RN015, RF011-FL008, RF011-CA016, RF011-CA017, RF011-CA019, RF017-TL007, RF017-CA015).
 
 #### Scenario: Livro salvo aparece na listagem
 - **GIVEN** um livro foi criado pela página do livro
@@ -64,13 +64,18 @@ O sistema SHALL listar os livros cadastrados na seção **Todos os livros**, em 
 - **WHEN** o escritor digita parte de um título em **Buscar livros…**
 - **THEN** a listagem mostra apenas os livros cujo título corresponde (RF011-CA016)
 
+#### Scenario: Mundos associados no card
+- **GIVEN** um livro tem os mundos **Kepler** e **Ravória** associados e outro livro não tem mundo
+- **WHEN** o escritor abre Meus Livros
+- **THEN** o primeiro mostra os nomes dos dois mundos e o segundo mostra **Sem mundo** (RF017-TL007, RF017-CA015)
+
 #### Scenario: Sem dados fictícios
 - **GIVEN** a tela Meus Livros está aberta
 - **WHEN** o escritor observa a listagem
 - **THEN** não aparecem os livros, personagens, contadores ou imagens de demonstração do protótipo (RF011-CA019)
 
 ### Requirement: Métricas da biblioteca de livros
-O sistema SHALL calcular as métricas da tela Meus Livros a partir do que está **associado aos livros**: **Livros na biblioteca** conta os livros cadastrados, **Personagens** conta somente personagens com vínculo em pelo menos um livro, **Personagens · N em 2+ livros** conta somente personagens com vínculo em dois ou mais livros, **Capítulos planejados** conta somente capítulos dos livros e **Entradas de worldbuilding** conta somente entradas dos mundos associados a livros; sem vínculo personagem–livro e sem associação livro–mundo, **Personagens**, **0 em 2+ livros** e **Entradas de worldbuilding** exibem **0** (RF011-CA018, RF014-RN011, RF014-CA014).
+O sistema SHALL calcular as métricas da tela Meus Livros a partir do que está **associado aos livros**: **Livros na biblioteca** conta os livros cadastrados, **Personagens** conta somente personagens com vínculo em pelo menos um livro, **Personagens · N em 2+ livros** conta somente personagens com vínculo em dois ou mais livros, **Capítulos planejados** conta somente capítulos dos livros e **Entradas de worldbuilding** conta somente entradas das seis categorias dos mundos associados a livros, somando todos os mundos de cada livro; sem vínculo personagem–livro e sem associação livro–mundo, **Personagens**, **0 em 2+ livros** e **Entradas de worldbuilding** exibem **0** (RF011-CA018, RF014-RN011, RF014-CA014, RF017-RN010, RF017-CA015).
 
 #### Scenario: Métricas sem vínculos com livros
 - **GIVEN** existem personagens globais e entradas de mundo cadastrados, mas nenhum vínculo personagem–livro e nenhuma associação livro–mundo
@@ -96,4 +101,9 @@ O sistema SHALL calcular as métricas da tela Meus Livros a partir do que está 
 - **GIVEN** o escritor acabou de associar personagens ao livro na seção **Personagens**
 - **WHEN** volta para Meus Livros
 - **THEN** as métricas **Personagens** e **Personagens · N em 2+ livros** refletem os vínculos criados (RF014-FL001, RF014-CA014)
+
+#### Scenario: Entradas de worldbuilding reais
+- **GIVEN** dois livros estão associados a mundos com entradas e um terceiro livro não tem mundo, e existem entradas em mundos sem livro
+- **WHEN** o escritor abre Meus Livros
+- **THEN** **Entradas de worldbuilding** conta as entradas dos mundos associados aos livros, incluindo as dos dois mundos de um mesmo livro, e ignora os mundos sem livro (RF017-RN010, RF017-CA015)
 
