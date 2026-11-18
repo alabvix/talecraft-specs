@@ -2285,6 +2285,206 @@ ciclos.
   subárvore nunca é cortada entre páginas (os filhos aparecem sempre na mesma
   página do pai) e a paginação também vale na seção Worldbuilding do livro.
 
+### RF019 - Worldbuilding - Mapas do Mundo
+
+Este requisito cria os **Mapas** do Mundo: representações espaciais funcionais das
+localidades, organizadas por **escala** — **Mundo**, **Região**, **Cidade**,
+**Bairro** e **Prédio/Casa**. O escritor cria vários mapas, posiciona as
+localidades existentes (ou cria novas no próprio mapa), desenha formas do
+terreno/paredes e faz ligações entre localidades. O mapa é **funcional, não
+estético**: nome, tipo, imagem e hierarquia continuam vindo do cadastro da
+localidade (RF018); o mapa só acrescenta posição, forma e ligação.
+
+Os mapas ficam na aba **Mapas** do detalhe do Mundo, aparecem em modo de leitura
+na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
+
+- **Data de criacao:** 18/11/2026
+
+#### Telas
+
+- **RF019-TL001** - Aba Mapas do Mundo: nova aba depois de **Localidades**, com
+  a lista de mapas em cards — Nome, tipo (escala), âncora, quantidade de
+  localidades e **Abrir** — e o botão **Novo mapa**. Vários mapas por escala.
+  Sem mapas, mostra o estado vazio; em mundo não salvo, o botão fica desabilitado
+  com orientação para salvar.
+- **RF019-TL002** - Modal de mapa: **Nome** (obrigatório), **Tipo** (lista
+  fechada: Mundo, Região, Cidade, Bairro, Prédio/Casa), **Âncora** (opcional,
+  apenas localidades do mesmo mundo, com o caminho) e **Fundo** (lista fechada:
+  Papel, Grade, Hex, Blueprint, Topográfico). A mesma modal edita os metadados de
+  um mapa existente e oferece **Excluir mapa** com confirmação.
+- **RF019-TL003** - Editor de mapa: a aba vira um editor em largura total, com
+  **Voltar aos mapas**, o nome/tipo/âncora/fundo no cabeçalho, **Salvar** e o
+  indicador de alterações pendentes. O layout tem a **toolbar**, o **canvas** e
+  dois painéis: à esquerda, as localidades do mundo com busca; à direita, as
+  propriedades do elemento selecionado.
+- **RF019-TL004** - Toolbar: **Selecionar/Mover**, **Polígono**, **Ligação**,
+  **Apagar**, **Desfazer**, **Refazer** e os controles de **zoom** (+ / − /
+  ajustar). O canvas tem pan (arrastar o fundo) e zoom, com coordenadas lógicas
+  de 1000 × 700.
+- **RF019-TL005** - Canvas: renderiza o fundo do template, os polígonos com
+  rótulo e cor, as ligações com rótulo e estilo e os marcadores das localidades
+  com miniatura, ícone do tipo (ou quadrado vazio), nome e tipo. O ícone segue
+  o **Tipo da Localidade** e é desenhado no estilo do **Tipo do Mundo**.
+  Selecionar um marcador destaca o nó e mostra as propriedades (**Abrir
+  localidade** e **Remover do mapa**).
+- **RF019-TL006** - Painel de localidades: lista pesquisável das localidades do
+  mundo, arrastável para o canvas; as que já estão no mapa aparecem com o selo
+  **No mapa** e clicar nelas seleciona o marcador. O botão **Nova localidade**
+  abre a modal do RF018 e coloca a nova localidade no centro da visão.
+- **RF019-TL007** - Ligações: escolher **Ligação**, clicar na localidade de
+  origem e na de destino; a ligação recebe **rótulo livre** e **estilo** (linha
+  cheia, tracejada ou seta) no painel de propriedades.
+- **RF019-TL008** - Livro: a seção **Worldbuilding** do livro ganha a aba
+  **Mapas** depois de **Localidades**, com o seletor dos mapas do mundo da aba e
+  a visualização **somente leitura** (pan/zoom leve, sem ferramentas). Sem mapas,
+  mostra o estado vazio.
+- **RF019-TL009** - PDF do Mundo: o **Documento do Mundo** ganha a seção
+  **Mapas** ao final, com **todos os mapas que tiverem conteúdo** (localidade ou
+  forma), na ordem de criação; mapas vazios são omitidos. Cada mapa entra com
+  nome, tipo, âncora e o desenho, usando a paleta fixa de impressão.
+
+#### Fluxos
+
+- **RF019-FL001** - Criar mapa: em mundo salvo, o escritor clica em **Novo mapa**,
+  informa Nome, Tipo, Âncora (opcional) e Fundo e salva; o card aparece na lista.
+- **RF019-FL002** - Abrir e salvar o mapa: ao abrir, o editor carrega metadados,
+  posições, formas e ligações; o escritor altera e clica em **Salvar**. Sair sem
+  salvar descarta as pendências.
+- **RF019-FL003** - Colocar uma localidade: o escritor arrasta uma localidade da
+  lista para o canvas; ela passa a ter um marcador na posição solta e recebe o
+  selo **No mapa**. Arrastar o marcador atualiza a posição.
+- **RF019-FL004** - Criar localidade pelo mapa: o escritor clica em **Nova
+  localidade**, preenche a modal do RF018 e salva; a localidade é criada no mundo,
+  entra no mapa no centro da visão e também aparece na aba Localidades. O pai
+  sugerido é a âncora do mapa, editável na modal.
+- **RF019-FL005** - Desenhar uma forma: com **Polígono**, o escritor clica nos
+  vértices e fecha com duplo clique ou Enter (Esc cancela); a forma é criada com
+  cor padrão e pode ser renomeada, recolorida, movida ou apagada.
+- **RF019-FL006** - Criar uma ligação: com **Ligação**, o escritor clica na
+  origem e no destino; se o par já existir, nada é criado; a ligação pode ser
+  editada no painel de propriedades.
+- **RF019-FL007** - Desfazer e refazer: as alterações do documento (posições,
+  formas, ligações e metadados) entram no histórico em memória; desfazer e
+  refazer percorrem o histórico até o último **Salvar** ou o limite.
+- **RF019-FL008** - Remover do mapa: remover um marcador, uma forma ou uma
+  ligação apaga só o elemento do mapa; a localidade, a imagem e a hierarquia
+  continuam intactas.
+- **RF019-FL009** - Excluir mapa: a modal de edição oferece **Excluir mapa**;
+  confirmar remove o mapa e os seus elementos, sem tocar nas localidades.
+- **RF019-FL010** - Ler os mapas no livro: na seção Worldbuilding, a aba **Mapas**
+  permite escolher o mapa e navegar com pan/zoom, sem editar nada.
+
+#### Regras de Negócio
+
+- **RF019-RN001** - Mapa pertence ao Mundo: todo mapa tem um `mundo_id`; as
+  localidades colocadas precisam ser do mesmo mundo. Não existem mapas globais.
+- **RF019-RN002** - Escala do mapa: lista fechada **Mundo**, **Região**,
+  **Cidade**, **Bairro** e **Prédio/Casa**. A escala organiza os mapas e **não**
+  restringe os tipos de localidade que podem ser colocados.
+- **RF019-RN003** - Âncora opcional: o mapa pode apontar para uma localidade do
+  mesmo mundo; a âncora é o pai sugerido ao criar localidades pelo mapa e aparece
+  no card e no PDF. O tipo da âncora não é validado contra a escala.
+- **RF019-RN004** - Fundo: lista fechada **Papel**, **Grade**, **Hex**,
+  **Blueprint** e **Topográfico**, desenhada com CSS/SVG (sem imagem externa).
+- **RF019-RN005** - Uma localidade por mapa: a chave `(mapa_id,
+  localidade_id)` impede o mesmo marcador duas vezes; a mesma localidade pode
+  estar em mapas diferentes, com posições independentes.
+- **RF019-RN006** - Coordenadas: as posições e os vértices usam um plano lógico
+  de **1000 × 700**; valores fora do plano são recusados pelo domínio. O canvas
+  escala com `viewBox`, sem perder posições.
+- **RF019-RN007** - Formas: cada polígono tem pelo menos **3 vértices**, cor de
+  uma lista fechada (**acento**, **âmbar**, **azul**, **verde**, **neutra**,
+  **destaque**) e rótulo livre opcional. As cores são gravadas como chaves
+  semânticas, não hexadecimal, para acompanhar o tema e a impressão.
+- **RF019-RN008** - Ligações: só entre localidades já colocadas no mapa, sem
+  auto-ligação e sem par duplicado; rótulo livre e estilo fechado **linha**,
+  **tracejada** ou **seta**.
+- **RF019-RN009** - Salvar transacional: `salvar_mapa` grava metadados,
+  posições, formas e ligações na mesma transação; uma falha não deixa o mapa
+  pela metade. As listas filhas são regravadas a partir do documento enviado.
+- **RF019-RN010** - Exclusão: excluir um mapa remove as posições, formas e
+  ligações dele (cascata) e **nunca** as localidades, as imagens ou a hierarquia.
+- **RF019-RN011** - Persistência: a migração **v20** aditiva cria `mapa`,
+  `mapa_localidade`, `mapa_forma` e `mapa_ligacao`, com chaves estrangeiras,
+  `CHECK`s das listas e cascata do mapa. Nenhuma migração publicada é editada.
+  As migrações continuam rodando com as FKs desligadas (RF018).
+- **RF019-RN012** - Editor: alterações ficam em memória até **Salvar**; sair
+  sem salvar descarta. O histórico de desfazer/refazer é da sessão do editor.
+- **RF019-RN013** - Livro somente leitura: a aba **Mapas** da seção Worldbuilding
+  não cria, não edita e não posiciona; só exibe os mapas do mundo da aba.
+- **RF019-RN014** - PDF: a seção **Mapas** usa a paleta fixa de impressão,
+  ignora o template decorativo quando ele comprometer a leitura e omite mapas
+  vazios. A ordem é a de criação.
+- **RF019-RN015** - Sem dados fictícios: mundo sem mapas mostra o estado vazio,
+  mapa sem conteúdo aparece vazio no editor e nenhuma tela inventa formas,
+  marcadores ou ligações.
+- **RF019-RN016** - Sem regressão: as abas e entradas do Mundo, as Localidades,
+  o livro, o cenário do capítulo, os temas e os PDFs existentes continuam
+  funcionando.
+- **RF019-RN017** - Ícones do mapa: quando a localidade **não tem imagem**, o
+  marcador usa um ícone do **Tipo da Localidade** (RF018). As famílias de
+  assentamento, moradia, fortificação e templo têm quatro desenhos, escolhidos
+  pelo **Tipo do Mundo** (**Medieval**, **Moderno**, **Futurista** e
+  **Antigo**); as demais famílias usam um desenho único. A **imagem cadastrada
+  tem prioridade** sobre o ícone. Tipos sem desenho e **Não definido** mantêm o
+  quadrado vazio, sem inventar símbolo.
+
+#### Critérios de Aceite
+
+- **RF019-CA001** - Aba real: **Mapas** abre a lista de mapas, não uma tela
+  informativa, com **Novo mapa** e estado vazio.
+- **RF019-CA002** - Criar mapa: Nome, Tipo, Âncora e Fundo são gravados e o card
+  aparece com tipo, âncora e contagem.
+- **RF019-CA003** - Escalas: a modal oferece exatamente **Mundo**, **Região**,
+  **Cidade**, **Bairro** e **Prédio/Casa**.
+- **RF019-CA004** - Âncora: a lista mostra as localidades do mesmo mundo pelo
+  caminho; uma âncora de outro mundo é recusada.
+- **RF019-CA005** - Editor abre: metadados, posições, formas e ligações são
+  carregados e o mapa anterior é restaurado ao reabrir.
+- **RF019-CA006** - Arrastar: soltar uma localidade no canvas cria o marcador na
+  posição; arrastar o marcador atualiza a posição; a mesma localidade não entra
+  duas vezes.
+- **RF019-CA007** - Criar localidade: a modal do RF018 cria a localidade, coloca
+  o marcador no centro e ela aparece também na aba Localidades, com a âncora
+  como pai sugerido.
+- **RF019-CA008** - Polígono: desenhar com 3 ou mais vértices cria a forma;
+  menos de 3 é recusado; mover, renomear, recolorir e apagar funcionam.
+- **RF019-CA009** - Ligação: duas localidades no mapa geram uma ligação com
+  rótulo e estilo; auto-ligação e par duplicado são recusados; a ligação pode ser
+  apagada sem tocar nas localidades.
+- **RF019-CA010** - Remover do mapa: apagar marcador/forma/ligação não altera o
+  cadastro da localidade.
+- **RF019-CA011** - Desfazer/refazer: as alterações do documento voltam e
+  avançam; o histórico não grava no banco antes do **Salvar**.
+- **RF019-CA012** - Salvar: posições, formas e ligações persistem após fechar e
+  reabrir; sair sem salvar descarta.
+- **RF019-CA013** - Excluir mapa: confirmar remove o mapa e os elementos; as
+  localidades continuam na árvore.
+- **RF019-CA014** - Templates: os cinco fundos trocam o padrão do canvas sem
+  perder os elementos.
+- **RF019-CA015** - Zoom/pan: o canvas navega sem alterar as coordenadas
+  gravadas.
+- **RF019-CA016** - Livro: a aba **Mapas** mostra o seletor e a visualização sem
+  edição, com pan/zoom leve.
+- **RF019-CA017** - PDF: a seção **Mapas** traz os mapas com conteúdo, na ordem
+  de criação, e omite os vazios; a paleta é fixa.
+- **RF019-CA018** - Migração v20: um banco v19 migra para a v20 sem perder
+  mundos, localidades, entradas, facções, livros, personagens, capítulos ou
+  associações.
+- **RF019-CA019** - Camadas: front-end chama só comandos Tauri; o salvar e o
+  excluir são transacionais no domínio.
+- **RF019-CA020** - Testes automatizados: a verificação cobre lista/modal,
+  editor, arrastar, criar localidade, polígono, ligação, undo/redo, salvar,
+  excluir, templates, livro e PDF.
+- **RF019-CA021** - Sem dados fictícios: mundo sem mapas e mapa vazio mostram
+  estados vazios.
+- **RF019-CA022** - Sem regressão: os fluxos dos requisitos anteriores continuam
+  funcionando.
+- **RF019-CA023** - Ícones: uma **Cidade** em mundo **Futurista** mostra o ícone
+  de cúpulas; em mundo **Medieval**, o de muralha. Localidade com imagem mostra
+  a miniatura; tipo sem desenho mantém o quadrado vazio. O mesmo ícone aparece
+  no livro e no PDF.
+
 ## Arquitetura
 
 O TaleCraft será construído para Desktop, usando a linguagem Rust com o Framework Tauri 2.0. Para o front-end, será utilizado o React, com JavaScript e Vite. Para o banco de dados, será utilizado o banco SQLite. 

@@ -5,7 +5,23 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
-> **Ponto de parada (17/11/2026 — RF018):** o **RF018** enriquece as
+> **Ponto de parada (18/11/2026 — RF019):** o **RF019** cria os **Mapas do
+> Mundo**: vários mapas por escala (**Mundo**, **Região**, **Cidade**,
+> **Bairro**, **Prédio/Casa**), com âncora opcional e cinco fundos (Papel,
+> Grade, Hex, Blueprint, Topográfico). O **editor** na aba **Mapas** posiciona
+> localidades (arrastar ou criar pelo canvas), desenha polígonos, cria ligações
+> rotuladas (linha/tracejada/seta), apaga, desfaz/refaz, navega com pan/zoom e
+> salva o documento em transação. A aba **Mapas** da seção Worldbuilding do
+> livro lê os mapas (pan/zoom leve) e o **PDF do Mundo** ganha a seção
+> **Mapas**. Migração **v20** (`mapa`, `mapa_localidade`, `mapa_forma`,
+> `mapa_ligacao`), **70 comandos** e **171 testes Rust**;
+> `verificar-rf019.mjs` **27/27** e regressão RF002-RF018 aprovada. Os
+> marcadores usam **ícones do Tipo da Localidade** no estilo do Tipo do Mundo
+> quando não há imagem. Change
+> ativo `rf019-mapas-do-mundo` — **validação visual em andamento** (mapas +
+> ícones); arquivar somente depois do aval do usuário.
+>
+> **Ponto de parada anterior (17/11/2026 — RF018):** o **RF018** enriquece as
 > **Localidades**: imagem (JPG/PNG/WEBP até 4 MB em `localidades/`), **Tipo**
 > (49 valores em ordem alfabética + **Não definido**) e **hierarquia** com pai do mesmo mundo,
 > vários filhos e profundidade livre, com recusa de ciclo no domínio. A aba
@@ -13,8 +29,7 @@
 > mostra o caminho completo; a seção do livro usa a mesma árvore em consulta.
 > Migrações **v18** (colunas) e **v19** (CHECK ampliado), **65 comandos** e **161 testes Rust**;
 > `verificar-rf018.mjs` **17/17** e regressão RF002-RF017 aprovada. Validado com
-> o usuário e **arquivado** em `2026-11-18-rf018-localidades-imagem-tipo-hierarquia`;
-> nenhum change ativo.
+> o usuário e **arquivado** em `2026-11-18-rf018-localidades-imagem-tipo-hierarquia`.
 >
 > **Ponto de parada anterior (17/11/2026 — RF017):** o **RF017** abriu a seção
 > **Worldbuilding** do livro (associação N:N, aba por mundo, entradas, cenário
@@ -60,7 +75,8 @@
 > **`162b475`**. A build de teste **v0.1.0** foi publicada no repositório
 > <https://github.com/alabvix/talecraft-releases>.
 >
-> **Próximo passo (17/11/2026):** escrever a exportação do livro antes de
+> **Próximo passo (18/11/2026):** validar o RF019 e arquivar o change
+> `rf019-mapas-do-mundo`; depois, escrever a exportação do livro antes de
 > implementá-la. Antes de uma nova release, subir a versão do app.
 
 Memória de trabalho do projeto. Leia este arquivo **antes** de mexer no código.
@@ -127,6 +143,8 @@ talecraft/
 │   ├── livrosApi.js           chamadas aos comandos de livros (RF011)
 │   ├── livros.js              seções e metadados do livro (RF011)
 │   ├── livroPersonagensApi.js chamadas ao elenco do livro (RF014)
+│   ├── localidades.js         helpers da árvore e do mapa (RF018/RF019)
+│   ├── mapasApi.js            chamadas aos mapas do mundo (RF019)
 │   ├── fichaModo.js           marcador `#ficha=<id>` da janela de exportação (RF006)
 │   ├── mundoModo.js           marcador `#mundo=<id>` da exportação do mundo (RF007)
 │   ├── nomeArquivo.js         nome seguro para o diálogo de salvar (RF006/RF007)
@@ -134,6 +152,7 @@ talecraft/
 │   ├── personagens.css        estilos das telas de personagens (RF004/RF005)
 │   ├── mundos.css             estilos de mundos, entradas e facções (RF007–RF009)
 │   ├── livros.css             estilos da página do livro e Tab Panel (RF011)
+│   ├── mapas.css              estilos dos mapas, editor e impressão (RF019)
 │   ├── fontes.css + fontes/   fontes locais (`@font-face`, 20 `.woff2`)
 │   └── componentes/           Marca, Topbar, Sidebar, TelaVazia, TelaTemas,
 │                              Splash, Icone, TelaPersonagens, TelaPersonagem,
@@ -147,12 +166,14 @@ talecraft/
 │                              TelaPersonagensLivro, ModalSelecaoPersonagens,
 │                              DetalhePersonagemLivro, TelaCapitulosLivro,
 │                              PainelCapitulo, TelaGraficosLivro,
-│                              GraficoProgressao, GraficoArco
+│                              GraficoProgressao, GraficoArco, TelaMapasMundo,
+│                              ModalMapa, MapaEditor, MapaCanvas,
+│                              MapaVisualizacao, MapasDoLivro, IconeLocalidade
 ├── src-tauri/                 BACK-END Rust + configuração do Tauri
 │   ├── src/main.rs            binário
 │   ├── src/lib.rs             comandos Tauri + estado gerenciado do banco
-│   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF016)
-│   ├── src/banco/migracoes.rs DDL versionado (v1-v16)
+│   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF019)
+│   ├── src/banco/migracoes.rs DDL versionado (v1-v20)
 │   ├── src/erro.rs            ErroDominio + CodigoErro + Resultado<T>
 │   ├── src/test_support.rs    DiretorioTemporario (tempfile, cfg test)
 │   ├── src/personagem.rs      domínio dos personagens (RF004)
@@ -165,7 +186,8 @@ talecraft/
 │   ├── src/livro_personagem.rs vínculo livro-personagem (RF014)
 │   ├── src/capitulo.rs        capítulos e personagens do arco (RF015)
 │   ├── src/grafico.rs         séries dos gráficos do livro (RF016)
-│   ├── src/documento_mundo.rs agregado do Documento do Mundo (RF007–RF009)
+│   ├── src/mapa.rs            mapas do mundo: domínio e validações (RF019)
+│   ├── src/documento_mundo.rs agregado do Documento do Mundo (RF007–RF009, RF019)
 │   ├── src/ficha.rs           montagem da Ficha do Personagem (RF006)
 │   ├── src/pdf.rs             gravação do PDF pelo WebView2 (RF006)
 │   ├── src/<modulo>/testes.rs testes extraídos de cada módulo
@@ -189,6 +211,9 @@ talecraft/
 │   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (47/47)
 │   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (30/30)
 │   ├── verificar-rf016.mjs    gráficos: progressão, arcos e marcadores (14/14)
+│   ├── verificar-rf017.mjs    Worldbuilding do livro: abas e associação (26/26)
+│   ├── verificar-rf018.mjs    localidades: imagem, tipo e hierarquia (17/17)
+│   ├── verificar-rf019.mjs    mapas do mundo, editor, livro e PDF (27/27)
 │   └── verificar-janela-maximizada.mjs  janela maximizada com barra (3/3)
 ├── index.html                 HTML do Vite (monta o React)
 ├── vite.config.js             configuração do Vite (porta 1420)
@@ -1715,23 +1740,27 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `character-library` (RF004); `family-tree` (RF005); `character-sheet-export`
   (RF006); `world-library` e `world-sheet-export` (RF007); `world-entries`
   (RF008); `factions` (RF009); `book-library` (RF010/RF011); `book-workspace`
-  (RF011–RF016). São **18** capabilities.
+  (RF011–RF019). São **18** capabilities.
   `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 142 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 171 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
-- **Comandos Rust (56 no total):** `mensagem_inicial` (RF001),
+- **Comandos Rust (70 no total):** `mensagem_inicial` (RF001),
   `estado_inicial`/`verificar_banco` (RF002/RF003), os comandos de personagens
   e relações + `arvore_familiar` (RF004/RF005), os de ficha/PDF (RF006), os de
   mundos (RF007), os de entradas (RF008), os de facções (RF009), os de livros
   (RF011), os sete de personagens do livro (RF014), os seis de capítulos
-  (RF015), `dados_graficos_livro` (RF016) e `montar_documento_mundo` (Documento
-  do Mundo completo). Todos no `invoke_handler`.
-- **Pendências conhecidas do app:** RF001–RF016 concluídos, validados e
-  **ARQUIVADOS**. O documento hoje define RF001–RF016; os próximos requisitos
-  (RF017+) ainda precisam ser escritos antes de virarem change.
+  (RF015), `dados_graficos_livro` (RF016), os seis de worldbuilding do livro
+  (RF017), os três de localidades (RF018), os cinco de mapas do mundo (RF019) e
+  `montar_documento_mundo` (Documento do Mundo completo). Todos no
+  `invoke_handler`.
+- **Pendências conhecidas do app:** RF001–RF018 concluídos, validados e
+  **ARQUIVADOS**; o RF019 está implementado no change ativo
+  `rf019-mapas-do-mundo`, aguardando validação e arquivamento. O documento hoje
+  define RF001–RF019; os próximos requisitos (RF020+) ainda precisam ser
+  escritos antes de virarem change.
 
 ### Protótipo (referência visual — HTML + CSS)
 
