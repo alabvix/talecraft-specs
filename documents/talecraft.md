@@ -2119,6 +2119,172 @@ navegação pelos mundos vivem na seção **Worldbuilding** do livro.
   a quantidade e os títulos, e as linhas da lista têm a coluna **Livros**; mundo
   sem livro mostra **Nenhum livro**.
 
+### RF018 - Worldbuilding - Localidades: imagem, tipo e hierarquia
+
+Este requisito enriquece as **Localidades** do Mundo (RF008). Cada localidade
+passa a ter **imagem**, **Tipo da Localidade** e uma **localidade pai**,
+formando uma árvore de contenção com vários níveis e vários filhos por nó — por
+exemplo, uma **Taverna** e uma **Loja** dentro de uma **Cidade**, um **Cômodo**
+dentro de uma **Casa**, um **País** dentro de um **Território** e uma **Casa**
+dentro de um **Bairro** dentro de uma **Cidade**.
+
+As localidades continuam pertencendo ao Mundo (RF008): a hierarquia é interna ao
+mundo e não cria entradas compartilhadas entre mundos. A contenção é **livre por
+tipo**: qualquer localidade pode conter qualquer outra, desde que não se formem
+ciclos.
+
+- **Data de criacao:** 17/11/2026
+
+#### Telas
+
+- **RF018-TL001** - Aba Localidades em árvore: a categoria **Localidades** da
+  tela de detalhe do Mundo deixa de usar a tabela paginada e passa a exibir uma
+  **árvore expansível**. Cada nó mostra a **miniatura** da imagem (ou um quadrado
+  vazio do mesmo tamanho), o **Nome**, o **Tipo** e, quando houver, a seta de
+  **expandir/recolher** com o contador de sublocalidades. As raízes ficam no
+  primeiro nível, os filhos indentados abaixo do pai e, em cada nível, a ordem é
+  alfabética pelo Nome. A árvore abre **expandida**, pagina de **20 em 20
+  localidades** — sem cortar uma subárvore entre páginas — e o botão **Nova
+  Localidade** fica no cabeçalho da categoria.
+- **RF018-TL002** - Modal de Localidade: a janela de inclusão/edição da
+  localidade ganha, além de **Nome** (obrigatório), **Descrição** e **História**,
+  os campos **Tipo da Localidade** (lista fechada, em ordem alfabética, com
+  **Não definido** por padrão), **Imagem** (prévia e botão **Enviar
+  imagem**/**Trocar imagem**) e
+  **Fica dentro de** (lista das localidades do mesmo mundo, com o caminho de cada
+  uma e a opção **Nenhuma (raiz)**). A própria localidade e os seus descendentes
+  não aparecem na lista de pai.
+- **RF018-TL003** - Miniatura: a imagem da localidade aparece em miniatura
+  quadrada na árvore e em prévia na modal. Sem imagem, a árvore mostra um
+  quadrado vazio do mesmo tamanho, sem iniciais, para alinhar os nomes.
+- **RF018-TL004** - Cenário Worldbuilding do capítulo: o campo continua listando
+  as localidades dos mundos associados, agrupadas por mundo (RF017-TL009), e cada
+  opção passa a mostrar o **caminho completo** da localidade (por exemplo,
+  `Cidade › Bairro › Casa › Quarto`); o valor gravado continua sendo a
+  localidade.
+- **RF018-TL005** - Seção Worldbuilding do livro: a categoria **Localidades** da
+  seção do livro (RF017) usa a mesma árvore, em modo de consulta — sem ação
+  **Editar** —, com **Nova Localidade** gravando no mundo da aba ativa. As demais
+  categorias continuam na tabela paginada.
+
+#### Fluxos
+
+- **RF018-FL001** - Criar localidade com tipo e pai: o escritor clica em **Nova
+  Localidade**, informa o Nome, escolhe o Tipo, opcionalmente escolhe a localidade
+  pai, envia uma imagem e salva; a localidade aparece na árvore no nível do pai
+  escolhido.
+- **RF018-FL002** - Editar e mover: ao editar uma localidade, o escritor troca o
+  Tipo, o pai ou a imagem e salva; a árvore é reconstruída com a localidade (e os
+  seus descendentes) no novo nível.
+- **RF018-FL003** - Expandir e recolher: o escritor clica na seta de um nó com
+  filhos e a subárvore é recolhida ou expandida, sem gravar nada e sem perder a
+  posição dos demais nós.
+- **RF018-FL004** - Enviar ou trocar a imagem: na modal, o escritor escolhe o
+  arquivo no diálogo nativo; a imagem é copiada para o diretório de dados e passa
+  a aparecer na prévia e na miniatura da árvore.
+- **RF018-FL005** - Tentar criar um ciclo: ao escolher como pai uma localidade
+  que já está dentro da localidade editada (ou ela mesma), a gravação é recusada
+  com mensagem útil e a árvore não muda.
+- **RF018-FL006** - Capítulo com localidade aninhada: no painel do capítulo, o
+  escritor escolhe uma localidade pelo caminho exibido, salva e reabre o capítulo
+  com o cenário gravado.
+
+#### Regras de Negócio
+
+- **RF018-RN001** - Imagem da localidade: JPG, PNG ou WEBP com até **4 MB**, uma
+  por localidade, copiada para `<app_data_dir>/localidades/` com o caminho
+  relativo gravado no banco. A imagem exige a localidade já salva e segue o mesmo
+  fluxo e as mesmas mensagens da imagem do mundo.
+- **RF018-RN002** - Tipo da Localidade: lista fechada de **49** valores, em
+  **ordem alfabética** no seletor — **Arena**, **Armazém**, **Bairro**,
+  **Bosque**, **Cantina**, **Capital**, **Casa**, **Castelo**, **Catacumba**,
+  **Caverna**, **Cemitério**, **Cidade**, **Colina**, **Comércio**, **Cômodo**,
+  **Edifício**, **Estádio**, **Estado**, **Floresta**, **Fortaleza**, **Forte**,
+  **Igreja**, **Lago**, **Loja**, **Mar**, **Montanha**, **País**, **Palácio**,
+  **Pântano**, **Planalto**, **Praça**, **Prisão**, **Quarto**, **Ravina**,
+  **Região**, **Residência**, **Restaurante**, **Rio**, **Ruína**, **Sala**,
+  **Salão**, **Serra**, **Taverna**, **Teatro**, **Templo**, **Território**,
+  **Torre**, **Vila** e **Vilarejo** —, além do valor vazio **Não definido**
+  (padrão, apresentado primeiro, gravado como texto, nunca `NULL`). O campo é
+  opcional.
+- **RF018-RN003** - Hierarquia livre: a localidade pai é opcional, precisa
+  pertencer ao **mesmo mundo** e não há restrição de tipo — qualquer localidade
+  pode conter qualquer outra, com profundidade e quantidade de filhos livres.
+- **RF018-RN004** - Sem ciclos: uma localidade não pode ser pai de si mesma nem
+  de um dos seus descendentes; a validação é feita no domínio (subida pela cadeia
+  de pais) e devolve erro próprio, não só desabilita a opção na interface.
+- **RF018-RN005** - Árvore e contadores: as raízes são as localidades sem pai; os
+  filhos são ordenados alfabeticamente em cada nível (tratando acentos no Rust) e
+  o contador de cada nó é o número real de filhos diretos.
+- **RF018-RN006** - Persistência: a migração **v18** aditiva acrescenta `tipo`,
+  `imagem` e `pai_id` (com chave estrangeira para `localidade`) e um índice por
+  `pai_id`; a **v19** recria a tabela para ampliar o `CHECK` aos **49** tipos
+  (o SQLite não altera `CHECK` in-place), copiando as linhas e preservando os
+  ids. Nenhuma migração publicada é editada, as localidades existentes ganham
+  **Não definido**, sem imagem e na raiz, e as migrações rodam com as chaves
+  estrangeiras desligadas para a recriação não esbarrar na FK do capítulo.
+- **RF018-RN007** - Sem regressão das outras entradas: Raças e Povos, Artefatos,
+  Armas, Eventos e Sistemas continuam com a tabela paginada, os campos atuais e a
+  ação **Editar**.
+- **RF018-RN008** - Sem exclusão: este requisito não cria exclusão de localidade
+  nem de imagem; remover uma localidade com filhos continua fora de escopo.
+- **RF018-RN009** - Sem dados fictícios: mundo sem localidades mostra a árvore
+  vazia, localidade sem imagem mostra o quadrado vazio e nenhuma tela inventa nós,
+  tipos ou imagens.
+- **RF018-RN010** - Exportação do mundo: o PDF do mundo continua funcionando e
+  passa a trazer o **Tipo** da localidade; a hierarquia não altera o documento
+  nem cria seções novas.
+
+#### Critérios de Aceite
+
+- **RF018-CA001** - Árvore real: a aba **Localidades** exibe a árvore, não a
+  tabela paginada, com **Nova Localidade** no cabeçalho.
+- **RF018-CA002** - Hierarquia: uma localidade com pai aparece indentada abaixo
+  dele; um nó com vários filhos mostra todos; netos aparecem no nível seguinte.
+- **RF018-CA003** - Ordem: as raízes e os filhos de cada nível aparecem em ordem
+  alfabética pelo Nome.
+- **RF018-CA004** - Expandir e recolher: a seta recolhe e expande a subárvore
+  sem gravar nada; a árvore abre expandida.
+- **RF018-CA005** - Tipo: a modal apresenta exatamente os **49** tipos, em ordem
+  alfabética, mais **Não definido** primeiro, começa em **Não definido** e grava
+  o valor escolhido.
+- **RF018-CA006** - Imagem: enviar JPG, PNG ou WEBP até 4 MB copia o arquivo,
+  mostra a prévia e a miniatura; formato inválido ou acima de 4 MB é recusado com
+  mensagem útil.
+- **RF018-CA007** - Miniatura na árvore: localidade com imagem mostra a
+  miniatura; sem imagem, um quadrado vazio do mesmo tamanho, sem iniciais.
+- **RF018-CA008** - Pai: a modal lista as localidades do mesmo mundo com o
+  caminho e a opção **Nenhuma (raiz)**, sem a própria localidade nem os seus
+  descendentes.
+- **RF018-CA009** - Ciclo recusado: escolher como pai a própria localidade ou um
+  descendente é recusado pelo domínio, com erro próprio, e nada é gravado.
+- **RF018-CA010** - Mover: trocar o pai de uma localidade com filhos move a
+  subárvore inteira para o novo nível.
+- **RF018-CA011** - Mundo diferente: o pai só pode ser uma localidade do mesmo
+  mundo; o domínio recusa ids de outro mundo.
+- **RF018-CA012** - Cenário do capítulo: as opções mostram o caminho completo da
+  localidade e o valor gravado continua sendo a localidade; o capítulo reabre com
+  o cenário selecionado.
+- **RF018-CA013** - Seção Worldbuilding do livro: a categoria **Localidades**
+  mostra a árvore sem ação **Editar**, e **Nova Localidade** grava no mundo da
+  aba, aparecendo também no nível raiz.
+- **RF018-CA014** - Outras categorias: Raças e Povos, Artefatos, Armas, Eventos e
+  Sistemas continuam na tabela paginada com **Editar**.
+- **RF018-CA015** - Migração v18: um banco v17 migra para a v18 sem perder
+  mundos, entradas, facções, livros, personagens, capítulos ou associações; as
+  localidades antigas ficam com **Não definido**, sem imagem e na raiz.
+- **RF018-CA016** - Sem dados fictícios: mundo sem localidades mostra a árvore
+  vazia e nenhuma imagem ou tipo é inventado.
+- **RF018-CA017** - Testes automatizados: a verificação cobre a árvore, o tipo, a
+  imagem, o pai, o ciclo, o mover, o caminho no capítulo e a seção do livro.
+- **RF018-CA018** - Sem regressão: os fluxos dos requisitos anteriores continuam
+  funcionando.
+- **RF018-CA019** - Paginação da árvore: a aba Localidades mostra **20
+  localidades por página**, com **Anterior**/**Próxima** e a página atual; os
+  controles aparecem **mesmo quando há uma única página** (desabilitados), uma
+  subárvore nunca é cortada entre páginas (os filhos aparecem sempre na mesma
+  página do pai) e a paginação também vale na seção Worldbuilding do livro.
+
 ## Arquitetura
 
 O TaleCraft será construído para Desktop, usando a linguagem Rust com o Framework Tauri 2.0. Para o front-end, será utilizado o React, com JavaScript e Vite. Para o banco de dados, será utilizado o banco SQLite. 

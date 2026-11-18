@@ -5,26 +5,23 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
-> **Ponto de parada (17/11/2026):** o **RF017** está escrito em
-> `documents/talecraft.md` (RF001–RF017) e implementado no app no change ativo
-> **`rf017-livro-mundo`**: o livro associa **um ou mais** mundos (N:N, revogando
-> o mundo único do RF007/protótipo) e a seção **Worldbuilding** do livro passa a
-> ter um Tab Panel por mundo, com resumo somente leitura, as seis categorias de
-> entradas, **Nova entrada**, **Associar mundos** (grade paginada com busca e
-> selo **Já associado**), **Remover mundo** (limpeza transacional dos cenários) e
-> **Abrir mundo**. O **Cenário Worldbuilding** do capítulo fica agrupado por
-> mundo, as métricas de entradas e os cards de Meus Livros passam a ser reais e o
-> painel **Vínculos com livros** do mundo lista os títulos. Migração **v17**
-> (`livro_mundo`), **62 comandos** e **154 testes Rust**;
-> `verificar-rf017.mjs` **26/26** e regressão de
-> RF007/RF008/RF011/RF014/RF015/RF016 aprovada. Ajustes de 17/11/2026: os cards e
-> a lista de **Mundos** mostram os livros associados (RF017-TL011), o detalhe do
-> mundo ganhou a aba **Livros** com links (RF017-TL010) — o painel de vínculos
-> ficou com a contagem e o atalho — e o Tab Panel do Worldbuilding do livro
-> recuperou o fundo das outras tab pages. Validado com o usuário e **arquivado**
-> em `2026-11-17-rf017-livro-mundo`; nenhum change ativo.
+> **Ponto de parada (17/11/2026 — RF018):** o **RF018** enriquece as
+> **Localidades**: imagem (JPG/PNG/WEBP até 4 MB em `localidades/`), **Tipo**
+> (49 valores em ordem alfabética + **Não definido**) e **hierarquia** com pai do mesmo mundo,
+> vários filhos e profundidade livre, com recusa de ciclo no domínio. A aba
+> **Localidades** virou árvore expansível; o Cenário Worldbuilding do capítulo
+> mostra o caminho completo; a seção do livro usa a mesma árvore em consulta.
+> Migrações **v18** (colunas) e **v19** (CHECK ampliado), **65 comandos** e **161 testes Rust**;
+> `verificar-rf018.mjs` **17/17** e regressão RF002-RF017 aprovada. Validado com
+> o usuário e **arquivado** em `2026-11-18-rf018-localidades-imagem-tipo-hierarquia`;
+> nenhum change ativo.
 >
-> **Ponto de parada anterior (02/11/2026):** RF001-RF016 estão implementados e
+> **Ponto de parada anterior (17/11/2026 — RF017):** o **RF017** abriu a seção
+> **Worldbuilding** do livro (associação N:N, aba por mundo, entradas, cenário
+> agrupado, métricas e vínculos) e foi arquivado em
+> `2026-11-17-rf017-livro-mundo`.
+>
+> **Ponto de parada anterior (02/11/2026):** RF001–RF016 implementados e
 > arquivados; o RF016 abre a seção **Gráficos** do livro (curva de progressão e
 > evolução dos personagens, somente leitura, sem migração). O RF015 abre
 > **Capítulos** (migrações **v14**
@@ -63,9 +60,8 @@
 > **`162b475`**. A build de teste **v0.1.0** foi publicada no repositório
 > <https://github.com/alabvix/talecraft-releases>.
 >
-> **Próximo passo (17/11/2026):** escrever o próximo requisito (exportação do
-> livro) antes de implementá-lo. Antes de uma nova release, subir a versão do
-> app.
+> **Próximo passo (17/11/2026):** escrever a exportação do livro antes de
+> implementá-la. Antes de uma nova release, subir a versão do app.
 
 Memória de trabalho do projeto. Leia este arquivo **antes** de mexer no código.
 A documentação do *produto* (como o app funciona, tokens, telas do protótipo)
