@@ -19,7 +19,9 @@
 > marcadores usam **ícones do Tipo da Localidade** no estilo do Tipo do Mundo
 > quando não há imagem. Change
 > ativo `rf019-mapas-do-mundo` — **validação visual em andamento** (mapas +
-> ícones); arquivar somente depois do aval do usuário.
+> ícones); arquivar somente depois do aval do usuário. **Retomar:** conferir os
+> 8 tipos-chave nos 4 mundos, a prioridade da imagem e o editor; depois
+> arquivar o change, subir a versão e gerar a build.
 >
 > **Ponto de parada anterior (17/11/2026 — RF018):** o **RF018** enriquece as
 > **Localidades**: imagem (JPG/PNG/WEBP até 4 MB em `localidades/`), **Tipo**
