@@ -17,6 +17,12 @@ uma região/cidade nem representar caminhos, portas e ligações. Um mapa funcio
   **Tipo da Localidade** e as famílias de assentamento, moradia, fortificação e
   templo mudam de estilo conforme o **Tipo do Mundo** (Medieval, Moderno,
   Futurista, Antigo).
+- **Plantas por escala**: **Cidade** desenha ruas e quarteirões vazios,
+  **Bairro** desenha quadras com lotes e **Prédio/Casa** desenha uma planta
+  baixa; o seletor de **Fundo** dá lugar à planta e o **Polígono** continua para
+  sombrear áreas.
+- **Tipos por escala**: Cidade, Bairro e Prédio/Casa filtram o painel e o
+  **Nova localidade**, e o domínio recusa marcadores fora da lista no salvar.
 - **Leitura no livro**: aba **Mapas** na seção Worldbuilding, com seletor e
   pan/zoom leve, somente leitura.
 - **PDF**: seção **Mapas** no Documento do Mundo com todos os mapas que tiverem
@@ -44,9 +50,9 @@ existentes.
 
 ## Impact
 
-- **Requisito:** RF019 em `documents/talecraft.md` (RF019-TL001 a RF019-TL009,
-  RF019-FL001 a RF019-FL010, RF019-RN001 a RF019-RN017, RF019-CA001 a
-  RF019-CA023).
+- **Requisito:** RF019 em `documents/talecraft.md` (RF019-TL001 a RF019-TL011,
+  RF019-FL001 a RF019-FL010, RF019-RN001 a RF019-RN019, RF019-CA001 a
+  RF019-CA025).
 - **Banco:** migração v20 aditiva.
 - **Back-end:** `mapa.rs` (domínio e validações), `documento_mundo.rs` (mapas no
   PDF), `erro.rs` (códigos), `lib.rs` (cinco comandos) e `banco.rs` (listas).

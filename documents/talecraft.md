@@ -2342,6 +2342,16 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   **Mapas** ao final, com **todos os mapas que tiverem conteúdo** (localidade ou
   forma), na ordem de criação; mapas vazios são omitidos. Cada mapa entra com
   nome, tipo, âncora e o desenho, usando a paleta fixa de impressão.
+- **RF019-TL010** - Plantas por escala: mapas de **Cidade** desenham uma planta
+  com ruas, quarteirões vazios e praça central; **Bairro** desenha quadras
+  maiores com lotes; **Prédio/Casa** desenha uma planta baixa com paredes e
+  cômodos. Nessas escalas o seletor de **Fundo** dá lugar à planta fixa, e o
+  **Polígono** continua disponível para sombrear áreas.
+- **RF019-TL011** - Tipos por escala: mapas de **Cidade**, **Bairro** e
+  **Prédio/Casa** filtram o painel de localidades e o seletor de **Nova
+  localidade** pelos tipos previstos no RF019-RN019; marcadores já colocados com
+  tipo fora da escala aparecem com aviso e impedem o **Salvar** até serem
+  removidos.
 
 #### Fluxos
 
@@ -2379,8 +2389,9 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
 - **RF019-RN001** - Mapa pertence ao Mundo: todo mapa tem um `mundo_id`; as
   localidades colocadas precisam ser do mesmo mundo. Não existem mapas globais.
 - **RF019-RN002** - Escala do mapa: lista fechada **Mundo**, **Região**,
-  **Cidade**, **Bairro** e **Prédio/Casa**. A escala organiza os mapas e **não**
-  restringe os tipos de localidade que podem ser colocados.
+  **Cidade**, **Bairro** e **Prédio/Casa**. A escala organiza os mapas; **Mundo**
+  e **Região** aceitam qualquer tipo de localidade, e **Cidade**, **Bairro** e
+  **Prédio/Casa** restringem os tipos conforme o RF019-RN019.
 - **RF019-RN003** - Âncora opcional: o mapa pode apontar para uma localidade do
   mesmo mundo; a âncora é o pai sugerido ao criar localidades pelo mapa e aparece
   no card e no PDF. O tipo da âncora não é validado contra a escala.
@@ -2428,6 +2439,21 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   **Antigo**); as demais famílias usam um desenho único. A **imagem cadastrada
   tem prioridade** sobre o ícone. Tipos sem desenho e **Não definido** mantêm o
   quadrado vazio, sem inventar símbolo.
+- **RF019-RN018** - Plantas por escala: **Cidade**, **Bairro** e
+  **Prédio/Casa** usam uma planta funcional desenhada em SVG no plano de
+  1000 × 700, no lugar dos cinco fundos decorativos; o campo **Fundo** deixa de
+  aparecer nessas escalas. O **Polígono** continua disponível para sombrear
+  áreas. **Mundo** e **Região** mantêm os cinco fundos.
+- **RF019-RN019** - Tipos por escala: **Mundo** e **Região** aceitam os 49
+  tipos; **Cidade** aceita tipos urbanos (Arena, Armazém, Bairro, Cantina, Casa,
+  Castelo, Cemitério, Comércio, Edifício, Estádio, Fortaleza, Forte, Igreja,
+  Loja, Palácio, Praça, Prisão, Restaurante, Ruína, Taverna, Teatro, Templo e
+  Torre); **Bairro** aceita Armazém, Cantina, Casa, Cemitério, Comércio,
+  Edifício, Igreja, Loja, Palácio, Praça, Prisão, Restaurante, Taverna, Teatro,
+  Templo e Torre; **Prédio/Casa** aceita apenas Cômodo, Quarto, Sala e Salão. O
+  painel e o **Nova localidade** filtram pela lista, e o domínio recusa, no
+  **Salvar**, qualquer marcador fora da escala — inclusive um tipo **Não
+  definido**.
 
 #### Critérios de Aceite
 
@@ -2484,6 +2510,14 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   de cúpulas; em mundo **Medieval**, o de muralha. Localidade com imagem mostra
   a miniatura; tipo sem desenho mantém o quadrado vazio. O mesmo ícone aparece
   no livro e no PDF.
+- **RF019-CA024** - Planta de Cidade: ao abrir um mapa de **Cidade**, o canvas
+  mostra ruas, quarteirões vazios e a praça; o seletor de **Fundo** não aparece,
+  o **Polígono** continua disponível e a planta também é desenhada no livro e no
+  PDF. **Bairro** e **Prédio/Casa** têm plantas próprias.
+- **RF019-CA025** - Tipos por escala: o painel de um mapa de **Cidade** não
+  lista uma **Floresta**; tentar salvar o mapa com esse marcador devolve erro do
+  domínio e nada é gravado. O mapa de **Prédio/Casa** lista apenas Cômodo,
+  Quarto, Sala e Salão.
 
 ## Arquitetura
 

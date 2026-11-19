@@ -738,3 +738,21 @@ O campo **Cenário Worldbuilding** do capítulo SHALL exibir cada localidade pel
 - **WHEN** o escritor reabre o capítulo
 - **THEN** o campo mostra o mesmo caminho selecionado (RF018-FL006, RF018-CA012)
 
+### Requirement: Mapas no Worldbuilding do livro
+A seção **Worldbuilding** do livro SHALL ganhar a aba **Mapas** depois de **Localidades**, com o seletor dos mapas do mundo da aba e a visualização **somente leitura** — pan/zoom leve, sem toolbar, sem criar, editar ou posicionar — e SHALL mostrar estado vazio quando o mundo não tiver mapas (RF019-TL008, RF019-FL010, RF019-RN013, RF019-CA016).
+
+#### Scenario: Aba Mapas no livro
+- **GIVEN** o mundo da aba tem dois mapas
+- **WHEN** o escritor abre **Worldbuilding** no livro e a aba **Mapas**
+- **THEN** vê o seletor com os dois mapas e o desenho do mapa escolhido, sem ações de edição (RF019-TL008, RF019-RN013, RF019-CA016)
+
+#### Scenario: Pan e zoom sem edição
+- **GIVEN** a aba **Mapas** do livro está aberta
+- **WHEN** o escritor arrasta o fundo ou usa a roda do mouse
+- **THEN** a visualização navega, mas nenhuma posição, forma ou ligação é alterada (RF019-FL010, RF019-RN013)
+
+#### Scenario: Mundo sem mapas
+- **GIVEN** o mundo da aba não tem mapas
+- **WHEN** o escritor abre a aba **Mapas**
+- **THEN** a aba informa que ainda não existem mapas (RF019-TL008, RF019-RN015, RF019-CA021)
+

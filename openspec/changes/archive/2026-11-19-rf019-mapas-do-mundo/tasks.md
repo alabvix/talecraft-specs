@@ -24,6 +24,8 @@
 - [x] 3.6 Estilos em `mapas.css` (cards, editor, toolbar, painéis, templates/marcadores).
 - [x] 3.7 Ligar a aba **Mapas** em `TelaMundo.jsx` depois de Localidades.
 - [x] 3.8 `IconeLocalidade.jsx`: glifos por família de tipo e quatro estilos pelo Tipo do Mundo; imagem tem prioridade no marcador.
+- [x] 3.9 `PlantaMapa.jsx`: plantas de Cidade, Bairro e Prédio/Casa no canvas; Fundo escondido e Polígono mantido nessas escalas.
+- [x] 3.10 Listas de tipos por escala no Rust e filtro no painel/Nova localidade, com aviso de marcador fora da escala.
 
 ## 4. Front-end — Livro e PDF
 
@@ -37,6 +39,7 @@
 - [x] 5.2 Ajustar `verificar-rf017.mjs` (sete abas na seção do livro) e o que depender do PDF.
 - [x] 5.3 `npm run build` e regressão dos verificadores RF002–RF019.
 - [x] 5.4 Cobertura dos ícones no editor, livro e PDF (tipo, mundo e prioridade da imagem).
+- [x] 5.5 Cobertura das plantas e dos tipos por escala (painel, domínio, livro e PDF).
 
 ## 6. Documentação e release
 

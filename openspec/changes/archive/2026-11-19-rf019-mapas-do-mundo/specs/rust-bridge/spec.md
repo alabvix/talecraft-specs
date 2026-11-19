@@ -16,7 +16,12 @@ O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_m
 #### Scenario: Listas fechadas de mapa
 - **GIVEN** a modal e o editor vão montar os controles
 - **WHEN** o front-end chama `listas_mapa`
-- **THEN** recebe escalas, fundos, cores de forma e estilos de ligação do back-end (RF019-RN002, RF019-RN004, RF019-RN007, RF019-RN008)
+- **THEN** recebe escalas, fundos, cores de forma, estilos de ligação e os **tipos por escala** do back-end (RF019-RN002, RF019-RN004, RF019-RN007, RF019-RN008, RF019-RN019)
+
+#### Scenario: Escala restrita recusa tipo fora da lista
+- **GIVEN** um mapa de **Cidade** com uma localidade de tipo **Floresta**
+- **WHEN** o front-end chama `salvar_mapa`
+- **THEN** o domínio devolve `LocalidadeForaDaEscala`, informa o marcador e não grava nada (RF019-RN019, RF019-CA025)
 
 #### Scenario: Excluir mapa
 - **GIVEN** o mapa existe

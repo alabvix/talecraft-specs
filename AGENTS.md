@@ -14,14 +14,13 @@
 > salva o documento em transação. A aba **Mapas** da seção Worldbuilding do
 > livro lê os mapas (pan/zoom leve) e o **PDF do Mundo** ganha a seção
 > **Mapas**. Migração **v20** (`mapa`, `mapa_localidade`, `mapa_forma`,
-> `mapa_ligacao`), **70 comandos** e **171 testes Rust**;
-> `verificar-rf019.mjs` **27/27** e regressão RF002-RF018 aprovada. Os
+> `mapa_ligacao`), **70 comandos** e **172 testes Rust**;
+> `verificar-rf019.mjs` **29/29** e regressão RF002-RF018 aprovada. Os
 > marcadores usam **ícones do Tipo da Localidade** no estilo do Tipo do Mundo
-> quando não há imagem. Change
-> ativo `rf019-mapas-do-mundo` — **validação visual em andamento** (mapas +
-> ícones); arquivar somente depois do aval do usuário. **Retomar:** conferir os
-> 8 tipos-chave nos 4 mundos, a prioridade da imagem e o editor; depois
-> arquivar o change, subir a versão e gerar a build.
+> quando não há imagem, e **Cidade**, **Bairro** e **Prédio/Casa** usam
+> **plantas** com filtro de tipos por escala. Validado com o usuário e
+> **arquivado** em `2026-11-19-rf019-mapas-do-mundo`; nenhum change ativo.
+> A próxima etapa é subir a versão e gerar a build com RF017 + RF018 + RF019.
 >
 > **Ponto de parada anterior (17/11/2026 — RF018):** o **RF018** enriquece as
 > **Localidades**: imagem (JPG/PNG/WEBP até 4 MB em `localidades/`), **Tipo**
@@ -77,9 +76,8 @@
 > **`162b475`**. A build de teste **v0.1.0** foi publicada no repositório
 > <https://github.com/alabvix/talecraft-releases>.
 >
-> **Próximo passo (18/11/2026):** validar o RF019 e arquivar o change
-> `rf019-mapas-do-mundo`; depois, escrever a exportação do livro antes de
-> implementá-la. Antes de uma nova release, subir a versão do app.
+> **Próximo passo (18/11/2026):** subir a versão e gerar a build com RF017 +
+> RF018 + RF019; depois, escrever a exportação do livro antes de implementá-la.
 
 Memória de trabalho do projeto. Leia este arquivo **antes** de mexer no código.
 A documentação do *produto* (como o app funciona, tokens, telas do protótipo)
@@ -170,7 +168,8 @@ talecraft/
 │                              PainelCapitulo, TelaGraficosLivro,
 │                              GraficoProgressao, GraficoArco, TelaMapasMundo,
 │                              ModalMapa, MapaEditor, MapaCanvas,
-│                              MapaVisualizacao, MapasDoLivro, IconeLocalidade
+│                              MapaVisualizacao, MapasDoLivro, IconeLocalidade,
+│                              PlantaMapa
 ├── src-tauri/                 BACK-END Rust + configuração do Tauri
 │   ├── src/main.rs            binário
 │   ├── src/lib.rs             comandos Tauri + estado gerenciado do banco
@@ -215,7 +214,7 @@ talecraft/
 │   ├── verificar-rf016.mjs    gráficos: progressão, arcos e marcadores (14/14)
 │   ├── verificar-rf017.mjs    Worldbuilding do livro: abas e associação (26/26)
 │   ├── verificar-rf018.mjs    localidades: imagem, tipo e hierarquia (17/17)
-│   ├── verificar-rf019.mjs    mapas do mundo, editor, livro e PDF (27/27)
+│   ├── verificar-rf019.mjs    mapas do mundo, editor, livro e PDF (29/29)
 │   └── verificar-janela-maximizada.mjs  janela maximizada com barra (3/3)
 ├── index.html                 HTML do Vite (monta o React)
 ├── vite.config.js             configuração do Vite (porta 1420)
@@ -1746,7 +1745,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 171 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 172 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
 - **Comandos Rust (70 no total):** `mensagem_inicial` (RF001),
@@ -1758,11 +1757,9 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   (RF017), os três de localidades (RF018), os cinco de mapas do mundo (RF019) e
   `montar_documento_mundo` (Documento do Mundo completo). Todos no
   `invoke_handler`.
-- **Pendências conhecidas do app:** RF001–RF018 concluídos, validados e
-  **ARQUIVADOS**; o RF019 está implementado no change ativo
-  `rf019-mapas-do-mundo`, aguardando validação e arquivamento. O documento hoje
-  define RF001–RF019; os próximos requisitos (RF020+) ainda precisam ser
-  escritos antes de virarem change.
+- **Pendências conhecidas do app:** RF001–RF019 concluídos, validados e
+  **ARQUIVADOS**. O documento hoje define RF001–RF019; os próximos requisitos
+  (RF020+) ainda precisam ser escritos antes de virarem change.
 
 ### Protótipo (referência visual — HTML + CSS)
 

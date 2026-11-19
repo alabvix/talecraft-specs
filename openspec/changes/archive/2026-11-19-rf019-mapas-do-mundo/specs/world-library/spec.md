@@ -78,3 +78,34 @@ Quando a localidade não tem imagem, o marcador SHALL usar um ícone do seu **Ti
 - **GIVEN** a localidade está como **Não definido** ou o tipo não tem glifo
 - **WHEN** o marcador é desenhado
 - **THEN** mantém o quadrado vazio, sem inventar símbolo (RF019-RN017, RF019-CA023)
+
+### Requirement: Plantas por escala
+Mapas de **Cidade**, **Bairro** e **Prédio/Casa** SHALL desenhar uma planta funcional em SVG no plano de 1000 × 700 — ruas e quarteirões vazios, quadras com lotes ou paredes e cômodos — no lugar dos cinco fundos decorativos, escondendo o seletor de **Fundo** nessas escalas e mantendo o **Polígono** para sombrear áreas; **Mundo** e **Região** SHALL manter os fundos atuais (RF019-TL010, RF019-RN018, RF019-CA024).
+
+#### Scenario: Planta de Cidade
+- **GIVEN** um mapa de **Cidade** aberto no editor
+- **WHEN** o canvas é desenhado
+- **THEN** mostra ruas, quarteirões vazios e a praça, sem o seletor de **Fundo**, com o **Polígono** disponível (RF019-TL010, RF019-RN018, RF019-CA024)
+
+#### Scenario: Planta no livro e no PDF
+- **GIVEN** o mapa de **Cidade** tem conteúdo
+- **WHEN** ele é exibido no livro ou exportado no PDF do Mundo
+- **THEN** a mesma planta aparece na paleta de leitura ou de impressão (RF019-RN018, RF019-CA024)
+
+### Requirement: Tipos de localidade por escala
+**Mundo** e **Região** SHALL aceitar os 49 tipos; **Cidade**, **Bairro** e **Prédio/Casa** SHALL aceitar apenas as listas do RF019-RN019, filtrando o painel e o **Nova localidade**, e `salvar_mapa` SHALL recusar com erro de domínio qualquer marcador fora da escala, inclusive **Não definido**, sem gravar o documento (RF019-TL011, RF019-RN002, RF019-RN019, RF019-CA025).
+
+#### Scenario: Painel filtrado
+- **GIVEN** um mapa de **Cidade**
+- **WHEN** o escritor abre o painel de localidades
+- **THEN** vê apenas os tipos urbanos; **Floresta** e **Porto** (tipo Cidade) não aparecem (RF019-TL011, RF019-RN019, RF019-CA025)
+
+#### Scenario: Salvar com tipo fora da escala
+- **GIVEN** o mapa de **Cidade** tem uma **Floresta** posicionada
+- **WHEN** o escritor clica em **Salvar**
+- **THEN** o domínio recusa, informa o marcador e nada é gravado (RF019-RN019, RF019-CA025)
+
+#### Scenario: Prédio/Casa
+- **GIVEN** um mapa de **Prédio/Casa**
+- **WHEN** o escritor abre o painel
+- **THEN** vê apenas **Cômodo**, **Quarto**, **Sala** e **Salão** (RF019-RN019, RF019-CA025)

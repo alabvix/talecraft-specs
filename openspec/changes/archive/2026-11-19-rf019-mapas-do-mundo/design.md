@@ -110,3 +110,23 @@ famílias) e o tipo do mundo escolhe a variante das famílias temáticas
 prioridade: o marcador só desenha o ícone quando não há URL de imagem. Tipos sem
 glifo mantêm o quadrado vazio. O `data-familia`/`data-mundo` do SVG serve aos
 E2E e ao diagnóstico.
+
+### D12 — Plantas e tipos por escala
+
+A escala do mapa ganha duas responsabilidades além de organizar a lista:
+
+- **Planta**: `PlantaMapa` desenha, dentro do `MapaCanvas`, ruas e quarteirões
+  vazios (Cidade), quadras com lotes (Bairro) ou paredes e cômodos (Prédio/Casa)
+  no plano de 1000 × 700. O `fundo` continua no banco, mas o `MapaCanvas` ignora
+  o padrão decorativo e o editor esconde o seletor nessas escalas; o
+  **Polígono** permanece para sombrear áreas. Livro e PDF reusam o componente e
+  a paleta fixa de impressão cobre as linhas da planta.
+- **Tipos**: `TIPOS_LOCALIDADE_CIDADE`, `..._BAIRRO` e `..._PREDIO` vivem em
+  `mapa.rs` e vão ao front em `ListasMapa.tipos_por_escala`. **Mundo** e
+  **Região** não aparecem no mapa de listas (aceitam tudo). O painel e o
+  **Nova localidade** filtram pela lista; o domínio valida o tipo **real** da
+  localidade no `salvar_mapa` (não o campo enviado) e devolve
+  `LocalidadeForaDaEscala` citando o marcador. Marcadores herdados fora da
+  escala aparecem no aviso do editor e impedem o salvar até serem removidos.
+  O `ModalEntradaMundo` começa no primeiro tipo permitido quando a lista
+  restrita não traz **Não definido**.
