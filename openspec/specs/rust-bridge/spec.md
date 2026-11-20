@@ -210,12 +210,12 @@ O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_m
 - **THEN** a gravação é recusada com erro próprio, sem gravar o capítulo (RF017-RN007, RF017-CA013)
 
 ### Requirement: Comandos de localidades expostos ao front-end
-O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_localidades_mundo` — que devolve a lista plana das localidades do mundo com `id`, `nome`, `tipo`, `imagem` e `paiId`, ordenada pelo nome — e `associar_imagem_localidade` — que copia a imagem escolhida para `localidades/` e grava o caminho relativo —, com a validação de ciclo, tipo e mundo no domínio e apenas mensagens úteis no IPC (RF018-RN001 a RF018-RN006, RF018-CA002, RF018-CA006, RF018-CA009, RF018-CA011).
+O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_localidades_mundo` — que devolve a lista plana das localidades do mundo com `id`, `nome`, `tipo`, `imagem`, `paiId` e `raiz`, ordenada pelo nome — e `associar_imagem_localidade` — que copia a imagem escolhida para `localidades/` e grava o caminho relativo —, com a validação de ciclo, tipo, mundo, pai padrão na raiz e bloqueio da edição da raiz no domínio, e apenas mensagens úteis no IPC (RF018-RN001 a RF018-RN006, RF018-CA002, RF018-CA006, RF018-CA009, RF018-CA011, RF018-CA020).
 
 #### Scenario: Listar localidades para a árvore
 - **GIVEN** o mundo tem localidades com e sem pai
 - **WHEN** o front-end chama `listar_localidades_mundo`
-- **THEN** recebe todas as localidades com o tipo, a imagem e o `paiId`, sem paginação (RF018-TL001, RF018-CA002)
+- **THEN** recebe todas as localidades com o tipo, a imagem, o `paiId` e a marca `raiz`, sem paginação (RF018-TL001, RF018-CA002, RF018-CA020)
 
 #### Scenario: Associar imagem da localidade
 - **GIVEN** a localidade existe e o escritor escolheu um arquivo válido
@@ -227,31 +227,64 @@ O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_l
 - **WHEN** o domínio valida a localidade
 - **THEN** a gravação é recusada com erro próprio (RF018-RN003, RF018-RN004, RF018-CA009, RF018-CA011)
 
+#### Scenario: Pai vazio vira a raiz
+- **GIVEN** o front-end salva uma localidade nova sem `paiId`
+- **WHEN** o domínio grava
+- **THEN** a localidade fica filha da raiz do mundo (RF018-RN003, RF018-CA020)
+
+#### Scenario: Raiz bloqueada
+- **GIVEN** o front-end tenta salvar a localidade com `raiz = 1`
+- **WHEN** o domínio valida
+- **THEN** devolve `LocalidadeRaizNaoEditavel` e nada é gravado (RF018-CA020)
+
 ### Requirement: Comandos de mapas expostos ao front-end
-O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_mapas`, `obter_mapa`, `salvar_mapa`, `excluir_mapa` e `listas_mapa`, com as validações de escala, fundo, âncora, coordenadas, formas e ligações no domínio e apenas mensagens úteis no IPC (RF019-RN001 a RF019-RN011, RF019-RN019, RF019-CA002 a RF019-CA014).
+O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_mapas`, `obter_mapa`, `salvar_mapa`, `excluir_mapa` e `listas_mapa`, com as validações de escala, fundo, âncora, coordenadas, formas, ligações, cômodos e portas no domínio e apenas mensagens úteis no IPC (RF019-RN001 a RF019-RN011, RF019-RN019 a RF019-RN023, RF019-CA002 a RF019-CA014, RF019-CA026 a RF019-CA028).
 
 #### Scenario: Listar e abrir mapas
 - **GIVEN** o mundo tem mapas
 - **WHEN** o front-end chama `listar_mapas` e depois `obter_mapa`
-- **THEN** recebe os resumos com contagens e o documento completo com posições, formas e ligações (RF019-TL001, RF019-TL003, RF019-CA005)
+- **THEN** recebe os resumos com contagens e o documento completo com posições, tamanhos, formas, ligações e portas (RF019-TL001, RF019-TL003, RF019-CA005)
 
 #### Scenario: Salvar o documento
-- **GIVEN** o front-end chama `salvar_mapa` com metadados, posições, formas e ligações
+- **GIVEN** o front-end chama `salvar_mapa` com metadados, posições, formas, ligações e portas
 - **WHEN** o comando termina
-- **THEN** tudo foi gravado junto e o mapa relido é devolvido; uma validação falha não deixa o mapa pela metade (RF019-RN009, RF019-CA012)
+- **THEN** tudo foi gravado junto e o mapa relido é devolvido; uma validação falha não deixa o mapa pela metade (RF019-RN009, RF019-RN022, RF019-CA012)
 
 #### Scenario: Listas fechadas de mapa
 - **GIVEN** a modal e o editor vão montar os controles
 - **WHEN** o front-end chama `listas_mapa`
-- **THEN** recebe escalas, fundos, cores de forma, estilos de ligação e os **tipos por escala** do back-end (RF019-RN002, RF019-RN004, RF019-RN007, RF019-RN008, RF019-RN019)
+- **THEN** recebe escalas, fundos, cores de forma, estilos de ligação, os **tipos por escala**, os **lados de porta** e os tamanhos padrão de cômodo e porta (RF019-RN002, RF019-RN004, RF019-RN007, RF019-RN008, RF019-RN019, RF019-RN021)
 
 #### Scenario: Escala restrita recusa tipo fora da lista
 - **GIVEN** um mapa de **Cidade** com uma localidade de tipo **Floresta**
 - **WHEN** o front-end chama `salvar_mapa`
 - **THEN** o domínio devolve `LocalidadeForaDaEscala`, informa o marcador e não grava nada (RF019-RN019, RF019-CA025)
 
+#### Scenario: Cômodo e porta inválidos
+- **GIVEN** um mapa de **Prédio/Casa**
+- **WHEN** o front-end envia um cômodo fora do plano, uma porta sem cômodo, um lado inválido ou uma porta em mapa de outra escala
+- **THEN** o domínio devolve `ComodoMapaInvalido` ou `PortaMapaInvalida` e não grava nada (RF019-RN020, RF019-RN021, RF019-CA026, RF019-CA027)
+
 #### Scenario: Excluir mapa
 - **GIVEN** o mapa existe
 - **WHEN** o front-end chama `excluir_mapa`
-- **THEN** o mapa e os elementos saem por cascata e as localidades continuam (RF019-RN010, RF019-CA013)
+- **THEN** o mapa e os elementos saem por cascata e as localidades continuam (RF019-RN010, RF019-RN022, RF019-CA013)
+
+### Requirement: Associações de localidade expostas e validadas
+O sistema SHALL devolver em `listar_localidades_mundo`, por localidade, a lista `mapas` com `id`, `nome` e `tipo` das associações existentes, e `salvar_mapa` SHALL recusar com `LocalidadeEmOutroMapa` a inclusão de uma localidade nova no mapa quando ela já pertencer a outro mapa incompatível — considerando compatíveis apenas os pares formados por **Mundo** e **Região** (RF019-RN024, RF019-CA030).
+
+#### Scenario: Listagem com associações
+- **GIVEN** uma localidade está em um mapa
+- **WHEN** o front-end chama `listar_localidades_mundo`
+- **THEN** a localidade traz `mapas` com o id, o nome e o tipo do mapa (RF019-RN024)
+
+#### Scenario: Salvar localidade presa a outro mapa
+- **GIVEN** a Sala está em um mapa de Prédio/Casa
+- **WHEN** o front-end tenta salvar outro mapa de Prédio/Casa com a mesma Sala
+- **THEN** o domínio devolve `LocalidadeEmOutroMapa` e não grava nada (RF019-RN024, RF019-CA030)
+
+#### Scenario: Mundo e Região compatíveis
+- **GIVEN** a localidade está em um mapa de Região
+- **WHEN** o front-end salva um mapa de Mundo com ela
+- **THEN** o domínio aceita a associação (RF019-RN024, RF019-CA030)
 

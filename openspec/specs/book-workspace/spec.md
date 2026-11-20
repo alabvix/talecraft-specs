@@ -713,25 +713,25 @@ O sistema SHALL preencher o campo **Cenário Worldbuilding** do painel do capít
 - **THEN** a gravação é recusada com erro de cenário inválido (RF017-RN007, RF017-CA013)
 
 ### Requirement: Localidades em árvore na seção Worldbuilding do livro
-A categoria **Localidades** da seção **Worldbuilding** do livro SHALL exibir a mesma **árvore** do RF018, em modo de consulta — sem ação **Editar** —, com **Nova Localidade** gravando no mundo da aba ativa e a árvore recarregando depois de salvar; as demais categorias SHALL continuar na tabela paginada (RF018-TL005, RF018-CA013).
+A categoria **Localidades** da seção **Worldbuilding** do livro SHALL exibir a mesma **árvore** do RF018, com a raiz do mundo fixa no topo e sem ação **Editar**, em modo de consulta, com **Nova Localidade** gravando no mundo da aba ativa e a árvore recarregando depois de salvar; a paginação SHALL manter a raiz fixa e paginar os filhos de 20 em 20, e as demais categorias SHALL continuar na tabela paginada (RF018-TL005, RF018-CA013, RF018-CA019, RF018-CA020).
 
 #### Scenario: Árvore em consulta no livro
 - **GIVEN** o mundo da aba tem a Cidade **Porto** com o Bairro **Centro**
 - **WHEN** o escritor abre **Worldbuilding** no livro e a categoria **Localidades**
-- **THEN** vê a árvore com os dois níveis e nenhuma ação **Editar** (RF018-TL005, RF018-CA013)
+- **THEN** vê a raiz do mundo no topo, a árvore com os dois níveis abaixo e nenhuma ação **Editar** (RF018-TL005, RF018-CA013, RF018-CA020)
 
 #### Scenario: Criar localidade pelo livro
 - **GIVEN** a categoria **Localidades** está aberta na aba do mundo
 - **WHEN** o escritor clica em **Nova Localidade**, preenche e salva
-- **THEN** a localidade é gravada no mundo, aparece na árvore e também no nível raiz (RF018-TL005, RF018-FL001, RF018-CA013)
+- **THEN** a localidade é gravada no mundo, aparece na árvore e o pai padrão é a raiz (RF018-TL005, RF018-FL001, RF018-CA013, RF018-CA020)
 
 ### Requirement: Caminho da localidade no cenário do capítulo
-O campo **Cenário Worldbuilding** do capítulo SHALL exibir cada localidade pelo **caminho completo** dentro da hierarquia (por exemplo, `Cidade › Bairro › Casa › Quarto`), mantendo o agrupamento por mundo e gravando o identificador da localidade (RF018-TL004, RF018-FL006, RF018-CA012).
+O campo **Cenário Worldbuilding** do capítulo SHALL exibir cada localidade pelo **caminho completo** dentro da hierarquia, começando pelo mundo (por exemplo, `Kepler › Porto › Centro › Solar`), mantendo o agrupamento por mundo, ocultando a raiz como opção isolada e gravando o identificador da localidade (RF018-TL004, RF018-FL006, RF018-CA012, RF018-CA020).
 
 #### Scenario: Caminho na opção do cenário
 - **GIVEN** o livro tem um mundo associado com a Casa **Solar** dentro do Bairro **Centro** dentro da Cidade **Porto**
 - **WHEN** o escritor abre a aba **Dados do Capítulo**
-- **THEN** a opção mostra **Porto › Centro › Solar** e, ao salvar, o capítulo guarda essa localidade (RF018-TL004, RF018-CA012)
+- **THEN** a opção mostra **Kepler › Porto › Centro › Solar** e, ao salvar, o capítulo guarda essa localidade (RF018-TL004, RF018-CA012, RF018-CA020)
 
 #### Scenario: Reabrir o capítulo
 - **GIVEN** o capítulo foi salvo com uma localidade aninhada
@@ -739,7 +739,7 @@ O campo **Cenário Worldbuilding** do capítulo SHALL exibir cada localidade pel
 - **THEN** o campo mostra o mesmo caminho selecionado (RF018-FL006, RF018-CA012)
 
 ### Requirement: Mapas no Worldbuilding do livro
-A seção **Worldbuilding** do livro SHALL ganhar a aba **Mapas** depois de **Localidades**, com o seletor dos mapas do mundo da aba e a visualização **somente leitura** — pan/zoom leve, sem toolbar, sem criar, editar ou posicionar — e SHALL mostrar estado vazio quando o mundo não tiver mapas (RF019-TL008, RF019-FL010, RF019-RN013, RF019-CA016).
+A seção **Worldbuilding** do livro SHALL ganhar a aba **Mapas** depois de **Localidades**, com o seletor dos mapas do mundo da aba e a visualização **somente leitura** — pan/zoom leve, sem toolbar, sem criar, editar ou posicionar —, SHALL desenhar os cômodos com o nome central e as portas nos mapas de **Prédio/Casa** e SHALL mostrar estado vazio quando o mundo não tiver mapas (RF019-TL008, RF019-TL012, RF019-FL010, RF019-RN013, RF019-CA016, RF019-CA028).
 
 #### Scenario: Aba Mapas no livro
 - **GIVEN** o mundo da aba tem dois mapas
@@ -749,7 +749,12 @@ A seção **Worldbuilding** do livro SHALL ganhar a aba **Mapas** depois de **Lo
 #### Scenario: Pan e zoom sem edição
 - **GIVEN** a aba **Mapas** do livro está aberta
 - **WHEN** o escritor arrasta o fundo ou usa a roda do mouse
-- **THEN** a visualização navega, mas nenhuma posição, forma ou ligação é alterada (RF019-FL010, RF019-RN013)
+- **THEN** a visualização navega, mas nenhuma posição, forma, porta ou ligação é alterada (RF019-FL010, RF019-RN013)
+
+#### Scenario: Cômodos e portas no livro
+- **GIVEN** o mapa de **Prédio/Casa** tem cômodos e portas
+- **WHEN** ele é escolhido na aba **Mapas** do livro
+- **THEN** os retângulos com nome e as portas são desenhados, sem toolbar (RF019-TL012, RF019-RN013, RF019-CA028)
 
 #### Scenario: Mundo sem mapas
 - **GIVEN** o mundo da aba não tem mapas

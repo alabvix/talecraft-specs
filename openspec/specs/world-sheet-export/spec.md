@@ -108,7 +108,7 @@ acrescentar biblioteca de geração de PDF ao projeto (RF007-RN019).
   (RF007-RN019)
 
 ### Requirement: Seção Mapas no Documento do Mundo
-O **Documento do Mundo** SHALL incluir, ao final, a seção **Mapas** com todos os mapas do mundo que tiverem pelo menos uma localidade ou uma forma, na ordem de criação, cada um com nome, escala, âncora e o desenho; mapas vazios SHALL ser omitidos e a seção SHALL usar a paleta fixa de impressão, independente do tema (RF019-TL009, RF019-RN014, RF019-CA017).
+O **Documento do Mundo** SHALL incluir, ao final, a seção **Mapas** com todos os mapas do mundo que tiverem pelo menos uma localidade ou uma forma, na ordem de criação, cada um com nome, escala, âncora e o desenho; mapas de **Prédio/Casa** SHALL desenhar os cômodos retangulares com o nome central e as portas, mapas vazios SHALL ser omitidos e a seção SHALL usar a paleta fixa de impressão, independente do tema (RF019-TL009, RF019-TL012, RF019-RN014, RF019-CA017, RF019-CA028).
 
 #### Scenario: Mapas com conteúdo no PDF
 - **GIVEN** o mundo tem um mapa com localidades e outro sem conteúdo
@@ -120,8 +120,21 @@ O **Documento do Mundo** SHALL incluir, ao final, a seção **Mapas** com todos 
 - **WHEN** o mapa é renderizado no PDF
 - **THEN** o desenho usa a paleta fixa de papel e tinta, legível na impressão (RF019-RN014)
 
+#### Scenario: Cômodos e portas no PDF
+- **GIVEN** o mapa de **Prédio/Casa** tem cômodos e portas
+- **WHEN** o PDF é gerado
+- **THEN** os retângulos com nome e as portas aparecem com o vão branco e a folha/arco na paleta fixa (RF019-TL012, RF019-RN014, RF019-CA028)
+
 #### Scenario: Ordem de criação
 - **GIVEN** o mundo tem três mapas com conteúdo
 - **WHEN** o PDF é gerado
 - **THEN** os mapas aparecem na ordem em que foram criados (RF019-TL009, RF019-RN014)
+
+### Requirement: Raiz do mundo fora das entradas do PDF
+O **Documento do Mundo** SHALL omitir a localidade raiz do tipo **Mundo** da seção de entradas e das contagens de localidades, porque ela representa o próprio mundo e não uma entrada cadastrada pelo escritor (RF018-CA020, RF018-RN010).
+
+#### Scenario: PDF sem a raiz
+- **GIVEN** o mundo tem a raiz **Kepler** e três localidades filhas
+- **WHEN** o escritor exporta o **Documento do Mundo**
+- **THEN** a raiz não aparece como entrada e as localidades filhas continuam no documento (RF018-CA020, RF018-RN010)
 

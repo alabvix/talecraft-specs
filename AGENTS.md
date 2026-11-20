@@ -5,6 +5,19 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
+> **Fechamento (20/11/2026):** os cinco ajustes desta rodada foram
+> implementados, validados e **arquivados**:
+> `2026-11-20-rf019-mapa-predio-comodos-portas`,
+> `2026-11-20-rf018-icone-localidade-sem-imagem`,
+> `2026-11-20-rf019-edicao-poligono-arestas`,
+> `2026-11-20-rf018-mundo-raiz-e-filtros-mapa` e
+> `2026-11-20-rf019-exclusividade-localidade-mapa`. Entregam cômodos/portas com
+> grade fixa, ícone na árvore sem imagem, edição de polígono por aresta/nó/
+> interior, mundo como localidade raiz com filtros de Mundo/Região, exclusividade
+> da localidade por mapa e a migração corretiva **v23** da FK do cenário do
+> capítulo. `openspec validate --all` **18/18**; verificadores RF017 26/26,
+> RF018 17/17 e RF019 43/43. **Nenhum change ativo.**
+>
 > **Ponto de parada (18/11/2026 — RF019):** o **RF019** cria os **Mapas do
 > Mundo**: vários mapas por escala (**Mundo**, **Região**, **Cidade**,
 > **Bairro**, **Prédio/Casa**), com âncora opcional e cinco fundos (Papel,
@@ -174,7 +187,7 @@ talecraft/
 │   ├── src/main.rs            binário
 │   ├── src/lib.rs             comandos Tauri + estado gerenciado do banco
 │   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF019)
-│   ├── src/banco/migracoes.rs DDL versionado (v1-v20)
+│   ├── src/banco/migracoes.rs DDL versionado (v1-v23)
 │   ├── src/erro.rs            ErroDominio + CodigoErro + Resultado<T>
 │   ├── src/test_support.rs    DiretorioTemporario (tempfile, cfg test)
 │   ├── src/personagem.rs      domínio dos personagens (RF004)
@@ -1745,7 +1758,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 172 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 180 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
 - **Comandos Rust (70 no total):** `mensagem_inicial` (RF001),

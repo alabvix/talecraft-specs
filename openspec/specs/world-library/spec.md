@@ -421,7 +421,7 @@ O detalhe do Mundo SHALL exibir, depois de **Localidades**, a aba **Mapas** com 
 - **THEN** o mapa e os seus elementos saem, e as localidades continuam na aba Localidades (RF019-RN010, RF019-CA013)
 
 ### Requirement: Editor de mapas do Mundo
-O editor SHALL oferecer toolbar (**Selecionar/Mover**, **Polígono**, **Ligação**, **Apagar**, **Desfazer**, **Refazer**, zoom), canvas de 1000 × 700 com pan/zoom e fundo do template, painel pesquisável das localidades do mundo para arrastar e **Nova localidade**, e painel de propriedades; SHALL posicionar cada localidade uma única vez por mapa, desenhar polígonos com pelo menos 3 vértices e cor semântica, criar ligações com rótulo e estilo entre localidades do mapa, remover elementos sem tocar no cadastro e gravar tudo por **Salvar** explícito, com histórico de desfazer/refazer em memória (RF019-TL003 a RF019-TL007, RF019-FL002 a RF019-FL008, RF019-FL010, RF019-RN005 a RF019-RN009, RF019-RN012, RF019-CA005 a RF019-CA015).
+O editor SHALL oferecer toolbar (**Selecionar/Mover**, **Polígono**, **Ligação**, **Apagar**, **Desfazer**, **Refazer**, zoom), canvas de 1000 × 700 com pan/zoom e fundo do template, painel pesquisável das localidades do mundo para arrastar e **Nova localidade**, e painel de propriedades; em mapas de **Prédio/Casa**, **Polígono** e **Ligação** SHALL dar lugar a **Porta**; SHALL posicionar cada localidade uma única vez por mapa, desenhar polígonos com pelo menos 3 vértices e cor semântica, criar ligações com rótulo e estilo entre localidades do mapa, remover elementos sem tocar no cadastro e gravar tudo por **Salvar** explícito, com histórico de desfazer/refazer em memória (RF019-TL003 a RF019-TL007, RF019-TL012, RF019-FL002 a RF019-FL008, RF019-FL011, RF019-RN005 a RF019-RN009, RF019-RN012, RF019-RN020 a RF019-RN023, RF019-CA005 a RF019-CA015, RF019-CA026 a RF019-CA028).
 
 #### Scenario: Arrastar localidade para o mapa
 - **GIVEN** a localidade **Porto** ainda não está no mapa
@@ -434,12 +434,12 @@ O editor SHALL oferecer toolbar (**Selecionar/Mover**, **Polígono**, **Ligaçã
 - **THEN** a localidade é criada no mundo, entra no mapa no centro da visão, com a âncora como pai sugerido, e aparece na aba Localidades (RF019-TL006, RF019-FL004, RF019-CA007)
 
 #### Scenario: Desenhar polígono
-- **GIVEN** a ferramenta **Polígono** está ativa
+- **GIVEN** a ferramenta **Polígono** está ativa em um mapa que não é **Prédio/Casa**
 - **WHEN** o escritor clica em três ou mais vértices e fecha com duplo clique
 - **THEN** a forma é criada, selecionada e pode ser renomeada, recolorida, movida ou apagada; dois vértices são recusados (RF019-TL004, RF019-FL005, RF019-RN007, RF019-CA008)
 
 #### Scenario: Ligação entre localidades
-- **GIVEN** **Porto** e **Centro** estão no mapa
+- **GIVEN** **Porto** e **Centro** estão no mapa e ele não é **Prédio/Casa**
 - **WHEN** o escritor usa **Ligação**, clica em Porto e depois em Centro
 - **THEN** a ligação é criada com rótulo e estilo editáveis; auto-ligação e o mesmo par repetido são recusados (RF019-TL007, RF019-FL006, RF019-RN008, RF019-CA009)
 
@@ -477,12 +477,17 @@ Quando a localidade não tem imagem, o marcador SHALL usar um ícone do seu **Ti
 - **THEN** mantém o quadrado vazio, sem inventar símbolo (RF019-RN017, RF019-CA023)
 
 ### Requirement: Plantas por escala
-Mapas de **Cidade**, **Bairro** e **Prédio/Casa** SHALL desenhar uma planta funcional em SVG no plano de 1000 × 700 — ruas e quarteirões vazios, quadras com lotes ou paredes e cômodos — no lugar dos cinco fundos decorativos, escondendo o seletor de **Fundo** nessas escalas e mantendo o **Polígono** para sombrear áreas; **Mundo** e **Região** SHALL manter os fundos atuais (RF019-TL010, RF019-RN018, RF019-CA024).
+Mapas de **Cidade** e **Bairro** SHALL desenhar uma planta funcional em SVG no plano de 1000 × 700 — ruas e quarteirões vazios ou quadras com lotes — no lugar dos cinco fundos decorativos; **Prédio/Casa** SHALL usar uma **grade fixa**, sem a planta baixa, escondendo o seletor de **Fundo** nas três escalas; **Cidade** e **Bairro** SHALL manter o **Polígono** para sombrear áreas, e **Prédio/Casa** SHALL usar cômodos e portas no lugar de **Polígono** e **Ligação**; **Mundo** e **Região** SHALL manter os fundos atuais (RF019-TL010, RF019-TL012, RF019-RN018, RF019-RN023, RF019-CA024, RF019-CA027).
 
 #### Scenario: Planta de Cidade
 - **GIVEN** um mapa de **Cidade** aberto no editor
 - **WHEN** o canvas é desenhado
 - **THEN** mostra ruas, quarteirões vazios e a praça, sem o seletor de **Fundo**, com o **Polígono** disponível (RF019-TL010, RF019-RN018, RF019-CA024)
+
+#### Scenario: Grade de Prédio/Casa
+- **GIVEN** um mapa de **Prédio/Casa** aberto no editor
+- **WHEN** o canvas é desenhado
+- **THEN** o fundo é a grade fixa, sem a planta baixa, e os cômodos e portas ficam por cima (RF019-TL010, RF019-TL012, RF019-RN018, RF019-CA024)
 
 #### Scenario: Planta no livro e no PDF
 - **GIVEN** o mapa de **Cidade** tem conteúdo
@@ -490,7 +495,7 @@ Mapas de **Cidade**, **Bairro** e **Prédio/Casa** SHALL desenhar uma planta fun
 - **THEN** a mesma planta aparece na paleta de leitura ou de impressão (RF019-RN018, RF019-CA024)
 
 ### Requirement: Tipos de localidade por escala
-**Mundo** e **Região** SHALL aceitar os 49 tipos; **Cidade**, **Bairro** e **Prédio/Casa** SHALL aceitar apenas as listas do RF019-RN019, filtrando o painel e o **Nova localidade**, e `salvar_mapa` SHALL recusar com erro de domínio qualquer marcador fora da escala, inclusive **Não definido**, sem gravar o documento (RF019-TL011, RF019-RN002, RF019-RN019, RF019-CA025).
+**Mundo** SHALL aceitar os tipos macro/geográficos e assentamentos do RF019-RN019; **Região** SHALL aceitar os 49 tipos, exceto **Cômodo**, **Quarto**, **Sala** e **Salão**; **Cidade**, **Bairro** e **Prédio/Casa** SHALL aceitar apenas as suas listas do RF019-RN019; todas as escalas SHALL filtrar o painel e o **Nova localidade**, `salvar_mapa` SHALL recusar com erro de domínio qualquer marcador fora da escala, inclusive **Não definido**, sem gravar o documento, e a localidade raiz do tipo **Mundo** SHALL ficar fora do painel de localidades dos mapas (RF019-TL011, RF019-RN002, RF019-RN019, RF019-CA025, RF019-CA029).
 
 #### Scenario: Painel filtrado
 - **GIVEN** um mapa de **Cidade**
@@ -506,4 +511,103 @@ Mapas de **Cidade**, **Bairro** e **Prédio/Casa** SHALL desenhar uma planta fun
 - **GIVEN** um mapa de **Prédio/Casa**
 - **WHEN** o escritor abre o painel
 - **THEN** vê apenas **Cômodo**, **Quarto**, **Sala** e **Salão** (RF019-RN019, RF019-CA025)
+
+#### Scenario: Mundo macro
+- **GIVEN** um mapa de **Mundo**
+- **WHEN** o escritor abre o painel ou tenta salvar uma **Casa** ou um **Bairro**
+- **THEN** o tipo não aparece e o domínio recusa o marcador (RF019-RN019, RF019-CA025, RF019-CA029)
+
+#### Scenario: Região sem cômodos
+- **GIVEN** um mapa de **Região**
+- **WHEN** o escritor abre o painel ou tenta salvar um **Quarto**
+- **THEN** o cômodo não aparece e o domínio recusa o marcador; Casa, Praça e Bairro são aceitos (RF019-RN019, RF019-CA025, RF019-CA029)
+
+#### Scenario: Raiz fora do mapa
+- **GIVEN** o mundo tem a localidade raiz do tipo **Mundo**
+- **WHEN** o escritor abre o painel de qualquer mapa
+- **THEN** a raiz não aparece como localidade posicionável (RF019-TL011, RF019-CA029)
+
+### Requirement: Cômodos e portas de Prédio/Casa
+Em mapas de **Prédio/Casa**, o editor SHALL desenhar cada localidade como um cômodo retangular com o nome no centro, permitir mover o retângulo pelo corpo e redimensioná-lo pelas oito alças (cantos e lados), e SHALL oferecer a ferramenta **Porta** para colocar passagens nas paredes, com lado, posição e largura editáveis; o cômodo SHALL ter no mínimo 40 unidades e ficar inteiro dentro do plano, e a porta SHALL acompanhar o cômodo e ser removida com ele (RF019-TL012, RF019-FL011, RF019-RN020, RF019-RN021, RF019-CA026, RF019-CA027).
+
+#### Scenario: Arrastar localidade cria cômodo
+- **GIVEN** um mapa de **Prédio/Casa** aberto no editor
+- **WHEN** o escritor arrasta uma localidade para o canvas
+- **THEN** um quadrado de 120 × 120 é criado na posição solta, com o nome centralizado e o selo **No mapa** (RF019-TL012, RF019-FL011, RF019-RN020, RF019-CA026)
+
+#### Scenario: Mover e redimensionar
+- **GIVEN** o cômodo está selecionado
+- **WHEN** o escritor arrasta o corpo e depois uma das oito alças
+- **THEN** a posição e o tamanho mudam, o retângulo pode virar retângulo alongado e o histórico registra um passo por arraste (RF019-TL012, RF019-RN020, RF019-CA026)
+
+#### Scenario: Colocar e editar porta
+- **GIVEN** a ferramenta **Porta** está ativa
+- **WHEN** o escritor clica numa parede do cômodo
+- **THEN** a porta é criada naquele lado e o painel permite mudar **Lado**, **Largura**, arrastar a porta pela parede e apagar a porta (RF019-TL012, RF019-FL011, RF019-RN021, RF019-CA027)
+
+#### Scenario: Porta acompanha o cômodo
+- **GIVEN** um cômodo com porta
+- **WHEN** o cômodo é movido, redimensionado ou removido do mapa
+- **THEN** a porta acompanha a nova geometria ou sai junto com o cômodo, sem tocar no cadastro da localidade (RF019-RN021, RF019-CA027)
+
+#### Scenario: Ferramentas legadas
+- **GIVEN** um mapa de **Prédio/Casa** com um polígono ou uma ligação antiga
+- **WHEN** o editor é aberto
+- **THEN** **Polígono** e **Ligação** não aparecem na toolbar, mas o elemento antigo continua visível e apagável (RF019-RN023, RF019-CA027)
+
+#### Scenario: Salvar e reabrir o prédio
+- **GIVEN** o escritor criou cômodos e portas
+- **WHEN** clica em **Salvar**, sai e reabre o mapa
+- **THEN** posições, larguras, alturas e portas voltam iguais (RF019-RN020 a RF019-RN022, RF019-CA026, RF019-CA027)
+
+### Requirement: Edição de formas do mapa
+O editor SHALL permitir, com **Selecionar/Mover**, redimensionar uma forma desenhada arrastando uma das suas arestas — movendo apenas os dois vértices dessa aresta na direção perpendicular —, ajustar um único vértice arrastando o seu nó e mover a forma inteira arrastando o seu interior; a forma selecionada SHALL mostrar uma alça no meio de cada aresta e um nó em cada vértice, os pontos SHALL permanecer dentro do plano de 1000 × 700 e cada arraste SHALL gerar um único passo de desfazer/refazer, com a geometria gravada por **Salvar** (RF019-TL013, RF019-FL005, RF019-RN007, RF019-CA008).
+
+#### Scenario: Redimensionar pela aresta
+- **GIVEN** um mapa **Mundo** com um polígono de três vértices desenhado e selecionado
+- **WHEN** o escritor arrasta a alça do meio de uma aresta
+- **THEN** só os dois vértices dessa aresta se deslocam na perpendicular e o terceiro vértice continua parado (RF019-TL013, RF019-CA008)
+
+#### Scenario: Mover um vértice pelo nó
+- **GIVEN** a forma está selecionada
+- **WHEN** o escritor arrasta o nó de um dos vértices
+- **THEN** só aquele vértice se desloca, preso ao plano, e os demais continuam parados (RF019-TL013, RF019-CA008)
+
+#### Scenario: Mover o polígono inteiro
+- **GIVEN** a forma está selecionada
+- **WHEN** o escritor arrasta o interior do polígono
+- **THEN** todos os vértices se deslocam pelo mesmo delta, sem sair do plano, e a forma pode ser salva na nova posição (RF019-TL013, RF019-RN007, RF019-CA008)
+
+#### Scenario: Limite do plano
+- **GIVEN** a forma está encostada na borda do plano
+- **WHEN** o escritor tenta arrastar a aresta ou o interior para fora
+- **THEN** o deslocamento é limitado e nenhum vértice fica fora de 1000 × 700 (RF019-TL013, RF019-RN007)
+
+#### Scenario: Histórico e persistência
+- **GIVEN** o escritor redimensionou a forma sem salvar
+- **WHEN** usa **Desfazer** e depois **Salvar** e reabre o mapa
+- **THEN** o arraste inteiro volta em um passo de desfazer e, ao salvar, os vértices alterados são restaurados ao reabrir (RF019-TL013, RF019-FL005, RF019-CA008)
+
+### Requirement: Exclusividade da localidade por mapa
+O editor SHALL permitir que uma localidade seja associada a vários mapas somente quando todos forem **Mundo** ou **Região**; a localidade em **Cidade**, **Bairro** ou **Prédio/Casa** SHALL ficar exclusiva daquele mapa, não SHALL aparecer no painel de outro mapa incompatível e `salvar_mapa` SHALL recusar a nova associação com erro `LocalidadeEmOutroMapa`, sem gravar o documento; localidades que já estavam no mapa SHALL continuar editáveis (RF019-TL006, RF019-FL003, RF019-RN005, RF019-RN024, RF019-CA030).
+
+#### Scenario: Prédio não compartilha cômodo
+- **GIVEN** a Sala **Sala de Estar** já está num mapa de **Prédio/Casa**
+- **WHEN** o escritor abre outro mapa de **Prédio/Casa**
+- **THEN** a Sala não aparece no painel e o domínio recusa salvar o segundo mapa com ela (RF019-RN024, RF019-CA030)
+
+#### Scenario: Mundo e Região compartilham
+- **GIVEN** a Cidade **Porto** já está num mapa de **Região**
+- **WHEN** o escritor abre um mapa de **Mundo**
+- **THEN** Porto continua no painel e pode ser adicionada; o salvamento é aceito (RF019-RN024, RF019-CA030)
+
+#### Scenario: Cidade não compartilha com Mundo
+- **GIVEN** a Casa **Solar** já está num mapa de **Região**
+- **WHEN** o escritor abre um mapa de **Cidade**
+- **THEN** Solar não aparece no painel e o domínio recusa a associação (RF019-RN005, RF019-RN024, RF019-CA030)
+
+#### Scenario: Mapa atual preservado
+- **GIVEN** uma localidade já estava no mapa antes da regra
+- **WHEN** o escritor move ou edita o mapa e salva
+- **THEN** a associação existente continua e o salvamento não é bloqueado por duplicatas legadas (RF019-RN024)
 

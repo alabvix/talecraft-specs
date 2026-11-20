@@ -2139,13 +2139,15 @@ ciclos.
 
 - **RF018-TL001** - Aba Localidades em árvore: a categoria **Localidades** da
   tela de detalhe do Mundo deixa de usar a tabela paginada e passa a exibir uma
-  **árvore expansível**. Cada nó mostra a **miniatura** da imagem (ou um quadrado
-  vazio do mesmo tamanho), o **Nome**, o **Tipo** e, quando houver, a seta de
-  **expandir/recolher** com o contador de sublocalidades. As raízes ficam no
-  primeiro nível, os filhos indentados abaixo do pai e, em cada nível, a ordem é
-  alfabética pelo Nome. A árvore abre **expandida**, pagina de **20 em 20
-  localidades** — sem cortar uma subárvore entre páginas — e o botão **Nova
-  Localidade** fica no cabeçalho da categoria.
+  **árvore expansível**. Cada nó mostra a **miniatura** da imagem (ou, sem
+  imagem, o **ícone do Tipo da Localidade** no estilo do **Tipo do Mundo**, no
+  mesmo quadradinho), o **Nome**, o **Tipo** e, quando houver, a seta de
+  **expandir/recolher** com o contador de sublocalidades. O **mundo** aparece no
+  topo como a localidade **raiz** do tipo **Mundo**, sem ação **Editar**; os
+  filhos ficam indentados abaixo do pai e, em cada nível, a ordem é alfabética
+  pelo Nome. A árvore abre **expandida**, mantém a raiz fixa no topo e pagina os
+  filhos dela de **20 em 20** — sem cortar uma subárvore entre páginas —, e o
+  botão **Nova Localidade** fica no cabeçalho da categoria.
 - **RF018-TL002** - Modal de Localidade: a janela de inclusão/edição da
   localidade ganha, além de **Nome** (obrigatório), **Descrição** e **História**,
   os campos **Tipo da Localidade** (lista fechada, em ordem alfabética, com
@@ -2155,8 +2157,10 @@ ciclos.
   uma e a opção **Nenhuma (raiz)**). A própria localidade e os seus descendentes
   não aparecem na lista de pai.
 - **RF018-TL003** - Miniatura: a imagem da localidade aparece em miniatura
-  quadrada na árvore e em prévia na modal. Sem imagem, a árvore mostra um
-  quadrado vazio do mesmo tamanho, sem iniciais, para alinhar os nomes.
+  quadrada na árvore e em prévia na modal. Sem imagem, a árvore mostra o
+  **ícone do Tipo da Localidade** no estilo do **Tipo do Mundo** dentro do mesmo
+  quadrado; tipos sem glifo e **Não definido** mantêm o quadrado vazio, sem
+  iniciais, para alinhar os nomes.
 - **RF018-TL004** - Cenário Worldbuilding do capítulo: o campo continua listando
   as localidades dos mundos associados, agrupadas por mundo (RF017-TL009), e cada
   opção passa a mostrar o **caminho completo** da localidade (por exemplo,
@@ -2170,9 +2174,9 @@ ciclos.
 #### Fluxos
 
 - **RF018-FL001** - Criar localidade com tipo e pai: o escritor clica em **Nova
-  Localidade**, informa o Nome, escolhe o Tipo, opcionalmente escolhe a localidade
-  pai, envia uma imagem e salva; a localidade aparece na árvore no nível do pai
-  escolhido.
+  Localidade**, informa o Nome, escolhe o Tipo, escolhe a localidade pai (a raiz
+  do mundo já vem selecionada), envia uma imagem e salva; a localidade aparece na
+  árvore no nível do pai escolhido.
 - **RF018-FL002** - Editar e mover: ao editar uma localidade, o escritor troca o
   Tipo, o pai ou a imagem e salva; a árvore é reconstruída com a localidade (e os
   seus descendentes) no novo nível.
@@ -2207,22 +2211,31 @@ ciclos.
   **Torre**, **Vila** e **Vilarejo** —, além do valor vazio **Não definido**
   (padrão, apresentado primeiro, gravado como texto, nunca `NULL`). O campo é
   opcional.
-- **RF018-RN003** - Hierarquia livre: a localidade pai é opcional, precisa
-  pertencer ao **mesmo mundo** e não há restrição de tipo — qualquer localidade
-  pode conter qualquer outra, com profundidade e quantidade de filhos livres.
+- **RF018-RN003** - Hierarquia livre: toda localidade tem um pai; a localidade
+  **raiz** do tipo **Mundo** é o pai de todas as demais e não pode ser editada
+  pela modal. O pai precisa pertencer ao **mesmo mundo** e não há restrição de
+  tipo — qualquer localidade pode conter qualquer outra, com profundidade e
+  quantidade de filhos livres.
 - **RF018-RN004** - Sem ciclos: uma localidade não pode ser pai de si mesma nem
   de um dos seus descendentes; a validação é feita no domínio (subida pela cadeia
   de pais) e devolve erro próprio, não só desabilita a opção na interface.
-- **RF018-RN005** - Árvore e contadores: as raízes são as localidades sem pai; os
-  filhos são ordenados alfabeticamente em cada nível (tratando acentos no Rust) e
-  o contador de cada nó é o número real de filhos diretos.
+- **RF018-RN005** - Árvore e contadores: a raiz é a localidade do tipo **Mundo**
+  e seus filhos são o primeiro nível paginado; os filhos são ordenados
+  alfabeticamente em cada nível (tratando acentos no Rust) e o contador de cada
+  nó é o número real de filhos diretos.
 - **RF018-RN006** - Persistência: a migração **v18** aditiva acrescenta `tipo`,
   `imagem` e `pai_id` (com chave estrangeira para `localidade`) e um índice por
   `pai_id`; a **v19** recria a tabela para ampliar o `CHECK` aos **49** tipos
   (o SQLite não altera `CHECK` in-place), copiando as linhas e preservando os
   ids. Nenhuma migração publicada é editada, as localidades existentes ganham
   **Não definido**, sem imagem e na raiz, e as migrações rodam com as chaves
-  estrangeiras desligadas para a recriação não esbarrar na FK do capítulo.
+  estrangeiras desligadas para a recriação não esbarrar na FK do capítulo. A
+  **v22** recria `localidade` com o tipo interno **Mundo** e a coluna `raiz`,
+  cria a raiz de cada mundo com o nome do mundo, reparenta as localidades sem pai
+  para ela e mantém um índice único parcial de uma raiz por mundo. A **v23** é
+  corretiva: recria `capitulo` para a FK `cenario_localidade_id` voltar a apontar
+  para `localidade` em bancos que ficaram com `localidade_antiga`, preservando
+  as linhas e os índices.
 - **RF018-RN007** - Sem regressão das outras entradas: Raças e Povos, Artefatos,
   Armas, Eventos e Sistemas continuam com a tabela paginada, os campos atuais e a
   ação **Editar**.
@@ -2279,11 +2292,16 @@ ciclos.
   imagem, o pai, o ciclo, o mover, o caminho no capítulo e a seção do livro.
 - **RF018-CA018** - Sem regressão: os fluxos dos requisitos anteriores continuam
   funcionando.
-- **RF018-CA019** - Paginação da árvore: a aba Localidades mostra **20
-  localidades por página**, com **Anterior**/**Próxima** e a página atual; os
-  controles aparecem **mesmo quando há uma única página** (desabilitados), uma
-  subárvore nunca é cortada entre páginas (os filhos aparecem sempre na mesma
-  página do pai) e a paginação também vale na seção Worldbuilding do livro.
+- **RF018-CA019** - Paginação da árvore: a raiz do mundo fica **fixa no topo** e
+  a aba Localidades pagina **20 filhos por página**, com **Anterior**/**Próxima**
+  e a página atual; os controles aparecem **mesmo quando há uma única página**
+  (desabilitados), uma subárvore nunca é cortada entre páginas (os filhos
+  aparecem sempre na mesma página do pai) e a paginação também vale na seção
+  Worldbuilding do livro.
+- **RF018-CA020** - Raiz do mundo: cada mundo tem uma localidade raiz do tipo
+  **Mundo**, com o nome do mundo e sem **Editar**; a raiz aparece no topo da
+  árvore, é o pai padrão das novas localidades e não aparece no cenário do
+  capítulo, nos PDFs nem nos painéis de localidade dos mapas.
 
 ### RF019 - Worldbuilding - Mapas do Mundo
 
@@ -2319,18 +2337,25 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   propriedades do elemento selecionado.
 - **RF019-TL004** - Toolbar: **Selecionar/Mover**, **Polígono**, **Ligação**,
   **Apagar**, **Desfazer**, **Refazer** e os controles de **zoom** (+ / − /
-  ajustar). O canvas tem pan (arrastar o fundo) e zoom, com coordenadas lógicas
-  de 1000 × 700.
+  ajustar). Em mapas de **Prédio/Casa**, **Polígono** e **Ligação** dão lugar
+  a **Porta** (RF019-TL012). O canvas tem pan (arrastar o fundo) e zoom, com
+  coordenadas lógicas de 1000 × 700.
 - **RF019-TL005** - Canvas: renderiza o fundo do template, os polígonos com
   rótulo e cor, as ligações com rótulo e estilo e os marcadores das localidades
-  com miniatura, ícone do tipo (ou quadrado vazio), nome e tipo. O ícone segue
-  o **Tipo da Localidade** e é desenhado no estilo do **Tipo do Mundo**.
+  com miniatura, ícone do tipo (ou quadrado vazio), nome e tipo. Em mapas de
+  **Prédio/Casa**, cada localidade é desenhada como um **cômodo retangular**
+  com o nome no centro e as portas nas paredes (RF019-TL012). O ícone segue o
+  **Tipo da Localidade** e é desenhado no estilo do **Tipo do Mundo**.
   Selecionar um marcador destaca o nó e mostra as propriedades (**Abrir
-  localidade** e **Remover do mapa**).
+  localidade** e **Remover do mapa**). Uma forma selecionada expõe as arestas
+  com pontos no meio para redimensionamento e também pode ser movida pelo
+  interior (RF019-TL013).
 - **RF019-TL006** - Painel de localidades: lista pesquisável das localidades do
   mundo, arrastável para o canvas; as que já estão no mapa aparecem com o selo
-  **No mapa** e clicar nelas seleciona o marcador. O botão **Nova localidade**
-  abre a modal do RF018 e coloca a nova localidade no centro da visão.
+  **No mapa** e clicar nelas seleciona o marcador. Localidades presas a outro
+  mapa incompatível não aparecem na lista (RF019-RN024). O botão **Nova
+  localidade** abre a modal do RF018 e coloca a nova localidade no centro da
+  visão.
 - **RF019-TL007** - Ligações: escolher **Ligação**, clicar na localidade de
   origem e na de destino; a ligação recebe **rótulo livre** e **estilo** (linha
   cheia, tracejada ou seta) no painel de propriedades.
@@ -2344,14 +2369,28 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   nome, tipo, âncora e o desenho, usando a paleta fixa de impressão.
 - **RF019-TL010** - Plantas por escala: mapas de **Cidade** desenham uma planta
   com ruas, quarteirões vazios e praça central; **Bairro** desenha quadras
-  maiores com lotes; **Prédio/Casa** desenha uma planta baixa com paredes e
-  cômodos. Nessas escalas o seletor de **Fundo** dá lugar à planta fixa, e o
-  **Polígono** continua disponível para sombrear áreas.
-- **RF019-TL011** - Tipos por escala: mapas de **Cidade**, **Bairro** e
-  **Prédio/Casa** filtram o painel de localidades e o seletor de **Nova
-  localidade** pelos tipos previstos no RF019-RN019; marcadores já colocados com
-  tipo fora da escala aparecem com aviso e impedem o **Salvar** até serem
-  removidos.
+  maiores com lotes; **Prédio/Casa** usa uma **grade fixa**, sem planta baixa,
+  para não competir com os cômodos e as portas. Nessas escalas o seletor de
+  **Fundo** dá lugar ao fundo fixo, e o **Polígono** continua disponível em
+  Cidade e Bairro para sombrear áreas.
+- **RF019-TL011** - Tipos por escala: as cinco escalas filtram o painel de
+  localidades e o seletor de **Nova localidade** pelos tipos previstos no
+  RF019-RN019; marcadores já colocados com tipo fora da escala aparecem com
+  aviso e impedem o **Salvar** até serem removidos. A localidade raiz do mundo
+  não aparece no painel, porque representa o próprio mundo.
+- **RF019-TL012** - Cômodos e portas em Prédio/Casa: ao arrastar uma localidade,
+  o editor desenha um **quadrado** com o nome no centro; o cômodo pode ser
+  **movido** e **redimensionado** pelas oito alças (cantos e lados), virando um
+  retângulo. A toolbar troca **Polígono** e **Ligação** por **Porta**: com a
+  ferramenta ativa, clicar perto de uma parede cria uma porta naquele lado; a
+  porta selecionada mostra **Lado**, **Largura** e **Remover porta** no painel
+  de propriedades e pode ser arrastada ao longo da parede.
+- **RF019-TL013** - Edição de formas: com **Selecionar/Mover**, a forma
+  selecionada expõe uma alça no meio de cada aresta, um **nó em cada vértice** e
+  uma área de clique sobre a própria aresta. Arrastar a aresta move só os dois
+  vértices dela na direção perpendicular; arrastar um nó move só aquele vértice;
+  arrastar o interior move a forma inteira. As alterações ficam em memória até o
+  **Salvar** e entram no histórico uma vez por arraste.
 
 #### Fluxos
 
@@ -2360,16 +2399,19 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
 - **RF019-FL002** - Abrir e salvar o mapa: ao abrir, o editor carrega metadados,
   posições, formas e ligações; o escritor altera e clica em **Salvar**. Sair sem
   salvar descarta as pendências.
-- **RF019-FL003** - Colocar uma localidade: o escritor arrasta uma localidade da
-  lista para o canvas; ela passa a ter um marcador na posição solta e recebe o
-  selo **No mapa**. Arrastar o marcador atualiza a posição.
+- **RF019-FL003** - Colocar uma localidade: o escritor arrasta uma localidade
+  disponível da lista para o canvas; ela passa a ter um marcador na posição solta
+  e recebe o selo **No mapa**. Arrastar o marcador atualiza a posição. Uma
+  localidade já usada em outro mapa incompatível não aparece para arrastar
+  (RF019-RN024).
 - **RF019-FL004** - Criar localidade pelo mapa: o escritor clica em **Nova
   localidade**, preenche a modal do RF018 e salva; a localidade é criada no mundo,
   entra no mapa no centro da visão e também aparece na aba Localidades. O pai
   sugerido é a âncora do mapa, editável na modal.
 - **RF019-FL005** - Desenhar uma forma: com **Polígono**, o escritor clica nos
   vértices e fecha com duplo clique ou Enter (Esc cancela); a forma é criada com
-  cor padrão e pode ser renomeada, recolorida, movida ou apagada.
+  cor padrão e pode ser renomeada, recolorida, movida pelo interior,
+  redimensionada pelas arestas, ajustada pelos nós dos vértices ou apagada.
 - **RF019-FL006** - Criar uma ligação: com **Ligação**, o escritor clica na
   origem e no destino; se o par já existir, nada é criado; a ligação pode ser
   editada no painel de propriedades.
@@ -2383,6 +2425,11 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   confirmar remove o mapa e os seus elementos, sem tocar nas localidades.
 - **RF019-FL010** - Ler os mapas no livro: na seção Worldbuilding, a aba **Mapas**
   permite escolher o mapa e navegar com pan/zoom, sem editar nada.
+- **RF019-FL011** - Desenhar cômodos e portas: em um mapa **Prédio/Casa**, o
+  escritor arrasta uma localidade, ajusta o retângulo pelas alças e o posiciona
+  sobre a planta; escolhe **Porta** e clica numa parede para criar a passagem,
+  podendo deslocá-la, mudar o lado e a largura. As portas acompanham o cômodo e
+  saem com ele.
 
 #### Regras de Negócio
 
@@ -2398,15 +2445,19 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
 - **RF019-RN004** - Fundo: lista fechada **Papel**, **Grade**, **Hex**,
   **Blueprint** e **Topográfico**, desenhada com CSS/SVG (sem imagem externa).
 - **RF019-RN005** - Uma localidade por mapa: a chave `(mapa_id,
-  localidade_id)` impede o mesmo marcador duas vezes; a mesma localidade pode
-  estar em mapas diferentes, com posições independentes.
+  localidade_id)` impede o mesmo marcador duas vezes. A mesma localidade só pode
+  estar em mapas diferentes quando **todos** são **Mundo** ou **Região**, com
+  posições independentes; nos demais casos ela pertence a um único mapa
+  (RF019-RN024).
 - **RF019-RN006** - Coordenadas: as posições e os vértices usam um plano lógico
   de **1000 × 700**; valores fora do plano são recusados pelo domínio. O canvas
   escala com `viewBox`, sem perder posições.
 - **RF019-RN007** - Formas: cada polígono tem pelo menos **3 vértices**, cor de
   uma lista fechada (**acento**, **âmbar**, **azul**, **verde**, **neutra**,
   **destaque**) e rótulo livre opcional. As cores são gravadas como chaves
-  semânticas, não hexadecimal, para acompanhar o tema e a impressão.
+  semânticas, não hexadecimal, para acompanhar o tema e a impressão. Mover,
+  redimensionar pela aresta ou arrastar um nó altera os vértices gravados, e
+  todos eles precisam continuar dentro do plano de 1000 × 700.
 - **RF019-RN008** - Ligações: só entre localidades já colocadas no mapa, sem
   auto-ligação e sem par duplicado; rótulo livre e estilo fechado **linha**,
   **tracejada** ou **seta**.
@@ -2439,21 +2490,53 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   **Antigo**); as demais famílias usam um desenho único. A **imagem cadastrada
   tem prioridade** sobre o ícone. Tipos sem desenho e **Não definido** mantêm o
   quadrado vazio, sem inventar símbolo.
-- **RF019-RN018** - Plantas por escala: **Cidade**, **Bairro** e
-  **Prédio/Casa** usam uma planta funcional desenhada em SVG no plano de
-  1000 × 700, no lugar dos cinco fundos decorativos; o campo **Fundo** deixa de
-  aparecer nessas escalas. O **Polígono** continua disponível para sombrear
-  áreas. **Mundo** e **Região** mantêm os cinco fundos.
-- **RF019-RN019** - Tipos por escala: **Mundo** e **Região** aceitam os 49
-  tipos; **Cidade** aceita tipos urbanos (Arena, Armazém, Bairro, Cantina, Casa,
-  Castelo, Cemitério, Comércio, Edifício, Estádio, Fortaleza, Forte, Igreja,
-  Loja, Palácio, Praça, Prisão, Restaurante, Ruína, Taverna, Teatro, Templo e
-  Torre); **Bairro** aceita Armazém, Cantina, Casa, Cemitério, Comércio,
-  Edifício, Igreja, Loja, Palácio, Praça, Prisão, Restaurante, Taverna, Teatro,
-  Templo e Torre; **Prédio/Casa** aceita apenas Cômodo, Quarto, Sala e Salão. O
-  painel e o **Nova localidade** filtram pela lista, e o domínio recusa, no
-  **Salvar**, qualquer marcador fora da escala — inclusive um tipo **Não
-  definido**.
+- **RF019-RN018** - Fundos por escala: **Cidade** e **Bairro** usam uma planta
+  funcional desenhada em SVG no plano de 1000 × 700; **Prédio/Casa** usa uma
+  **grade fixa**, sem a planta baixa, porque os cômodos e as portas são o
+  próprio desenho do mapa (RF019-TL012). O campo **Fundo** deixa de aparecer
+  nessas três escalas. O **Polígono** continua disponível para sombrear áreas
+  em **Cidade** e **Bairro**; em **Prédio/Casa**, os cômodos e as portas
+  substituem o **Polígono** e a **Ligação**. **Mundo** e **Região** mantêm os
+  cinco fundos.
+- **RF019-RN019** - Tipos por escala: **Mundo** aceita tipos macro/geográficos e
+  assentamentos (Bosque, Capital, Caverna, Cidade, Colina, Estado, Floresta,
+  Fortaleza, Lago, Mar, Montanha, País, Pântano, Planalto, Prisão, Ravina,
+  Região, Rio, Serra, Território, Vila e Vilarejo); **Região** aceita todos os 49 tipos, exceto
+  **Cômodo**, **Quarto**, **Sala** e **Salão**; **Cidade** aceita tipos urbanos
+  (Arena, Armazém, Bairro, Cantina, Casa, Castelo, Cemitério, Comércio, Edifício,
+  Estádio, Fortaleza, Forte, Igreja, Loja, Palácio, Praça, Prisão, Restaurante,
+  Ruína, Taverna, Teatro, Templo e Torre); **Bairro** aceita Armazém, Cantina,
+  Casa, Cemitério, Comércio, Edifício, Igreja, Loja, Palácio, Praça, Prisão,
+  Restaurante, Taverna, Teatro, Templo e Torre; **Prédio/Casa** aceita apenas
+  Cômodo, Quarto, Sala e Salão. O painel e o **Nova localidade** filtram pela
+  lista, e o domínio recusa, no **Salvar**, qualquer marcador fora da escala —
+  inclusive um tipo **Não definido**. A localidade raiz do tipo **Mundo** não
+  entra nos mapas.
+- **RF019-RN020** - Cômodo retangular: em **Prédio/Casa**, a localidade
+  posicionada tem `largura` e `altura` próprias (padrão **120 × 120**, mínimo
+  **40**), é movida pelo corpo e redimensionada pelas alças, e precisa ficar
+  inteira dentro do plano de 1000 × 700. As demais escalas continuam com o
+  marcador de tamanho fixo.
+- **RF019-RN021** - Porta: pertence a um cômodo do mapa e a um lado fechado
+  (**norte**, **sul**, **leste** ou **oeste**), com posição de **0 a 1** ao
+  longo da parede e largura que caiba no lado. A porta acompanha mover e
+  redimensionar o cômodo, sai junto com ele e só existe em mapas de
+  **Prédio/Casa**; trocar o tipo do mapa remove as portas.
+- **RF019-RN022** - Persistência v21: a migração **v21** aditiva acrescenta
+  `largura` e `altura` em `mapa_localidade` com padrão 120 e cria `mapa_porta`
+  (`mapa_id`, `localidade_id`, `lado` com `CHECK`, `posicao` de 0 a 1 e
+  `largura`), com cascata do mapa e da localidade. Bancos v20 ganham o quadrado
+  padrão sem perder posições.
+- **RF019-RN023** - Sem regressão de ferramentas: **Polígono** e **Ligação**
+  continuam disponíveis em **Mundo**, **Região**, **Cidade** e **Bairro**. Em
+  **Prédio/Casa**, polígonos e ligações já existentes continuam visíveis e
+  apagáveis, mas não podem ser criados.
+- **RF019-RN024** - Exclusividade da localidade: uma localidade só pode estar em
+  vários mapas quando **todos** são **Mundo** ou **Região**. Se ela já está em
+  **Cidade**, **Bairro** ou **Prédio/Casa**, não fica disponível para nenhum
+  outro mapa. O editor remove as bloqueadas da lista e o domínio recusa a nova
+  inclusão com `LocalidadeEmOutroMapa`. Localidades que já estavam no mapa
+  continuam editáveis, mesmo que sejam duplicatas legadas.
 
 #### Critérios de Aceite
 
@@ -2474,7 +2557,10 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   o marcador no centro e ela aparece também na aba Localidades, com a âncora
   como pai sugerido.
 - **RF019-CA008** - Polígono: desenhar com 3 ou mais vértices cria a forma;
-  menos de 3 é recusado; mover, renomear, recolorir e apagar funcionam.
+  menos de 3 é recusado; arrastar uma aresta redimensiona só aquela aresta,
+  arrastar um nó move só aquele vértice, arrastar o interior move a forma
+  inteira, e renomear, recolorir e apagar funcionam; salvar e reabrir preserva os
+  vértices alterados.
 - **RF019-CA009** - Ligação: duas localidades no mapa geram uma ligação com
   rótulo e estilo; auto-ligação e par duplicado são recusados; a ligação pode ser
   apagada sem tocar nas localidades.
@@ -2510,14 +2596,36 @@ na seção **Worldbuilding** do livro e entram no **Documento do Mundo** em PDF.
   de cúpulas; em mundo **Medieval**, o de muralha. Localidade com imagem mostra
   a miniatura; tipo sem desenho mantém o quadrado vazio. O mesmo ícone aparece
   no livro e no PDF.
-- **RF019-CA024** - Planta de Cidade: ao abrir um mapa de **Cidade**, o canvas
+- **RF019-CA024** - Fundos por escala: ao abrir um mapa de **Cidade**, o canvas
   mostra ruas, quarteirões vazios e a praça; o seletor de **Fundo** não aparece,
   o **Polígono** continua disponível e a planta também é desenhada no livro e no
-  PDF. **Bairro** e **Prédio/Casa** têm plantas próprias.
+  PDF. **Bairro** tem quadras com lotes. **Prédio/Casa** mostra uma **grade
+  fixa**, sem planta baixa, no editor, no livro e no PDF.
 - **RF019-CA025** - Tipos por escala: o painel de um mapa de **Cidade** não
   lista uma **Floresta**; tentar salvar o mapa com esse marcador devolve erro do
   domínio e nada é gravado. O mapa de **Prédio/Casa** lista apenas Cômodo,
-  Quarto, Sala e Salão.
+  Quarto, Sala e Salão; **Mundo** não lista Casa nem Bairro; **Região** não lista
+  Cômodo, Quarto, Sala nem Salão.
+- **RF019-CA026** - Cômodo: arrastar uma localidade para um mapa de
+  **Prédio/Casa** cria um quadrado de 120 × 120 com o nome no centro; mover,
+  redimensionar pelas oito alças, salvar e reabrir preservam posição, largura e
+  altura.
+- **RF019-CA027** - Porta: a toolbar de **Prédio/Casa** oferece **Porta** e não
+  oferece **Polígono** nem **Ligação**; clicar numa parede cria a porta, que
+  pode mudar de lado, largura e posição, acompanha o cômodo e é apagada com ele.
+  Um banco v20 migra para a v21 sem perder posições.
+- **RF019-CA028** - Leitura e PDF: cômodos e portas aparecem iguais no editor,
+  na aba **Mapas** do livro e no **Documento do Mundo**, inclusive com a paleta
+  fixa de impressão.
+- **RF019-CA029** - Filtros de Mundo e Região: tentar salvar um **Bairro** num
+  mapa de **Mundo** devolve erro do domínio; o mapa de **Região** aceita Casa,
+  Praça e Bairro, mas recusa **Quarto** com erro. A raiz do mundo não aparece no
+  painel de localidades.
+- **RF019-CA030** - Exclusividade: uma **Sala** já usada num mapa de
+  **Prédio/Casa** não aparece no painel de outro mapa de Prédio/Casa e o domínio
+  recusa a nova associação. Uma localidade usada em **Região** continua
+  disponível num mapa de **Mundo** (e vice-versa), mas não num mapa de
+  **Cidade**. As localidades do mapa atual continuam disponíveis nele.
 
 ## Arquitetura
 
