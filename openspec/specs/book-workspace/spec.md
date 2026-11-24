@@ -373,7 +373,7 @@ O sistema SHALL substituir a tela informativa da seção **Personagens** pela li
 - **THEN** não encontra botão, ícone ou ação para desvincular o personagem do livro (RF014-RN009, RF014-CA015)
 
 ### Requirement: Capítulos do livro
-O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo quadro de planejamento do livro, com as quatro colunas de status **Esboço**, **Rascunho**, **Revisão** e **Finalizado**, cada uma com tamanho fixo, contador, rolagem interna, ordenação por **Número** ou **Data de Criação** (ascendente/descendente) e o botão **Adicionar Capítulo** no rodapé; **Novo Capítulo** no cabeçalho SHALL criar no **Esboço**, os rodapés SHALL criar no status da coluna, o clique em um capítulo SHALL abrir o painel de edição abaixo do quadro, organizado em duas abas — **Dados do Capítulo**, com **Número**, **Título**, **Status**, **Tipo**, **Motivo do Tipo**, **Meta**, **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch**, **K.O**, **Cenário Worldbuilding**, **Cenário Descritivo** e **Resumo**, e **Personagens do Capítulo**, com cada personagem precedido de uma miniatura quadrada do retrato (ou um quadrado vazio do mesmo tamanho) e exibido como **Nome - Papel** a partir do **Papel** do vínculo do RF014 (ou **Não definido**), com **Evento**, **Tipo de Evento** e **Motivo do Evento** por personagem —, com **Salvar** no cabeçalho comum às duas abas, o **Motivo do Tipo** e a **Meta** como textos de duas linhas, o **Cenário Descritivo** em duas linhas, o **K.O** ao lado do **Punch** e com a mesma altura dele, a ajuda do **Tipo** em linhas separadas para Ação, Suspensão, Direto e Indireto, as ajudas do **Evento** e do **Tipo de Evento** no padrão do **?** do Tipo e o arrastar SHALL mudar o status do capítulo (RF015-TL001 a RF015-TL007, RF015-FL001 a RF015-FL005, RF015-RN001 a RF015-RN017, RF015-CA001 a RF015-CA024).
+O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo quadro de planejamento do livro, com as quatro colunas de status **Esboço**, **Rascunho**, **Revisão** e **Finalizado**, cada uma com tamanho fixo, contador, rolagem interna, ordenação por **Número** ou **Data de Criação** (ascendente/descendente) e o botão **Adicionar Capítulo** no rodapé; **Novo Capítulo** no cabeçalho SHALL criar no **Esboço**, os rodapés SHALL criar no status da coluna, o clique em um capítulo SHALL abrir o painel de edição abaixo do quadro, organizado em três abas — **Dados do Capítulo**, com **Número**, **Título**, **Status**, **Tipo**, **Motivo do Tipo**, **Meta**, **Cenário Worldbuilding**, **Cenário Descritivo** e **Resumo**; **Dados Complementares**, com **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch** e **K.O**; e **Personagens do Capítulo**, com cada personagem precedido de uma miniatura quadrada do retrato (ou um quadrado vazio do mesmo tamanho) e exibido como **Nome - Papel** a partir do **Papel** do vínculo do RF014 (ou **Não definido**), com **Evento**, **Tipo de Evento** e **Motivo do Evento** por personagem —, com **Salvar** no cabeçalho comum às três abas, o **Motivo do Tipo** e a **Meta** como textos de duas linhas, o **Cenário Descritivo** em duas linhas, o **K.O** ao lado do **Punch** e com a mesma altura dele, o **Cenário Worldbuilding** aceitando **um ou mais** cenários com a lista de selecionados e **Remover**, a ajuda do **Tipo** em linhas separadas para Ação, Suspensão, Direto e Indireto, as ajudas do **Evento** e do **Tipo de Evento** no padrão do **?** do Tipo e o arrastar SHALL mudar o status do capítulo (RF015-TL001 a RF015-TL008, RF015-FL001 a RF015-FL005, RF015-RN001 a RF015-RN018, RF015-CA001 a RF015-CA026).
 
 #### Scenario: Quadro com os quatro status
 - **GIVEN** um livro salvo sem capítulos
@@ -405,13 +405,18 @@ O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo qua
 - **WHEN** o escritor clica em um card
 - **THEN** o painel abaixo mostra os dados do capítulo em edição, com **Salvar** no canto superior direito do cabeçalho e todos os campos do requisito (RF015-TL005, RF015-CA006)
 
-#### Scenario: Painel em duas abas
+#### Scenario: Painel em três abas
 - **GIVEN** o painel de edição está aberto
 - **WHEN** o escritor observa o painel
-- **THEN** vê as abas **Dados do Capítulo** e **Personagens do Capítulo**; a primeira mostra os campos do **Número** até o **Resumo** e a segunda mostra os personagens do arco, com o **Salvar** no cabeçalho nas duas abas (RF015-TL005, RF015-RN014, RF015-CA020)
+- **THEN** vê as abas **Dados do Capítulo**, **Dados Complementares** e **Personagens do Capítulo**; a primeira mostra do **Número** ao **Resumo** sem os campos complementares, a segunda mostra **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch** e **K.O**, e a terceira mostra os personagens do arco, com o **Salvar** no cabeçalho nas três abas (RF015-TL005, RF015-TL008, RF015-RN014, RF015-CA020, RF015-CA025)
+
+#### Scenario: Aba Dados Complementares
+- **GIVEN** o painel de edição está aberto
+- **WHEN** o escritor clica na aba **Dados Complementares**
+- **THEN** vê os campos **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch** e **K.O**, com o **K.O** ao lado do **Punch** e a mesma altura dele, e nenhum campo estrutural do capítulo (RF015-TL008, RF015-RN018, RF015-CA025)
 
 #### Scenario: Troca de aba preserva a edição pendente
-- **GIVEN** o escritor digitou um valor em um campo da aba **Dados do Capítulo** ou alterou um personagem na aba **Personagens do Capítulo** sem salvar
+- **GIVEN** o escritor digitou um valor em um campo da aba **Dados do Capítulo** ou **Dados Complementares**, ou alterou um personagem na aba **Personagens do Capítulo** sem salvar
 - **WHEN** troca de aba e volta
 - **THEN** o valor digitado continua no formulário e nada foi gravado antes do **Salvar** (RF015-RN014, RF015-CA020)
 
@@ -421,9 +426,9 @@ O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo qua
 - **THEN** o **Motivo do Tipo** aparece logo abaixo do **Tipo** e os três campos usam textos de duas linhas, menores que a altura curta anterior, e **Salvar** e reabrir preserva o conteúdo digitado (RF015-TL005, RF015-RN013, RF015-CA018, RF015-CA019, RF015-CA021)
 
 #### Scenario: K.O ao lado do Punch com a mesma altura
-- **GIVEN** o painel de edição está aberto
+- **GIVEN** o painel de edição está aberto na aba **Dados Complementares**
 - **WHEN** o escritor observa o formulário
-- **THEN** o **K.O** aparece ao lado do **Punch**, com a mesma altura dele (RF015-TL005, RF015-CA018)
+- **THEN** o **K.O** aparece ao lado do **Punch**, com a mesma altura dele (RF015-TL005, RF015-TL008, RF015-CA018, RF015-CA025)
 
 #### Scenario: Tipo com ajuda em linhas
 - **GIVEN** o painel de edição está aberto
@@ -458,7 +463,7 @@ O sistema SHALL substituir a tela informativa da seção **Capítulos** pelo qua
 #### Scenario: Salvar e reabrir o capítulo
 - **GIVEN** o escritor preencheu os campos e salvou
 - **WHEN** reabre o mesmo capítulo
-- **THEN** os valores continuam gravados, inclusive a **Meta**, o **Motivo do Tipo** e o **Motivo do Evento** de cada personagem, o capítulo permanece no status escolhido e o card reflete título, tipo e personagens (RF015-FL003, RF015-RN005, RF015-RN007, RF015-CA009, RF015-CA018, RF015-CA019, RF015-CA021)
+- **THEN** os valores continuam gravados, inclusive a **Meta**, o **Motivo do Tipo**, os campos complementares e o **Motivo do Evento** de cada personagem, o capítulo permanece no status escolhido e o card reflete título, tipo e personagens (RF015-FL003, RF015-RN005, RF015-RN007, RF015-CA009, RF015-CA018, RF015-CA019, RF015-CA021, RF015-CA025)
 
 #### Scenario: Arrastar muda o status
 - **GIVEN** um capítulo está em uma coluna
@@ -690,17 +695,22 @@ O sistema SHALL substituir a tela informativa da seção **Worldbuilding** do li
 - **THEN** as associações, a ordem das abas e a entrada continuam disponíveis (RF017-CA018)
 
 ### Requirement: Cenário Worldbuilding do capítulo com os mundos do livro
-O sistema SHALL preencher o campo **Cenário Worldbuilding** do painel do capítulo com as **Localidades** de todos os mundos associados ao livro, agrupadas por mundo, gravando a localidade escolhida, SHALL manter o campo desabilitado com o aviso **Nenhum mundo associado a este livro** quando o livro não tiver mundo, e SHALL recusar no domínio a localidade que não pertença a um mundo associado ao livro (RF017-TL009, RF017-FL007, RF017-RN007, RF017-RN010, RF017-CA012, RF017-CA013).
+O sistema SHALL preencher o campo **Cenário Worldbuilding** do painel do capítulo com as **Localidades** de todos os mundos associados ao livro, agrupadas por mundo, permitindo adicionar **um ou mais** cenários ao capítulo, SHALL gravar a lista escolhida na ordem de inclusão, SHALL manter o campo desabilitado com o aviso **Nenhum mundo associado a este livro** quando o livro não tiver mundo, e SHALL recusar no domínio qualquer localidade que não pertença a um mundo associado ao livro (RF017-TL009, RF017-FL007, RF017-RN007, RF017-RN015, RF017-CA012, RF017-CA013, RF017-CA023).
 
 #### Scenario: Localidades agrupadas por mundo
 - **GIVEN** o livro tem os mundos **Kepler** e **Ravória** associados, ambos com localidades
 - **WHEN** o escritor abre a aba **Dados do Capítulo**
-- **THEN** o campo **Cenário Worldbuilding** lista as localidades agrupadas por mundo e permite escolher uma delas (RF017-TL009, RF017-CA012)
+- **THEN** o select de cenário lista as localidades agrupadas por mundo e permite adicionar uma delas à lista de cenários do capítulo (RF017-TL009, RF017-CA012)
+
+#### Scenario: Vários cenários no capítulo
+- **GIVEN** o livro tem localidades em mais de um mundo associado
+- **WHEN** o escritor adiciona dois cenários, salva e reabre o capítulo
+- **THEN** os dois cenários continuam gravados, na ordem em que foram adicionados, e podem ser removidos individualmente (RF017-FL007, RF017-RN015, RF017-CA023)
 
 #### Scenario: Cenário gravado e reaberto
 - **GIVEN** o escritor escolheu uma localidade de **Ravória** e salvou o capítulo
 - **WHEN** reabre o capítulo
-- **THEN** o cenário aparece gravado e selecionado (RF017-FL007, RF017-RN007)
+- **THEN** o cenário aparece gravado na lista de cenários do capítulo (RF017-FL007, RF017-RN007)
 
 #### Scenario: Sem mundo associado
 - **GIVEN** o livro não tem nenhum mundo associado
@@ -726,17 +736,17 @@ A categoria **Localidades** da seção **Worldbuilding** do livro SHALL exibir a
 - **THEN** a localidade é gravada no mundo, aparece na árvore e o pai padrão é a raiz (RF018-TL005, RF018-FL001, RF018-CA013, RF018-CA020)
 
 ### Requirement: Caminho da localidade no cenário do capítulo
-O campo **Cenário Worldbuilding** do capítulo SHALL exibir cada localidade pelo **caminho completo** dentro da hierarquia, começando pelo mundo (por exemplo, `Kepler › Porto › Centro › Solar`), mantendo o agrupamento por mundo, ocultando a raiz como opção isolada e gravando o identificador da localidade (RF018-TL004, RF018-FL006, RF018-CA012, RF018-CA020).
+O campo **Cenário Worldbuilding** do capítulo SHALL exibir cada localidade pelo **caminho completo** dentro da hierarquia, começando pelo mundo (por exemplo, `Kepler › Porto › Centro › Solar`), tanto nas opções de adicionar quanto na lista de cenários selecionados, mantendo o agrupamento por mundo, ocultando a raiz como opção isolada e gravando o identificador de cada localidade (RF018-TL004, RF018-FL006, RF018-CA012, RF018-CA020, RF017-CA023).
 
 #### Scenario: Caminho na opção do cenário
 - **GIVEN** o livro tem um mundo associado com a Casa **Solar** dentro do Bairro **Centro** dentro da Cidade **Porto**
 - **WHEN** o escritor abre a aba **Dados do Capítulo**
-- **THEN** a opção mostra **Kepler › Porto › Centro › Solar** e, ao salvar, o capítulo guarda essa localidade (RF018-TL004, RF018-CA012, RF018-CA020)
+- **THEN** a opção mostra **Kepler › Porto › Centro › Solar** e, ao adicionar e salvar, o capítulo guarda essa localidade na lista de cenários (RF018-TL004, RF018-CA012, RF018-CA020)
 
 #### Scenario: Reabrir o capítulo
 - **GIVEN** o capítulo foi salvo com uma localidade aninhada
 - **WHEN** o escritor reabre o capítulo
-- **THEN** o campo mostra o mesmo caminho selecionado (RF018-FL006, RF018-CA012)
+- **THEN** a lista de cenários mostra o mesmo caminho selecionado (RF018-FL006, RF018-CA012)
 
 ### Requirement: Mapas no Worldbuilding do livro
 A seção **Worldbuilding** do livro SHALL ganhar a aba **Mapas** depois de **Localidades**, com o seletor dos mapas do mundo da aba e a visualização **somente leitura** — pan/zoom leve, sem toolbar, sem criar, editar ou posicionar —, SHALL desenhar os cômodos com o nome central e as portas nos mapas de **Prédio/Casa** e SHALL mostrar estado vazio quando o mundo não tiver mapas (RF019-TL008, RF019-TL012, RF019-FL010, RF019-RN013, RF019-CA016, RF019-CA028).

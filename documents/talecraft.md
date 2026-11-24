@@ -1548,22 +1548,25 @@ houver um mundo associado, exibindo o aviso correspondente.
   no status **Esboço**, abre o painel de edição e atualiza o quadro, mesmo que o
   escritor esteja em outra coluna.
 - **RF015-TL005** - Painel de edição: ao clicar em um card, o painel **abaixo do
-  quadro** abre com os dados do capítulo em modo de edição, organizados em duas
-  abas: **Dados do Capítulo** e **Personagens do Capítulo**. O cabeçalho do
-  painel exibe o número, o título, o status e o botão **Salvar** no canto
-  superior direito, comum às duas abas. A aba **Dados do Capítulo** reúne
-  **Número**, **Título**, **Status**, **Tipo**, **Motivo do Tipo**, **Meta**,
-  **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch**, **K.O**,
-  **Cenário Worldbuilding**, **Cenário Descritivo** e **Resumo**. A aba
-  **Personagens do Capítulo** reúne os personagens do elenco, cada um com uma
-  **miniatura do retrato** antes do nome — sem retrato, um quadrado vazio ocupa
-  o mesmo espaço — e com o **Nome** seguido do **Papel** do vínculo no livro, no
-  formato **Nome - Papel**, além de **Evento**, **Tipo de Evento** e **Motivo do
+  quadro** abre com os dados do capítulo em modo de edição, organizados em três
+  abas: **Dados do Capítulo**, **Dados Complementares** e **Personagens do
+  Capítulo**. O cabeçalho do painel exibe o número, o título, o status e o botão
+  **Salvar** no canto superior direito, comum às três abas. A aba **Dados do
+  Capítulo** reúne **Número**, **Título**, **Status**, **Tipo**, **Motivo do
+  Tipo**, **Meta**, **Cenário Worldbuilding**, **Cenário Descritivo** e
+  **Resumo**. A aba **Dados Complementares** reúne **Foreshadowing**, **Plot
+  Twist**, **Cliffhanger**, **Punch** e **K.O**. A aba **Personagens do
+  Capítulo** reúne os personagens do elenco, cada um com uma **miniatura do
+  retrato** antes do nome — sem retrato, um quadrado vazio ocupa o mesmo espaço
+  — e com o **Nome** seguido do **Papel** do vínculo no livro, no formato
+  **Nome - Papel**, além de **Evento**, **Tipo de Evento** e **Motivo do
   Evento**, e do controle de adicionar e remover personagens. O **Motivo do
   Tipo** é um texto de duas linhas logo abaixo do Tipo e a **Meta** é um texto
   de duas linhas. O **Punch** é texto curto e o **K.O**, texto curto com a
   **mesma altura** do Punch, fica ao lado dele; o **Cenário Descritivo** usa
-  duas linhas. O painel só edita um capítulo existente; **Salvar** não cria um
+  duas linhas. O **Cenário Worldbuilding** aceita **um ou mais** cenários, com
+  select agrupado por mundo, botão **Adicionar** e lista dos selecionados com
+  **Remover**. O painel só edita um capítulo existente; **Salvar** não cria um
   capítulo novo.
 - **RF015-TL006** - Ajuda do Tipo: o campo **Tipo** tem o botão **?** ao lado do
   rótulo, como o Nível Tecnológico do Mundo. Ao passar o mouse ou focar, explica
@@ -1579,6 +1582,10 @@ houver um mundo associado, exibindo o aviso correspondente.
   **Tipo de Evento** explica **Ascensão**, **Declínio**, **Apogeu** e **Queda**,
   com os exemplos do requisito. As duas ajudas não alteram as opções nem a
   gravação.
+- **RF015-TL008** - Aba Dados Complementares: a segunda aba do painel do
+  capítulo reúne **Foreshadowing**, **Plot Twist**, **Cliffhanger**, **Punch** e
+  **K.O**, com o **K.O** ao lado do **Punch** e a mesma altura dele. A aba usa o
+  mesmo **Salvar** do cabeçalho e não mostra os campos estruturais do capítulo.
 
 #### Fluxos
 
@@ -1627,8 +1634,9 @@ houver um mundo associado, exibindo o aviso correspondente.
   migração **v15** aditiva acrescenta o **Motivo do Evento** em
   `capitulo_personagem`, com texto vazio para os vínculos existentes, e a
   migração **v16** aditiva acrescenta o **Motivo do Tipo** em `capitulo`, também
-  com texto vazio para os capítulos existentes. Bancos v13, v14 e v15 migram
-  preservando livros, personagens, vínculos e capítulos.
+  com texto vazio para os capítulos existentes; a **v24** cria a tabela
+  `capitulo_cenario` e copia para ela o cenário único. Bancos v13, v14 e v15
+  migram preservando livros, personagens, vínculos e capítulos.
 - **RF015-RN007** - Gravação: **Salvar** atualiza somente o capítulo e os
   personagens do capítulo; não altera a ficha global, o vínculo do personagem
   com o livro nem os dados do livro. Uma falha não deixa o capítulo pela metade.
@@ -1651,10 +1659,12 @@ houver um mundo associado, exibindo o aviso correspondente.
   motivo vazio. O **K.O** é texto curto com a mesma altura do **Punch**.
 - **RF015-RN014** - Abas do painel do capítulo: a primeira aba, **Dados do
   Capítulo**, mostra os campos do **Número** até o **Resumo**; a segunda,
-  **Personagens do Capítulo**, mostra os personagens do arco e o controle de
-  adicionar e remover. O **Salvar** do cabeçalho é comum às duas abas e grava os
-  dados e os personagens na mesma operação do RF015-RN007. Trocar de aba não
-  descarta as edições pendentes e nada é gravado antes do **Salvar**.
+  **Dados Complementares**, mostra **Foreshadowing**, **Plot Twist**,
+  **Cliffhanger**, **Punch** e **K.O**; a terceira, **Personagens do Capítulo**,
+  mostra os personagens do arco e o controle de adicionar e remover. O
+  **Salvar** do cabeçalho é comum às três abas e grava os dados e os personagens
+  na mesma operação do RF015-RN007. Trocar de aba não descarta as edições
+  pendentes e nada é gravado antes do **Salvar**.
 - **RF015-RN015** - Legendas de Evento e Tipo de Evento: as duas ajudas seguem o
   padrão do **?** do **Tipo** (botão ao lado do rótulo, popup por hover e foco,
   uma explicação por linha) e são apenas visuais; não mudam a lista fechada nem o
@@ -1678,6 +1688,10 @@ houver um mundo associado, exibindo o aviso correspondente.
   quadrado pequeno. Sem retrato, o quadrado fica vazio, mas mantém o mesmo
   tamanho para alinhar os nomes. A miniatura é somente leitura e não altera o
   retrato do cadastro global.
+- **RF015-RN018** - Dados Complementares: a aba guarda os mesmos campos já
+  existentes no capítulo, sem coluna nova; a separação é apenas de organização
+  visual. O **Salvar** grava a aba ativa e as demais na mesma operação, e
+  **Salvar** e reabrir preserva o conteúdo dos cinco campos.
 
 #### Critérios de Aceite
 
@@ -1729,10 +1743,11 @@ houver um mundo associado, exibindo o aviso correspondente.
 - **RF015-CA019** - Motivo do Tipo: o campo **Motivo do Tipo** aparece logo
   abaixo do Tipo, como texto de duas linhas, é gravado e relido com o capítulo; a
   migração v16 preserva os capítulos existentes com o motivo vazio.
-- **RF015-CA020** - Abas do painel: ao abrir um capítulo, o painel mostra duas
-  abas — **Dados do Capítulo**, com os campos do **Número** até o **Resumo**, e
-  **Personagens do Capítulo**, com os personagens do arco. O **Salvar**
-  permanece no cabeçalho nas duas abas, e trocar de aba preserva as edições
+- **RF015-CA020** - Abas do painel: ao abrir um capítulo, o painel mostra três
+  abas — **Dados do Capítulo**, com os campos do **Número** até o **Resumo**;
+  **Dados Complementares**, com Foreshadowing, Plot Twist, Cliffhanger, Punch e
+  K.O; e **Personagens do Capítulo**, com os personagens do arco. O **Salvar**
+  permanece no cabeçalho nas três abas, e trocar de aba preserva as edições
   pendentes.
 - **RF015-CA021** - Campos de duas linhas: **Motivo do Tipo**, **Meta** e
   **Cenário Descritivo** usam textarea de duas linhas, menor que o texto médio
@@ -1753,6 +1768,13 @@ houver um mundo associado, exibindo o aviso correspondente.
   por um quadrado vazio do mesmo tamanho, sem iniciais nem deslocamento dos
   nomes; a imagem carrega pelo protocolo de assets e o cadastro global não é
   alterado.
+- **RF015-CA025** - Dados Complementares: a aba mostra Foreshadowing, Plot
+  Twist, Cliffhanger, Punch e K.O, com o K.O ao lado do Punch e a mesma altura;
+  os cinco campos não aparecem em **Dados do Capítulo**, e **Salvar** e reabrir
+  preserva o conteúdo digitado.
+- **RF015-CA026** - Testes da nova aba: a verificação cobre as três abas, a
+  troca sem perder edição pendente, os campos complementares na aba certa e a
+  gravação/reabertura dos cinco campos.
 
 ### RF016 - Livros - Gráficos
 
@@ -1970,8 +1992,9 @@ navegação pelos mundos vivem na seção **Worldbuilding** do livro.
   (RF017-TL010).
 - **RF017-TL009** - Cenário Worldbuilding do capítulo: o campo **Cenário
   Worldbuilding** do painel do capítulo lista as **Localidades** de todos os
-  mundos associados ao livro, agrupadas por mundo, e grava a localidade
-  escolhida. Sem mundo associado, o campo permanece desabilitado com o aviso
+  mundos associados ao livro, agrupadas por mundo, e permite adicionar **um ou
+  mais** cenários, com a lista dos selecionados e o botão **Remover** em cada
+  um. Sem mundo associado, o campo permanece desabilitado com o aviso
   **Nenhum mundo associado a este livro**.
 - **RF017-TL010** - Aba Livros do mundo: a tela de detalhe do mundo ganha a aba
   **Livros**, depois das entradas e de **Facções**, com o contador de livros e a
@@ -2007,8 +2030,8 @@ navegação pelos mundos vivem na seção **Worldbuilding** do livro.
   associados sem perder a categoria selecionada nem a página da tabela; a troca
   não grava nada.
 - **RF017-FL007** - Editar capítulo com cenário: no painel do capítulo, o
-  escritor escolhe uma localidade de qualquer mundo associado, salva e reabre o
-  capítulo com o cenário gravado.
+  escritor adiciona uma ou mais localidades de qualquer mundo associado, salva e
+  reabre o capítulo com a mesma lista de cenários gravada, na ordem de inclusão.
 
 #### Regras de Negócio
 
@@ -2031,9 +2054,9 @@ navegação pelos mundos vivem na seção **Worldbuilding** do livro.
   transação, os capítulos daquele livro cujas localidades pertencem ao mundo
   removido ficam com o cenário vazio. A remoção é recusada com mundo ou livro
   inexistente, e o retorno informa quantos capítulos foram limpos.
-- **RF017-RN007** - Cenário validado: o cenário do capítulo só aceita localidade
-  de um mundo associado ao livro; localidade de outro mundo é recusada pelo
-  domínio, não só pela interface.
+- **RF017-RN007** - Cenário validado: cada cenário do capítulo só aceita
+  localidade de um mundo associado ao livro; localidade de outro mundo é
+  recusada pelo domínio, não só pela interface, sem gravar a lista parcial.
 - **RF017-RN008** - Entradas pertencem ao mundo: criar uma entrada pela aba do
   livro grava no mundo, como no RF008. O livro não tem cópia das entradas, e
   editar ou excluir continua sendo operação do nível raiz.
@@ -2059,6 +2082,13 @@ navegação pelos mundos vivem na seção **Worldbuilding** do livro.
 - **RF017-RN014** - Escopo da exportação: a exportação do livro continua em
   requisito posterior; este requisito não cria nem altera os PDFs da ficha do
   personagem e do mundo.
+- **RF017-RN015** - Múltiplos cenários: um capítulo pode ter **vários** cenários,
+  sem repetição da mesma localidade, gravados na ordem de inclusão. A migração
+  **v24** cria `capitulo_cenario` (`capitulo_id`, `localidade_id`, `ordem`), com
+  chave composta, FKs e índice, e copia para ela o cenário único anterior. A
+  coluna `capitulo.cenario_localidade_id` permanece no esquema, mas deixa de ser
+  a fonte da verdade. Remover um mundo limpa todos os cenários daquele mundo e
+  mantém os dos demais mundos no mesmo capítulo.
 
 #### Critérios de Aceite
 
@@ -2085,12 +2115,14 @@ navegação pelos mundos vivem na seção **Worldbuilding** do livro.
   tabela recarrega e a entrada aparece também no nível raiz.
 - **RF017-CA010** - Remover mundo: confirmar a remoção tira a aba, mantém as
   demais e, se era a última, volta ao estado vazio; cancelar não altera nada.
-- **RF017-CA011** - Cenários limpos: ao remover um mundo, os capítulos do livro
-  que usavam localidades dele ficam sem cenário na mesma operação, e a tela
-  informa a quantidade de capítulos afetados.
+- **RF017-CA011** - Cenários limpos: ao remover um mundo, todos os cenários do
+  livro em localidades dele saem na mesma operação, os cenários dos outros
+  mundos permanecem e a tela informa a quantidade de capítulos distintos
+  afetados.
 - **RF017-CA012** - Cenário agrupado: o campo **Cenário Worldbuilding** lista as
-  localidades dos mundos associados agrupadas por mundo e grava a localidade
-  escolhida; sem mundo, permanece desabilitado com o aviso.
+  localidades dos mundos associados agrupadas por mundo, permite adicionar e
+  remover vários cenários e grava a lista escolhida; sem mundo, permanece
+  desabilitado com o aviso.
 - **RF017-CA013** - Cenário recusado: salvar um capítulo com localidade de mundo
   não associado ao livro é recusado pelo domínio.
 - **RF017-CA014** - Vínculos do mundo: o painel **Vínculos com livros** mostra a
@@ -2118,6 +2150,10 @@ navegação pelos mundos vivem na seção **Worldbuilding** do livro.
 - **RF017-CA022** - Listagem de Mundos: os cards mostram os livros associados com
   a quantidade e os títulos, e as linhas da lista têm a coluna **Livros**; mundo
   sem livro mostra **Nenhum livro**.
+- **RF017-CA023** - Vários cenários: adicionar duas localidades, salvar e reabrir
+  o capítulo mantém as duas na ordem de inclusão; remover uma grava a lista sem
+  ela; a mesma localidade não entra duas vezes; a migração v24 preserva o
+  cenário único dos capítulos existentes.
 
 ### RF018 - Worldbuilding - Localidades: imagem, tipo e hierarquia
 

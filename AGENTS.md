@@ -5,6 +5,19 @@
 > como `src/`, `src-tauri/`, `scripts/`, `package.json` e `docs/setup.md` citados
 > abaixo pertencem ao repositório do aplicativo, não a este.
 
+> **Fechamento (24/11/2026 — RF015/RF017):** o change
+> `rf015-dados-complementares-cenarios-multiplos` foi implementado, validado e
+> **arquivado** em
+> `2026-11-24-rf015-dados-complementares-cenarios-multiplos`. Ele cria a aba
+> **Dados Complementares** (Foreshadowing, Plot Twist, Cliffhanger, Punch e K.O)
+> e permite **vários cenários** no capítulo. A migração **v24** cria
+> `capitulo_cenario` e copia o cenário único; a coluna antiga
+> `capitulo.cenario_localidade_id` permanece no esquema, sem leitura. O domínio
+> valida cada localidade, grava a lista na ordem e a remoção de mundo limpa
+> todos os cenários daquele mundo. `openspec validate --all` **18/18**;
+> verificadores RF015 31/31, RF017 28/28, RF018 17/17 e RF019 43/43. **Nenhum
+> change ativo.**
+>
 > **Fechamento (20/11/2026):** os cinco ajustes desta rodada foram
 > implementados, validados e **arquivados**:
 > `2026-11-20-rf019-mapa-predio-comodos-portas`,
@@ -187,7 +200,7 @@ talecraft/
 │   ├── src/main.rs            binário
 │   ├── src/lib.rs             comandos Tauri + estado gerenciado do banco
 │   ├── src/banco.rs           infraestrutura do SQLite (RF003–RF019)
-│   ├── src/banco/migracoes.rs DDL versionado (v1-v23)
+│   ├── src/banco/migracoes.rs DDL versionado (v1-v24)
 │   ├── src/erro.rs            ErroDominio + CodigoErro + Resultado<T>
 │   ├── src/test_support.rs    DiretorioTemporario (tempfile, cfg test)
 │   ├── src/personagem.rs      domínio dos personagens (RF004)
@@ -223,7 +236,7 @@ talecraft/
 │   ├── verificar-rf012.mjs    aba Resumo, textos longos e sem Descartar (15/15)
 │   ├── verificar-rf013.mjs    abas Sinopse/Tema/Conflito/Voz e Humor (15/15)
 │   ├── verificar-rf014.mjs    personagens do livro: elenco, vínculo e métricas (47/47)
-│   ├── verificar-rf015.mjs    capítulos: quadro, edição, arrastar e métricas (30/30)
+│   ├── verificar-rf015.mjs    capítulos: quadro, abas, cenários e métricas (31/31)
 │   ├── verificar-rf016.mjs    gráficos: progressão, arcos e marcadores (14/14)
 │   ├── verificar-rf017.mjs    Worldbuilding do livro: abas e associação (26/26)
 │   ├── verificar-rf018.mjs    localidades: imagem, tipo e hierarquia (17/17)
@@ -1758,7 +1771,7 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   `openspec validate --all` → 18 passed, 0 failed.
 - **Comandos:** `npm run tauri dev` (executa), `npm run tauri build`
   (compila → `src-tauri/target/release/talecraft.exe` + MSI/NSIS),
-  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 180 testes) e
+  `npm run verificar:rust` (fmt + Clippy `-D warnings` + 183 testes) e
   `cargo test --manifest-path src-tauri/Cargo.toml --lib` (testes isolados).
 - **Guia de ambiente** em `documents/setup.md`.
 - **Comandos Rust (70 no total):** `mensagem_inicial` (RF001),
@@ -1770,6 +1783,11 @@ usuário, renderizada no servidor com `<html th:attr="data-theme=${prefs.tema}">
   (RF017), os três de localidades (RF018), os cinco de mapas do mundo (RF019) e
   `montar_documento_mundo` (Documento do Mundo completo). Todos no
   `invoke_handler`.
+- **Estado em 24/11/2026:** banco na **v24** (`capitulo_cenario`), **183 testes
+  Rust**, verificadores RF015 **31/31**, RF017 **28/28**, RF018 **17/17** e
+  RF019 **43/43**. O change
+  `rf015-dados-complementares-cenarios-multiplos` está **arquivado**; nenhum
+  change ativo.
 - **Pendências conhecidas do app:** RF001–RF019 concluídos, validados e
   **ARQUIVADOS**. O documento hoje define RF001–RF019; os próximos requisitos
   (RF020+) ainda precisam ser escritos antes de virarem change.

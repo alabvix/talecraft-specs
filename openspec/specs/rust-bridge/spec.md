@@ -177,7 +177,7 @@ O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_l
 - **THEN** recebe as contagens de livros, personagens, capítulos e entradas de mundo (RF011-CA018)
 
 ### Requirement: Comandos dos mundos do livro expostos ao front-end
-O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_mundos_do_livro`, `listar_mundos_para_livro`, `associar_mundos_ao_livro`, `remover_mundo_do_livro` e `listar_livros_do_mundo`, com as regras de associação, remoção com limpeza de cenários e validação do cenário do capítulo no back-end, e apenas mensagens úteis no IPC (RF017-RN003 a RF017-RN007, RF017-CA003 a RF017-CA014).
+O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_mundos_do_livro`, `listar_mundos_para_livro`, `associar_mundos_ao_livro`, `remover_mundo_do_livro` e `listar_livros_do_mundo`, com as regras de associação, remoção com limpeza de **todos** os cenários daquele mundo e validação de **cada** cenário do capítulo no back-end, e apenas mensagens úteis no IPC (RF017-RN003 a RF017-RN007, RF017-RN015, RF017-CA003 a RF017-CA014, RF017-CA023).
 
 #### Scenario: Listar os mundos do livro em ordem
 - **GIVEN** o livro tem dois mundos associados
@@ -195,9 +195,9 @@ O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_m
 - **THEN** só as novas associações são criadas, a duplicidade volta no relatório e a ordem é preservada (RF017-RN004, RF017-CA003)
 
 #### Scenario: Remover mundo com limpeza de cenários
-- **GIVEN** o livro tem capítulos com cenário em localidades do mundo a remover
+- **GIVEN** o livro tem capítulos com um ou mais cenários em localidades do mundo a remover
 - **WHEN** o front-end chama `remover_mundo_do_livro`
-- **THEN** a associação e os cenários são limpos na mesma transação e o retorno informa quantos capítulos foram afetados (RF017-RN006, RF017-CA010, RF017-CA011)
+- **THEN** a associação e todos os cenários daquele mundo são limpos na mesma transação, os cenários dos outros mundos permanecem e o retorno informa quantos capítulos distintos foram afetados (RF017-RN006, RF017-RN015, RF017-CA010, RF017-CA011)
 
 #### Scenario: Livros que usam o mundo
 - **GIVEN** dois livros usam o mundo
@@ -205,9 +205,14 @@ O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_m
 - **THEN** recebe os livros com o título para o painel de vínculos (RF017-TL008, RF017-CA014)
 
 #### Scenario: Cenário inválido recusado
-- **GIVEN** o front-end chama `salvar_capitulo` com localidade de um mundo não associado ao livro
-- **WHEN** o domínio valida o cenário
-- **THEN** a gravação é recusada com erro próprio, sem gravar o capítulo (RF017-RN007, RF017-CA013)
+- **GIVEN** o front-end chama `salvar_capitulo` com uma lista de cenários que contém localidade de um mundo não associado ao livro
+- **WHEN** o domínio valida cada cenário
+- **THEN** a gravação é recusada com erro próprio, sem gravar o capítulo nem a lista parcial (RF017-RN007, RF017-RN015, RF017-CA013)
+
+#### Scenario: Lista de cenários gravada e relida
+- **GIVEN** o front-end chama `salvar_capitulo` com duas localidades válidas do livro
+- **WHEN** em seguida chama `obter_capitulo`
+- **THEN** recebe os dois cenários na ordem enviada, com nome e caminho completo, e a lista pode ser reduzida ou ampliada em uma nova gravação (RF017-RN015, RF017-CA023)
 
 ### Requirement: Comandos de localidades expostos ao front-end
 O sistema SHALL expor ao front-end, pelo `invoke_handler`, os comandos `listar_localidades_mundo` — que devolve a lista plana das localidades do mundo com `id`, `nome`, `tipo`, `imagem`, `paiId` e `raiz`, ordenada pelo nome — e `associar_imagem_localidade` — que copia a imagem escolhida para `localidades/` e grava o caminho relativo —, com a validação de ciclo, tipo, mundo, pai padrão na raiz e bloqueio da edição da raiz no domínio, e apenas mensagens úteis no IPC (RF018-RN001 a RF018-RN006, RF018-CA002, RF018-CA006, RF018-CA009, RF018-CA011, RF018-CA020).
